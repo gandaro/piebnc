@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: Lora, serif;
 }
 
 header {
@@ -21,6 +22,9 @@ nav ul li:after {
 }
 
 article {
-    font: 1em serif;
     margin: 0 10em;
+}
+
+.ribbon {
+    
 }
