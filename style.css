@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    margin: 1em 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li:before {
+    content: "[";
+}
+
+nav ul li:after {
+    content: "]"
+}
+
+article {
+    font: 1em serif;
+    margin: 0 10em;
+}
