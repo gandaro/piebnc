@@ -1,4 +1,4 @@
-DELASK [network'] :number
+DELASK [network~] :number
 -------------------------
 cancella un op su richiesta dal bot. Usa /LISTASK per ottenere il numero
 da specificare.

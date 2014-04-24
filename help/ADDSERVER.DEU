@@ -1,4 +1,4 @@
-ADDSERVER [netzwerk'][S=]server :port password
+ADDSERVER [netzwerk~][S=]server :port password
 ----------------------------------------------
 Fuegt einen neuen IRC-Server hinzu. Du kannst mehrere Server hinzufuegen,
 falls der Bouncer nicht zu einem angegebenen Server verbinden kann, 

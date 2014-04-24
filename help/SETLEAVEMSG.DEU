@@ -1,4 +1,4 @@
-SETLEAVEMSG [netzwerk']text
+SETLEAVEMSG [netzwerk~]text
 ---------------------------
 Setzt den Text einer Nachricht, welche in den Channels des Nutzers
 ausgegeben wird, wenn der Nutzer die Verbindung zum Bouncer trennt.

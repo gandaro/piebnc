@@ -1,4 +1,4 @@
-JUMP [netzwerk'] :[nummer]
+JUMP [netzwerk~] :[nummer]
 --------------------------
 Springt zum naechsten Server aus der Serverliste, falls keine
 Nummer angegeben ist. Ist eine Nummer angeben, wird direkt 

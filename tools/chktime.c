@@ -1,6 +1,5 @@
-/* $Id: chktime.c,v 1.2 2005/06/04 18:01:32 hisi Exp $ */
 /************************************************************************
- *   psybnc2.2.2, tools/chktime.c
+ *   psybnc, tools/chktime.c
  *   Copyright (C) 2001 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -21,10 +20,6 @@
  */
 
 /* this program gets compiled, if time.h is not needed */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: chktime.c,v 1.2 2005/06/04 18:01:32 hisi Exp $";
-#endif
 
 #include <stdio.h>
 #include <sys/types.h>

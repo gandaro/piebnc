@@ -1,4 +1,4 @@
-ADDOP [network'][#canale] password :hostmask
+ADDOP [network~][#canale] password :hostmask
 ------------------------------------------
 Permette di aggiungere utenti alla oplist del bouncer. Questi potranno ottenere
 l'op da esso similarmente a come si fa con un bot.

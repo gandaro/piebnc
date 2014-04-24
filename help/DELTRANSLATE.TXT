@@ -1,4 +1,4 @@
-DELTRANSLATE [network']number
+DELTRANSLATE [network~]number
 -----------------------------
 DELTRANSLATE allows you to remove an added translator entry from
 the list of formerly added translators. See /LISTTRANSLATE to get

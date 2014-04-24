@@ -1,6 +1,5 @@
-/* $Id: p_topology.c,v 1.3 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_topology.c
+ *   psybnc, src/p_topology.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_topology.c,v 1.3 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_TOPOLOGY
 
@@ -149,6 +144,7 @@ int *displaytopology(int(*displayvia)(char *buffer))
     strmncpy(ebuf,topo->server,sizeof(ebuf));
     rc=(*displaytopo)(ebuf);
     digdisptopology(topo);
+    return 0x0;
 }
 
 /* add an item to the topology */
@@ -160,9 +156,9 @@ int addtopology(char *from, char *to)
     int litype;
     if(topology==NULL)
     {
-	topology=(struct topologyt *)pmalloc(sizeof(struct topologyt));
-	strmncpy(topology->server,me,sizeof(topology->server));
-	topology->linktype=TP_ROOT;
+        topology=(struct topologyt *)pmalloc(sizeof(struct topologyt));
+        strmncpy(topology->server,me,sizeof(topology->server));
+        topology->linktype=TP_ROOT;
     }
     a=gettopology(from);
     b=gettopology(to);
@@ -170,26 +166,27 @@ int addtopology(char *from, char *to)
     if(a==NULL && b==NULL) return 0x0;
     if(a==NULL) 
     {
-	top=b;
-	litype=TP_LFROM;
+        top=b;
+        litype=TP_LFROM;
     } else {
-	top=a;
-	litype=TP_LTO;
+        top=a;
+        litype=TP_LTO;
     }
     for(i=0;i<100;i++)
     {
-	if(top->linked[i]==NULL)
-	{
-	    top->linked[i]=(struct topologyt *)pmalloc(sizeof(struct topologyt));
-	    top=top->linked[i];
-	    top->linktype=litype;
-	    if(litype==TP_LFROM)
-		strmncpy(top->server,from,sizeof(top->server));
-	    else
-		strmncpy(top->server,to,sizeof(top->server));
-	    return 0x0;
-	}
-    }        
+        if(top->linked[i]==NULL)
+        {
+            top->linked[i]=(struct topologyt *)pmalloc(sizeof(struct topologyt));
+            top=top->linked[i];
+            top->linktype=litype;
+            if(litype==TP_LFROM)
+            strmncpy(top->server,from,sizeof(top->server));
+            else
+            strmncpy(top->server,to,sizeof(top->server));
+            return 0x0;
+        }
+    }
+    return 0x0;
 }
 
 /* module-constat caller for the remove-call */
@@ -204,13 +201,13 @@ int digremove(struct topologyt *topo)
     int rc;
     for(i=0;i<100;i++)
     {
-	if(topo->linked[i]!=NULL)
-	{
-	    rc=(*removeit)(topo->linked[i]->server);
-	    rc=digremove(topo->linked[i]);    
-	    free(topo->linked[i]);
-	    topo->linked[i]=NULL;
-	}
+        if(topo->linked[i]!=NULL)
+        {
+            rc=(*removeit)(topo->linked[i]->server);
+            rc=digremove(topo->linked[i]);    
+            free(topo->linked[i]);
+            topo->linked[i]=NULL;
+        }
     }
     return 0x0;
 }

@@ -1,0 +1,8 @@
+BRAW ident :command
+-------------------
+Used to simulate a command to a given ident. It has to be
+very format strict or it might not work as intended.
+Example:
+/BRAW TestUser :PRIVMSG #MyChannel :Testing testing
+Would send the message "Testing testing" to the channel #MyChannel
+as the user with the ident TestUser. Note the two colons.

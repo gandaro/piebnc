@@ -1,6 +1,5 @@
-/* $Id: p_hash.c,v 1.3 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_hash.c
+ *   psybnc, src/p_hash.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_hash.c,v 1.3 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_HASH
 
@@ -52,18 +47,20 @@ struct hasht inboundhash[]={
     {1016,	cmdtopic,	0,	0	,2,0},
 #endif
     {1017,	cmdnick,	0,	0	,1,0},
-    {1018,	cmdbwho,	1019,	1020	,0,0},
+    {1018,	cmdbwho,	1019,	1020	,0,1},
     {1021,	cmdpassword,	1022,	1023	,0,0},
     {1024,	cmdvhost,	1025,	1026	,0,0},
 #ifdef PROXYS
     {1027,	cmdproxy,	1028,	1029	,0,0},
 #endif
     {1030,	cmdsetusername,	1031,	1032	,0,0},
+    {1797,	cmdsetusername,	1798,	1799	,0,0},
     {1033,	cmdsetaway,	1034,	1035	,0,0},
     {1036,	cmdsetleavemsg,	1037,	1038	,0,0},
     {1039,	cmdleavequit,	1040,	1041	,0,0},
     {1042,	cmdsetawaynick,	1043,	1044	,0,0},
     {1045,	cmdjump,	1046,	1047	,0,0},
+    {1376,	cmdbraw,	1377,	1378	,0,1},
 #ifndef DYNAMIC
     {1048,	cmdbquit,	1049,	1050	,0,0},
     {1051,	cmdbconnect,	1052,	1053	,0,0},
@@ -77,6 +74,9 @@ struct hasht inboundhash[]={
     {1069,	cmdaddnetwork,	1070,	1071	,0,0},
     {1072,	cmddelnetwork,	1073,	1074	,0,0},
     {1075,	cmdswitchnet,	1076,	1077	,0,0},
+	{1400,	cmdbvhostn,		1401,	1402	,0,1},
+	{1410,  cmdbquitn,		1411,   1412    ,0,1},
+	{1420,  cmdbconnectn,	1421,   1422    ,0,1},
 #endif
     {1078,	cmdaddop,	1079,	1080	,0,0},
     {1081,	cmddelop,	1082,	1083	,0,0},
@@ -144,6 +144,8 @@ struct hasht inboundhash[]={
     {1198,	cmdbkill,	1199,	1200	,0,1},
 #endif
     {1201,	cmdsockstat,	1202,	1203	,0,1},
+	{1430,  cmdkillsock, 1431,  1432    ,0,1},
+	{1440,  cmdfixlistener, 1441,  1442    ,0,1},
 #ifdef MULTIUSER
     {1204,	cmdadduser,	1205,	1206	,0,1},
     {1207, 	cmddeluser,	1208,	1209	,0,1},
@@ -170,6 +172,15 @@ struct hasht inboundhash[]={
 #endif
     {1342,	cmdsetlang,	1343,	1344	,0,1},
     {1252,	printhelp,	1253,	1254	,0,0},
+    {1450,	cmdbdone,	1451,	1452	,0,0},
+    {1460,	cmdsetconnectdelay,	1461,	1462	,0,1},
+    {1480,	cmddefaultipv6,		1481,   1482    ,0,1},
+    {1490,	cmdpreferipv6,		1491,   1492    ,0,0},
+#ifdef MYSQL_IPCHECK
+#ifdef HAVE_MYSQL
+    {2001,	cmdmysqlipcheck,	2002,	2003	,0,1},
+#endif
+#endif      
     {0,		NULL,		0,	0	,0,0}
 };
 
@@ -247,7 +258,6 @@ struct inthasht inthash[]={
 
 int internalinbound(int iusern, int link)
 {
-    int rc,ca;
     int usern;
     int hashn=0;
     int ret,dummy;
@@ -288,6 +298,7 @@ int internalinbound(int iusern, int link)
 	      ssnprintf(user(usern)->instate,lngtxt(1304),me,user(usern)->nick,irccommand);
 	  }    
     }
+    return 0x0;
 }
 
 #endif
@@ -349,11 +360,81 @@ int userhelp(int usern, char *cmd)
     return 0x0;
 }
 
-/* the userinbound hash processing */
+/* fakeinbound, used for braw - same as userinbound, but doesn't update socket references */
+int fakeinbound(int iusern) {
+    #ifdef SCRIPTING
+    int ca=0;
+    #endif
+    int usern,ausern;
+    int hashn=0;
+    int ret,dummy;
+    pcontext;    
+    ausern=iusern;
+    if(user(iusern)->parent!=0) ausern=user(iusern)->parent;
+    usern=ausern;
+    usern=checknetwork(usern);
+    while (checknetwork(ausern)!=ausern); /* filtering other network tokens */
+    if(usern<=1000)
+    {
+	parse();
+	
+	
+#ifdef SCRIPTING
+	ca=executealias(usern);
+	if(ca==0)
+	{
+#endif
+	    while(inboundhash[hashn].commandmsgnum!=0)
+    	    {
+		if (ifcommand(lngtxt(inboundhash[hashn].commandmsgnum)))
+		{
+		    ret=inboundhash[hashn].proceed;
+		    if(inboundhash[hashn].adminonly==1 && user(usern)->rights!=RI_ADMIN)
+		    {
+			ssnprintf(user(ausern)->insock,lngtxt(1312),user(ausern)->nick);
+			return 0x0;
+		    }
+		    pcontext;    
+		    if(ret==2)
+		    {
+			if(inboundhash[hashn].handler!=NULL)
+			    ret=(*inboundhash[hashn].handler)(usern);
+		    }
+		    else
+		    {
+			if(inboundhash[hashn].handler!=NULL)
+			    dummy=(*inboundhash[hashn].handler)(usern);
+		    }
+		    pcontext;    
+		    if (ret==0) return 0x0;
+		    break;
+		}
+		hashn++;
+	    }
+#ifdef SCRIPTING
+	}
+#endif
+    }
+#ifdef INTNET
+    if(usern>10000)
+    	internalinbound(usern-10000,-1);
+    else
+#endif
+    if (user(usern)->outstate > STD_NOCON) {
+#ifdef SCRIPTING
+        if(ca==0)
+#endif
+        writesock(user(usern)->outsock,ircbuf);
+    }
+    return 0x0;
+}
 
+/* the userinbound hash processing */
 int userinbound(int iusern)
 {
-    int rc,ca=0;
+    #ifdef SCRIPTING
+    int ca=0;
+    #endif
     int usern,ausern;
     int hashn=0;
     int ret,dummy;
@@ -415,16 +496,16 @@ int userinbound(int iusern)
 #ifdef SCRIPTING
         if(ca==0)
 #endif
-    	    writesock(user(usern)->outsock,ircbuf);
+        writesock(user(usern)->outsock,ircbuf);
     }
+    return 0x0;
 }
 
 /* the useroutbound hash processing */
 
 int useroutbound(int usern)
 {
-    int rc,ret;
-    char *po;
+    int ret;
     int hashn=0;
     int dummy;
     pcontext;    

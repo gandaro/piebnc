@@ -1,4 +1,4 @@
-TRANSLATE [network']#canale/utente :linguaggio-da linguaggio-a
+TRANSLATE [network~]#canale/utente :linguaggio-da linguaggio-a
 ------------------------------------------------------------
 Translate ti permette di impostare degli utenti o canali i cui messaggi
 debbano essere tradotti.

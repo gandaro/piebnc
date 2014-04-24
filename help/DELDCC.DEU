@@ -1,4 +1,4 @@
-DELDCC [netzwerk']nummer
+DELDCC [netzwerk~]nummer
 ------------------------
 Entfernt eine DCC-Bot-Verbindung. Die Nummer kann aus LISTDCC ausgelesen
 werden.

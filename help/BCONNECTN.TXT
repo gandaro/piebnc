@@ -1,0 +1,8 @@
+BCONNECTN ident :network-prefix
+----------------------------
+Available to BounceAdmin only. Used to connect
+a given ident to its secondary network.
+Example:
+/BCONNECT TestUser :E
+would connect the ident TestUser to the network called E.
+See also: BQUIT BQUITN and BCONNECT

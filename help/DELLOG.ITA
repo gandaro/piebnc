@@ -1,4 +1,4 @@
-DELLOG [network']number
+DELLOG [network~]number
 -----------------------
 DELLOG permette di cancellare un entry dalla lista dei log per il
 traffic log.

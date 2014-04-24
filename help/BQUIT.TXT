@@ -1,6 +1,8 @@
-BQUIT [network']
+BQUIT [ident/network~]
 ----------------
-quits the server connection until you restart it with BCONNECT. 
+quits the server connection until you restart it with BCONNECT.
+If used by BounceAdmin a given ident can be quitted at the
+users primary network only.
 Example: 
 /BQUIT 
-See also: BCONNECT
+See also: BCONNECT BCONNECTN and BQUITN

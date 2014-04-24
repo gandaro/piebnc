@@ -1,17 +1,39 @@
-$Id: CHANGES,v 1.7 2005/06/04 18:13:37 hisi Exp $
-CHANGES are always downwards compatible to earlier versions
+CHANGES are always downwards compatible to earlier versions (hopefully!)
 (comment see EOF)
 -------------------------------------------------------------------
 
+Version 2.4:
+-------------------------------------------------------------------
+xx-xx-11   - Too many changes to list them all! :)
+             Feature: rewritten DNS engine using c-ares!
+             Fix: if compiled with IPv6, IPv6 DNS lookups was forced to AAAA. The engine has been
+                  been made smarter. Better support for IPv4/IPv6 interoperability
+             Command: defaultipv6
+             Command: preferipv6
+             Command: braw
+             Command: bdone
+             Command: fixlistener (yeye, this is a hack to workaround a bug)
+             Command: killsocket
+             Command: bconnectn
+             Command: bquitn
+             Command: bvhostn
+             Deprecated setusername in favour of setrealname
+             Feature: MySQL IP check for banning and IP restriction (lock IP to account)
+             Feature: ability to prevent new outgoing connections or set the connect delay timer
+             Feature: admins can use bquit on a user
+             Feature: admins can use bconnect on a user
+	     Feature: improved oidentd support for both ipv4 and ipv6
+             Command: setconnectdelay
+	     Fix: psyBNC might be connecting clients too fast causing throttling
+             Fix: freeze bug \o/
+             Fix: bwho is now admin only
+	     Fix: broken proxy support fixed (http/socks4, still no socks5/authentication)
+	     Fix: fixed compile warnings when using recent compiler
+             Fix: When binding to * it caused a bind warning (* = IPv4, :: = IPv6)
+             Code cleanup, lots of tweaks and fixes
+
 Version 2.3.2:
 -------------------------------------------------------------------
-03-20-07   - Added make cleandist for deep cleaning
-03-20-07   - Fixed make clean and added a default config.h and psybnc.conf
-03-20-07   - Fixed glibc freeze bug
-11-16-06   - Added a script to autocreate psybncchk and add it to crontab 
-11-16-06   - Changed make clean to have a little less dust ;) 
-11-16-06   - Fixed a bug on config.h initialization when file was missing.
-11-16-06   - Added a fix for the freeze bug.
 06-04-06   - Yeah, forgot a closing bracket, shame on me :)
 06-04-05   - And back again, fixing the network separator, thanks for the freaking patch, Beeth.
              Why are finnish special chars allowed in nicks, but others not? A bit inconsequently, eh?

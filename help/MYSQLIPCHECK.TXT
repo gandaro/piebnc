@@ -1,0 +1,11 @@
+MYSQLIPCHECK [0|1]
+------------------
+Enables or disables the MySQL based IP-check.
+This can be useful if you plan maintenance on your MySQL server.
+However, it requires an admin user to be online to disable it while the admin
+can still be verified against the MySQL server.
+It is intended to work as a ban (notifier) function as well as IP restricting
+an account of a user so it can only be access from a given set of IP addresses.
+Example:
+MYSQLIPCHECK 1
+(Enables MySQL IP check, so connecting users are verified against a database)

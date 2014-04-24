@@ -1,4 +1,4 @@
-LISTBANS [netzwerk']
+LISTBANS [netzwerk~]
 --------------------
 Listet alle Bans des jeweiligen Nutzers.
 Example: 

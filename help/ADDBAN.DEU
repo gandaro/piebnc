@@ -1,4 +1,4 @@
-ADDBAN [netzwerk'][#chan] Grund :hostmaske
+ADDBAN [netzwerk~][#chan] Grund :hostmaske
 ------------------------------------------
 Du kannst Bans setzen, welche ebenfalls ausgefuehrt werden, wenn
 Du nicht zum Bouncer verbunden bist.

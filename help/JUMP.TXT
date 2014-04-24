@@ -1,4 +1,4 @@
-JUMP [network'] :[number]
+JUMP [network~] :[number]
 -------------------------
 jumps to next server, if no servernumber is given, or to the server by number
 from LISTSERVERS. 

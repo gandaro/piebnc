@@ -1,4 +1,3 @@
-/* $Id: textbox.c,v 1.2 2005/06/04 17:55:53 hisi Exp $ */
 /*
  *  textbox.c -- implements the text box
  *

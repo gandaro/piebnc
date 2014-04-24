@@ -1,6 +1,5 @@
-/* $Id: chkipv6.c,v 1.2 2005/06/04 18:01:32 hisi Exp $ */
 /************************************************************************
- *   psybnc2.2.2, tools/chkipv6.c
+ *   psybnc, tools/chkipv6.c
  *   Copyright (C) 2001 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -21,10 +20,6 @@
  */
 
 /* this program gets compiled, if IPv6 is supported. */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: chkipv6.c,v 1.2 2005/06/04 18:01:32 hisi Exp $";
-#endif
 
 #include <stdio.h>
 #include <sys/types.h>

@@ -1,4 +1,4 @@
-DELLOG [network']number
+DELLOG [network~]number
 -----------------------
 DELLOG allows you to delete an entry to the logging specifications
 for traffic logging.

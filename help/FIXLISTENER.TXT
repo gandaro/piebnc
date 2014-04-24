@@ -1,0 +1,8 @@
+FIXLISTENER
+-----------
+FIXLISTENER takes no argument and tries to recreate the main
+listening socket in case it has died (known to happen at
+FreeBSD).
+Example:
+/FIXLISTENER
+See also: SOCKSTAT and KILLSOCKET

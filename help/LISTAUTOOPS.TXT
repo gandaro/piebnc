@@ -1,4 +1,4 @@
-LISTAUTOOPS [network']
+LISTAUTOOPS [network~]
 ----------------------
 Displays the list of all added Users/Hosts which may get
 autoop from your bouncer.

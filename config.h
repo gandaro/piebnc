@@ -10,21 +10,9 @@
 
 #define BLOWFISH
 
-/* Allow Translation */
-
-#define TRANSLATE
-
-/* Allow internal network */
-
-#define INTNET
-
 /* Allow traffic logging */
 
 #define TRAFFICLOG
-
-/* Allow linkage of bouncers */
-
-#define LINKAGE
 
 /* Allow the dcc File-Functions */
 
@@ -40,19 +28,23 @@
 
 /* Number of max. Users */
 
-#define MAXUSER 50
+#define MAXUSER 100
 
 /* Number of max. Connections per User */
 
-#define MAXCONN 99
+#define MAXCONN 200
 
-/* Use blocking DNS */
+/* Allow the usage of scripts */
 
-#define BLOCKDNS
+#define SCRIPTING
 
-/* Fixes the freeze bug */
+/* Support oIdentd */
 
-#define FREEZEFIX
+#define OIDENTD
+
+/* Allow multiple irc connections per user */
+
+#define NETWORK
 
 /* The logging level */
 
@@ -60,5 +52,4 @@
 
 /* SSL-Security */
 
-#define SSLSEC 2
-
+#define SSLSEC 0

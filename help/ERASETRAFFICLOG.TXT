@@ -1,4 +1,4 @@
-ERASETRAFFICLOG [network']
+ERASETRAFFICLOG [network~]
 --------------------------
 erases your traffig log. In order to keep your log up to date you should 
 delete the messages that you allready read using /PLAYTRAFFICLOG last.

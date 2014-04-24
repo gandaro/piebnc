@@ -1,0 +1,9 @@
+BQUITN ident :network-prefix
+----------------------------
+Available to BounceAdmin only. Used to quit
+a given idents secondary network.
+Example:
+/BQUITN TestUser :E
+would quit the connection to the network called E
+for the ident TestUser.
+See also: BQUIT BCONNECT and BCONNECTN

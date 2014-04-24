@@ -1,0 +1,5 @@
+BDONE
+-----
+This command will return 'Done' when issued. An optional parameter can be provided, e.g.:
+BDONE test, and the bouncer will return 'Done: test'.
+This is only meant as a service tool for a webinterface.

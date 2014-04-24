@@ -1,4 +1,4 @@
-DELIGNORE [network']number
+DELIGNORE [network~]number
 ---------------------------
 Cancella l'entry di un ignore dalla lista.
 Esempio:

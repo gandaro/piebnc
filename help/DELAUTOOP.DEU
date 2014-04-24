@@ -1,4 +1,4 @@
-DELAUTOOP [netzwerk']nummer
+DELAUTOOP [netzwerk~]nummer
 ---------------------------
 Entfernt einen Auto-Op Eintrag nach angegebener Nummer aus LISTAUTOOPS.
 Beispiel::

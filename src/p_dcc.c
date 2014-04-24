@@ -1,6 +1,5 @@
-/* $Id: p_dcc.c,v 1.7 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_dcc.c
+ *   psybnc, src/p_dcc.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -20,15 +19,13 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_dcc.c,v 1.7 2005/06/04 18:00:14 hisi Exp $";
-#endif
-
 #define P_DCC
 
 #include <p_global.h>
 
 #ifdef DCCCHAT
+
+int listpdccs(int usern);
 
 /* DCC - Support */
 /* adding a dcc */
@@ -60,7 +57,7 @@ int adddcc(int usern, char *host, int port, char *luser, char *pass, char *name,
 	}
 	thisdcc=thisdcc->next;
     }
-    thisdcc->link->outstate==0;
+    thisdcc->link->outstate=0;
     thisdcc->link->outsock=0;
     thisdcc->link->port=port;
     thisdcc->uid=usern;
@@ -87,8 +84,6 @@ int adddcc(int usern, char *host, int port, char *luser, char *pass, char *name,
 int loaddccs(int usern)
 {
 #ifdef DCCCHAT
-    char buf[400];
-    struct linknodes *thisdcc;
     char afile[30];
     char section[30];
     char entry[30];
@@ -148,7 +143,6 @@ int loaddccs(int usern)
 
 int listdccs(int usern)
 {
-    char buf[400];
     struct linknodes *thisdcc;
     int cnt;
     char l;
@@ -183,10 +177,6 @@ int erasedcc(int usern,int dccn)
 {
     struct linknodes *thisdcc;
     struct linknodes *lastdcc;
-    char l;
-    FILE *infile;
-    FILE *tmp;
-    char fbuf[40];
     char afile[30];
     char section[30];
     char entry[30];
@@ -282,30 +272,30 @@ int dcchandler(int usern)
     struct datalinkt *th;
     char l=')';
     char netc[15];
-    int rc;
     netc[0]=0;
     pcontext;
     if (user(usern)->parent!=0)
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+    	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     else
-	memset(netc,0x0,sizeof(netc));
+    	memset(netc,0x0,sizeof(netc));
     lkm=user(usern)->dcc;
     while(lkm!=NULL)
     {
-	if(lkm->link!=NULL)
-	    if(lkm->link->outsock==currentsocket->sock->syssock) break;
-	lkm=lkm->next;    
+    	if(lkm->link!=NULL)
+	        if(lkm->link->outsock==currentsocket->sock->syssock) break;
+    	lkm=lkm->next;    
     }
     if (lkm==NULL) return 0x0;
     th=lkm->link;
     if(th->outstate==STD_CONN)
     {
-	if (user(usern)->instate==STD_CONN)
-	{
-	    ssnprintf(user(usern)->insock,lngtxt(303),netc,l,th->name,th->host,user(usern)->nick,ircbuf);
-	    return 0x0;
-	}
+        if (user(usern)->instate==STD_CONN)
+        {
+            ssnprintf(user(usern)->insock,lngtxt(303),netc,l,th->name,th->host,user(usern)->nick,ircbuf);
+            return 0x0;
+        }
     }
+    return 0x0;
 }
 
 /* connected dcc */
@@ -335,6 +325,7 @@ int connecteddcc(int usern)
     writesock_DELAY(th->outsock,buf,5);
     th->outstate=STD_CONN;
     th->delayed=1;
+    return 0x0;
 }
 
 /* remap dcc socket */
@@ -343,8 +334,6 @@ int remapdcc(int usern, int newsocket)
 {
     struct linknodes *lkm;
     struct datalinkt *th;
-    char *pt;
-    char buf[100];
     pcontext;
     lkm=user(usern)->dcc;
     while(lkm!=NULL)
@@ -357,6 +346,7 @@ int remapdcc(int usern, int newsocket)
     th=lkm->link;
     if(th)
         th->outsock=newsocket;
+    return 0x0;
 }
 
 /* connection terminated */
@@ -412,12 +402,9 @@ int errordcc(int usern, int errn)
 
 int checkdcclink(int usern, struct datalinkt *th)
 {
-    char buf[8192];
-    char l=')';
     char netc[15];
     int proto=AF_INET;
     char *ho;
-    int rc;
 #ifdef HAVE_SSL
     int issl=SSL_OFF;
 #else
@@ -428,7 +415,7 @@ int checkdcclink(int usern, struct datalinkt *th)
     if(user(usern)->instate!=STD_CONN) return 0x0;
 #endif
     if (user(usern)->parent!=0)
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     else
 	memset(netc,0x0,sizeof(netc));
     if (th->outstate==0) {
@@ -652,7 +639,7 @@ int pdccconnected(int usern)
     netc[0]=0;
     if(user(usern)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     pdcc=getpsocketpdcc(usern,currentsocket);
     if(pdcc==NULL) return 0x0;
@@ -694,7 +681,7 @@ int pdccerror(int usern, int r)
     netc[0]=0;
     if(user(usern)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     pdcc=getpsocketpdcc(usern,currentsocket);
     if(pdcc==NULL) return 0x0;
@@ -703,21 +690,22 @@ int pdccerror(int usern, int r)
 	ssnprintf(user(usern)->insock,lngtxt(316),netc,pdcc->nick,pdcc->host,user(usern)->nick,currentsocket->sock->syssock);
     }    
     removepdcc(usern);
+    return 0x0;
 }
 
 int pdccquery(int usern)
 {
 #ifdef SCRIPTING
     struct subtask *stsk;
+    char *pt;
 #endif
     struct dcct *pdcc;
     char netc[20];
-    char *pt;
     pcontext;
     netc[0]=0;
     if(user(usern)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     pdcc=getpsocketpdcc(usern,currentsocket);
     if(pdcc!=NULL)
@@ -760,14 +748,12 @@ int acceptpdccchat(int usern)
 {
     struct dcct *pdcc;
     int nsock;
-    int userp=usern;
-    int rc;
-    struct socketnodes *ps,*eps;
+    struct socketnodes *ps;
     char netc[20];
     netc[0]=0;
     if(user(usern)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     pdcc=getpsocketpdcc(usern,mastersocket);
     if(pdcc==NULL) return 0x0;
@@ -796,7 +782,7 @@ int pdccfileerror(int usern, int r)
     netc[0]=0;
     if(user(usern)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     pdcc=getpsocketpdcc(usern,currentsocket);
     if(pdcc==NULL) return 0x0;
@@ -806,6 +792,7 @@ int pdccfileerror(int usern, int r)
     }    
     fclose(pdcc->fhandle);
     removepdcc(usern);
+    return 0x0;
 }
 
 int pdccfileclosed(int usern)
@@ -815,7 +802,7 @@ int pdccfileclosed(int usern)
     netc[0]=0;
     if(user(usern)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     pdcc=getpsocketpdcc(usern,currentsocket);
     if(pdcc==NULL) return 0x0;
@@ -825,6 +812,7 @@ int pdccfileclosed(int usern)
     }    
     fclose(pdcc->fhandle);
     removepdcc(usern);
+    return 0x0;
 }
 
 int pdccfilesendack(int usern)
@@ -838,7 +826,7 @@ int pdccfilesendack(int usern)
     netc[0]=0;
     if(user(usern)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     addrp=(unsigned long *)pt;
     ackdcc=ntohl(*addrp);
@@ -869,13 +857,12 @@ int acceptpdccfile(int usern)
 {
     struct dcct *pdcc;
     int nsock,rc;
-    int userp=usern;
     struct socketnodes *ps;
     char netc[20];
     netc[0]=0;
     if(user(usern)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     pdcc=getpsocketpdcc(usern,mastersocket);
     if(pdcc==NULL) return 0x0;
@@ -919,7 +906,7 @@ int pdccfconnected(int usern)
     netc[0]=0;
     if(user(usern)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     pdcc=getpsocketpdcc(usern,currentsocket);
     if(pdcc==NULL) return 0x0;
@@ -951,7 +938,7 @@ int pdccferror(int usern,int r)
     netc[0]=0;
     if(user(usern)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     pdcc=getpsocketpdcc(usern,currentsocket);
     if(pdcc==NULL) return 0x0;
@@ -962,6 +949,7 @@ int pdccferror(int usern,int r)
 	ssnprintf(user(usern)->insock,lngtxt(327),user(usern)->nick,netc,pdcc->nick,pdcc->host,pdcc->file);
     }    
     removepdcc(usern);
+    return 0x0;
 }
 
 int pdccfget(int usern)
@@ -975,7 +963,7 @@ int pdccfget(int usern)
     netc[0]=0;
     if(user(usern)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     pdcc=getpsocketpdcc(usern,currentsocket);
     if(pdcc==NULL) return 0x0;
@@ -1012,7 +1000,7 @@ int pdccfclosed(int usern)
     netc[0]=0;
     if(user(usern)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     pdcc=getpsocketpdcc(usern,currentsocket);
     if(pdcc==NULL) return 0x0;
@@ -1025,6 +1013,7 @@ int pdccfclosed(int usern)
     if(pdcc->fhandle!=NULL)
 	fclose(pdcc->fhandle);    
     removepdcc(usern);
+    return 0x0;
 }
 
 int pdccfremap(int usern, int newsocket)
@@ -1046,9 +1035,8 @@ int addpendingdcc(int usern, int type, char *host, int port, char *nick, char *f
     char c=1;
     int sck;
     int proto=AF_INET;
-    int rc,cnt=0;
+    int cnt=0;
 #ifdef IPV6
-    struct hostent *he;
     struct sockaddr_in6 sin6;
 #endif
     struct sockaddr_in sin;
@@ -1057,7 +1045,6 @@ int addpendingdcc(int usern, int type, char *host, int port, char *nick, char *f
     FILE *check;
     char myfile[800];
     char myhost[200];
-    char ihost[60];
     char en[64],an[64];
     char netc[20];
     char *nck;
@@ -1076,7 +1063,7 @@ int addpendingdcc(int usern, int type, char *host, int port, char *nick, char *f
     if(user(usern)->parent!=0)
     {
 	userp=user(usern)->parent;
-	ap_snprintf(netc,sizeof(netc),"%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(usern)->network);
     }
     switch(type)
     {
@@ -1618,8 +1605,10 @@ int canceldcc(int usern, char *nick, char *file)
 
 int answerctcp(int usern,char *nick, char *ctcp)
 {
+#ifdef CTCPVERSION
     char c=1;
     char buf[300];
+#endif
 #ifdef SCRIPTING
     if(ctcpscript(usern,ctcp)==0)
     {
@@ -1641,10 +1630,19 @@ int answerctcp(int usern,char *nick, char *ctcp)
 
 int parsectcps(int usern)
 {
-    static char host[200],file[200];
+
+#if defined(DCCFILES) || defined(DCCCHAT)
+    static char host[200];
     int port;
+    char *ept;
+#endif
+
+#ifdef DCCFILES
+    static char file[200];
     unsigned long filelen;
-    char *pt,*ept,*pt2;
+#endif
+    char *pt,*pt2;
+
     if(*irccontent==0x1 && strmncasecmp(ircto,user(usern)->nick)==1)
     {
 	if(strchr(irccontent,' ')==NULL)

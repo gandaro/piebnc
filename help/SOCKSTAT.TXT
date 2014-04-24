@@ -9,3 +9,4 @@ You can also trigger the logging of socketstats by sending
 the USR1 signal on the shell.
 Example:
 /SOCKSTAT
+See also: FIXLISTENER and KILLSOCKET

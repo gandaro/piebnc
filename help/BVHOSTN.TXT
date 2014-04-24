@@ -1,0 +1,9 @@
+BVHOST ident :network-prefix vhost
+----------------------------------
+sets the VHOST of an ident at a secondary network.
+You can also set the bouncer to use your virtual hosts if 
+present on the server from which the bouncer is running. 
+Example: 
+/BVHOSTN TestUser :E This.Is.Only.Virtual.Com
+would change the vhost of TestUser on the network E to
+This.Is.Only.Virtual.Com.

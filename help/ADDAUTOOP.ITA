@@ -1,4 +1,4 @@
-ADDAUTOOP [network']#canale :hostmask
+ADDAUTOOP [network~]#canale :hostmask
 --------------------------------------
 Questo comando consente di aggiungere utenti a cui dare automaticamente
 l'op quando questi entrano nel canale.

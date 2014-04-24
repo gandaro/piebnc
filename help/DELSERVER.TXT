@@ -1,4 +1,4 @@
-DELSERVER [network'] :servernumber
+DELSERVER [network~] :servernumber
 ----------------------------------
 Deletes Server. If you find out that some IRC servers are LAGGED or don't allow 
 your connection or you have +r (restricted) connection you can delete them. 

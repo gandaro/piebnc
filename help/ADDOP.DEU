@@ -1,4 +1,4 @@
-ADDOP [netzwerk'][#chan] password :hostmaske
+ADDOP [netzwerk~][#chan] password :hostmaske
 --------------------------------------------
 Du kannst User eintragen, welche von Deinem Bouncer Op holen koennen.
 Dies ist vergleichbar mit Bots, der Nutzer muss im Falle, falls er 

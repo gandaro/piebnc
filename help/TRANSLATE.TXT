@@ -1,4 +1,4 @@
-TRANSLATE [network']#channel/user :language-from language-to
+TRANSLATE [network~]#channel/user :language-from language-to
 ------------------------------------------------------------
 Translate allows you to set channels or users to be online translated.
 Currently possibly are the following translations:

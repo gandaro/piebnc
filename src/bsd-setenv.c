@@ -1,4 +1,3 @@
-/* $Id: bsd-setenv.c,v 1.2 2005/06/04 18:00:14 hisi Exp $ */
 /*
  * Copyright (c) 1987 Regents of the University of California.
  * All rights reserved.

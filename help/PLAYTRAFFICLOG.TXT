@@ -1,4 +1,4 @@
-PLAYTRAFFICLOG [network']source fromdate fromtime todate totime :filter
+PLAYTRAFFICLOG [network~]source fromdate fromtime todate totime :filter
 or
 PLAYTRAFFICLOG last
 -----------------------------------------------------------------------

@@ -1,4 +1,4 @@
-DELAUTOOP [network']number
+DELAUTOOP [network~]number
 --------------------------
 deletes an added autoop entry by number. 
 You can get the number from LISTAUTOOPS.

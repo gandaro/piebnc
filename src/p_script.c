@@ -1,6 +1,5 @@
-/* $Id: p_script.c,v 1.7 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_script.c
+ *   psybnc, src/p_script.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,11 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_script.c,v 1.7 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_SCRIPT
 
@@ -114,9 +108,7 @@ int startpipe(	int usern,
 		int(*destroyed)(int))
 {
     int in_fds[2],out_fds[2],err_fds[2];
-    int pid,ss1=0,ss2=0,ss3=0,rc;
-    int temp_in,temp_out,temp_err;
-    int mypid;
+    int pid,ss1=0,ss2=0,ss3=0,rc,dummy;
     struct socketnodes *sdes;
     pcontext;
     if(forks>MAXFORKS)
@@ -196,7 +188,7 @@ int startpipe(	int usern,
 	 * on. Also we only define the environment, there
 	 * are no "usergiven" env-parameters.
 	 */
-	system(program);
+	dummy = system(program);
 /*	write(STD_ERR,lngtxt(715),4);  sending us an EOF  */
 	sleep(1); /* wait some time, until mother gets we died. */
 	exit(0x0);    
@@ -277,32 +269,33 @@ int terminatetask(int pid,int err)
     ps=getpsocketbysock(st->fdin);
     if(ps!=NULL)
     {
-	ps->sock->destructor=NULL;
-	ps->sock->errorhandler=NULL;
-	killsocket(st->fdin);
+        ps->sock->destructor=NULL;
+        ps->sock->errorhandler=NULL;
+        killsocket(st->fdin);
     }
     ps=getpsocketbysock(st->fdout);
     if(ps!=NULL)
     {
-	ps->sock->destructor=NULL;
-	ps->sock->errorhandler=NULL;
-	killsocket(st->fdout);
+        ps->sock->destructor=NULL;
+        ps->sock->errorhandler=NULL;
+        killsocket(st->fdout);
     }
     ps=getpsocketbysock(st->fderr);
     if(ps!=NULL)
     {
-	ps->sock->destructor=NULL;
-	ps->sock->errorhandler=NULL;
-	killsocket(st->fderr);
+        ps->sock->destructor=NULL;
+        ps->sock->errorhandler=NULL;
+        killsocket(st->fderr);
     }
     scr=st->script;
     if(scr!=NULL)
     {
-	scr->pid=0;
+        scr->pid=0;
     }
-kmd:
+
     free(st->desc);
     free(st);
+    waitpid(pid, NULL, 0);
     return 0x0;
 }
 
@@ -602,7 +595,7 @@ int dialogueevent(int pid)
 	{
 	    if(stsk->script!=NULL)
 	    {
-		ssnprintf(user(stsk->uid)->insock,"(%s)!psyBNC@lam3rz.de PRIVMSG %s :%s\r\n",stsk->script->to,user(stsk->uid)->nick,ircbuf);
+		ssnprintf(user(stsk->uid)->insock,"(%s)!psyBNC@psyBNC.dk PRIVMSG %s :%s\r\n",stsk->script->to,user(stsk->uid)->nick,ircbuf);
 	    }
 	}
     }
@@ -625,6 +618,7 @@ int startdialogues(int usern)
 	}
 	msc=msc->next;
     }
+    return 0x0;
 }
 
 /* stop the dialogues if the user signs off */
@@ -907,7 +901,7 @@ int aliasbhelp(int usern)
 	    if(headout==0)
 	    {
 		headout=1;
-		ssnprintf(user(usern)->insock,":-psyBNC!psyBNC@lam3rz.de PRIVMSG %s :BHELP User defined Aliases:\n",user(usern)->nick);
+		ssnprintf(user(usern)->insock,":-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :BHELP User defined Aliases:\n",user(usern)->nick);
 	    }
 	    event=defev;
 	    from=deffrom;
@@ -915,7 +909,7 @@ int aliasbhelp(int usern)
 		event=scr->event;
 	    if(scr->from!=NULL)
 		from=scr->from;
-	    ssnprintf(user(usern)->insock,":-psyBNC!psyBNC@lam3rz.de PRIVMSG %s :BHELP   %-15s - %s\n",user(usern)->nick,event,from);
+	    ssnprintf(user(usern)->insock,":-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :BHELP   %-15s - %s\n",user(usern)->nick,event,from);
 	}
 	scr=scr->next;
     }
@@ -927,7 +921,6 @@ int aliasbhelp(int usern)
 int executealias(int usern)
 {
     struct scriptt *scr;
-    struct subtask *sub;
     scr=user(usern)->script;
     while(scr!=NULL)
     {
@@ -981,7 +974,7 @@ int tasktochatevent(int pid)
     pdcc=user(stsk->uid)->pdcc;
     if(user(stsk->uid)->parent!=0)
     {
-	ap_snprintf(netc,sizeof(netc),"%s'",user(stsk->uid)->network);
+	ap_snprintf(netc,sizeof(netc),"%s~",user(stsk->uid)->network);
     }
     while(pdcc!=NULL)
     {
@@ -1005,7 +998,6 @@ int tasktochatevent(int pid)
 int dccchatscript(int usern, char *from)
 {
     struct scriptt *scr;
-    struct subtask *sub;
     int pid=0;
     static char sicbuf[8192];
     strmncpy(sicbuf,ircbuf,sizeof(sicbuf));
@@ -1043,7 +1035,6 @@ int setdccfileenv(int usern,struct scriptt *script)
 int dccfilescript(int usern, char *from)
 {
     struct scriptt *scr;
-    struct subtask *sub;
     int pid=0;
     static char sicbuf[8192];
     strmncpy(sicbuf,ircbuf,sizeof(sicbuf));
@@ -1087,7 +1078,6 @@ int setctcpenv(int usern, struct scriptt *script)
 int ctcpscript(int usern, char *ctcp)
 {
     struct scriptt *scr;
-    struct subtask *sub;
     static char sicbuf[8192];
     int pid=0;
     strmncpy(sicbuf,ircbuf,sizeof(sicbuf));

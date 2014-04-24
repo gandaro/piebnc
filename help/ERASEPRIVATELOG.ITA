@@ -1,4 +1,4 @@
-ERASEPRIVATELOG [network']
+ERASEPRIVATELOG [network~]
 --------------------------
 cancella i messaggi loggati. 
 erases your logged messages. Per potere tenere i log aggiornati dovresti

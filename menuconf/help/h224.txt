@@ -1,0 +1,20 @@
+This option defines whether MySQL IP check should be enabled or not.
+If enabled, you will need a working MySQL setup with a database and table structure provided.
+Menuconfig will automatically generate a random password for you and put in the following entries:
+#define MYSQL_SERVER "localhost"
+#define MYSQL_USER "psybnc"
+#define MYSQL_PASS "some random password"
+#define MYSQL_DB "psybnc"
+#define MYSQL_TABLE "iplock"
+#define MYSQL_TIMEOUT 2
+Please update them before compiling psybnc if you need that.
+
+MySQL table layout:
+CREATE TABLE IF NOT EXISTS `iplock` (
+  `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
+  `ident` varchar(10) NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `server` varchar(20) NOT NULL DEFAULT '*',
+  `comments` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;

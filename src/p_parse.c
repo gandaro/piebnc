@@ -1,6 +1,5 @@
-/* $Id: p_parse.c,v 1.3 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_parse.c
+ *   psybnc, src/p_parse.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_parse.c,v 1.3 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_PARSE
 
@@ -43,12 +38,12 @@ int generalparse ()
    if(p1!=NULL) *p1=0;
    irchost[0]=0;ircident[0]=0;ircnick[0]=0;ircfrom[0]=0;ircto[0]=0;irccommand[0]=0;irccontent[0]=0;
    p1 = secbuf;
-   if (p1 == NULL) { return; }
+   if (p1 == NULL) { return 0x0; }
    if (secbuf[0] == ':') { /* from server */
       ircserver = 1;
       p1++;
       p2=strchr(secbuf, ' ');
-      if (p2 == NULL) {return;}
+      if (p2 == NULL) {return 0x0;}
       stleng = p2 - p1;
       secbuf[stleng+1] = 0;
       strmncpy(ircfrom,p1,sizeof(ircfrom));
@@ -57,7 +52,7 @@ int generalparse ()
       p1 = secbuf;
       p2=strchr(p1,' ');
       if (p2 == NULL)
-         return;
+         return 0x0;
       stleng = p2 - p1;
       secbuf[stleng]=0;
       strmncpy(irccommand,p1,sizeof(irccommand));
@@ -69,7 +64,7 @@ int generalparse ()
       if (p2 == NULL) 
       { 
 	 strmncpy(ircto,rtrim(p1),sizeof(ircto));
-         return;
+         return 0x0;
       }
       stleng = p2 - p1;
       secbuf[stleng] = 0;
@@ -87,7 +82,7 @@ int generalparse ()
       if (p2 == NULL) 
       {
 	 strmncpy(irccommand,secbuf,sizeof(irccommand));
-	 return;
+	 return 0x0;
       }
       stleng = p2 - p1;
       secbuf[stleng] = 0;
@@ -120,12 +115,14 @@ int generalparse ()
           if (p2 == NULL) 
           {
 	      strmncpy(irccontent,p1,sizeof(irccontent));
-	      return; 
+	      return 0x0; 
           }
           stleng = p2 - p1;
           secbuf[stleng]=0;
           strmncpy(ircto,rtrim(p1),sizeof(ircto));
-          if (*p2 = ':') p2++;
+/*          if (*p2 = ':') p2++; ???? 2011-07-01 */
+          *p2 = ':';
+          p2++;
           strmncpy(irccontent,p2,sizeof(irccontent));
       }
    }

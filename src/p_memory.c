@@ -1,6 +1,5 @@
-/* $Id: p_memory.c,v 1.5 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_memory.c
+ *   psybnc, src/p_memory.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_memory.c,v 1.5 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_MEMORY
 
@@ -67,7 +62,7 @@ void _pfree(unsigned long *pointer, char *module, char *function, int line)
     free(pointer);
 }
 
-#define free(a) _pfree((void *)a,__FILE__,__FUNCTION__,__LINE__)
+#define free(a) _pfree((void *)a,__FILE__,(char*)__FUNCTION__,__LINE__)
 
 /* struct wrappers. Those alloc, delete and return the needed structures */
 
@@ -284,6 +279,7 @@ int clearuser(int usern)
 	}
         thisuser=NULL;
     }
+    return 0x0;
 }
 
 int clearpeer(int peern)
@@ -298,6 +294,7 @@ int clearpeer(int peern)
 	    thispeer->peer=NULL;
 	}
     }
+    return 0x0;
 }
 
 int clearlink(int peern)
@@ -312,6 +309,7 @@ int clearlink(int peern)
 	    thislink->link=NULL;
 	}
     }
+    return 0x0;
 }
 
 /* logging last context */
@@ -361,7 +359,6 @@ void fpe_error(int r)
 
 void term_error(int r)
 {
-    struct usernodes *th;
     if(nosignals == 1)
 	return;
     nosignals=1;
@@ -441,12 +438,9 @@ void logsslstats(SSL *reference)
 
 void usr1_error(int r)
 {
-    int i;
     struct socketnodes *lkm,*pre;
-    char buf[800];
     char *types[4];
     char *flags[5];
-    char *enc[5];
     char *ssle[2];
     int noadv;
 #ifdef HAVE_SSL
@@ -515,9 +509,6 @@ void usr1_error(int r)
     }
 #ifdef HAVE_SSL
     logsslstats(reference);
-#endif
-#ifndef BLOCKDNS
-    dns_stat(-1);
 #endif
     if(r!=31337)
 	p_log(LOG_INFO,-1,"Done");
@@ -615,7 +606,7 @@ int errorhandling()
   sigaction( SIGKILL, &sv, NULL);
   sv.sa_handler=alrm_error;
   sigaction( SIGALRM, &sv, NULL);
-  umask( ~S_IRUSR & ~S_IWUSR );
+  umask (~(S_IRUSR | S_IWUSR));
   srand( time( NULL) );
   return 0x0;
 }

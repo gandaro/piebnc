@@ -1,4 +1,4 @@
-LISTIGNORES [netzwerk']
+LISTIGNORES [netzwerk~]
 -----------------------
 Listet alle hinzugefuegten Ignores.
 Beispiel:

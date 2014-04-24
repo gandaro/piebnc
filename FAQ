@@ -1,326 +1,71 @@
-Archiv-Name......: psyBNC-FAQ
-Url..............: http://www.psyBNC.info/faq
-Last Modified....: 2004/06/26
-Posting-Frequency: Weekly(url)/monthly(txt)
-KByte Length.....: 16169
-Words............: 2632
-Lines............: 326
-
-+--------------------------------------------------------------------+
-| psyBNC-FAQ (Frequently Asked Questions) for psyBNC                 |
-+--------------------------------------------------------------------+
-
- This FAQ does not attempt to teach you using psyBNC, just to answer
- simple questions, give you some hints on getting started, and point
- you to sources of information.
-
- § Please submit bug reports, suggestions for improvement, and other 
- comments relating to this FAQ only to the maintainer
- at infect@club-23.org.
-
-+--------------------------------------------------------------------+
-| Table of Contest                                                   |
-+--------------------------------------------------------------------+
-
-Q01: I tried to add a User for getting Op from psyBNC with /ADDOP.
-Q02: How to use the internal network?
-Q03: How to quit psyBNC?
-Q04: How to change my CTCP VERSION reply?
-Q05: I try to compile psyBNC and get this error: ...
-Q06: I added a friend to my bouncer but he can't connect. The bouncer says
-Q07: I use bouncer but i can't DCC CHAT or SEND. What is wrong?
-Q08: I connected my bouncer to the internal linked Bouncer Net. But it wouldn't connect.
-Q09: I have added a BOT DCC to my bouncer. It worked great. Now it's gone. What should i do?
-Q10: My bouncer is active but not on the IRC NETWORK. What should i do?
-Q11: Is there a way to get psyBNC to send you dcc files (recieve) directly to you and not to the shell?
-Q12: I set bouncer so that it asks OP from a bot. I am added in bot and i checked my  password. But nothing happens. What is wrong?
-Q13: I would like to suggest a Bugfix/Change to psyBNC. Whom should i ask?
-Q14: How to install psyBNC?
-Q15: How to setup a crontab for psyBNC? (10 minutes interval automatic start/restart if psyBNC isn't running)
-Q16: How to use psyBNC with oidentd?
-Q17: How to add an IPV6 ip on psyBNC?
-Q18: I just installed my psyBNC and connected to it, but i get this message: "Move the file salt.h from the shell to a safe place"
-Q19: I forgot my password or need a new one.
-Q20: My bouncer is connecting to servers that i dont want it to, how can i solve that?
-Q21: I am getting a message when i logon to my bouncer from Q bot saying 'you are already authed' 
-Q22: How to add an IPV6 ip to the server list?
-Q23: How to handle psyBNC with ssl links?
-Q24: Is it possible set psyBNC to cycle on empty and opless channel?
-Q25: How do I set a vhost for a secondary network?
-Q26: Is it possible to make a psyBNC that doesnt use crypted password?
-Q27: Is there any way to reset all user connections?
-Q28: How to add an IPv6 Server?
-
-
-+--------------------------------------------------------------------+
-| General                                                            |
-+--------------------------------------------------------------------+
-
-Q01: I tried to add a User for getting Op from psyBNC with /ADDOP.
-     He tried /msg bouncer op password, but it did not work ! What is wrong ?
-
-A01: A question to psyBNC for op has always to include the channel.
-     So if a user asks for op, he has to do:
-     /msg bouncer op password #channel
-     to get op.
-
-Q02: How to use the internal network?
-A02: Edit the config.h and insert "#define INTNET" recompile the psyBNC. done.
-
-Q03: How do quit psyBNC?
-A03: Type /bquit (~networkprefix) to quit your irc sessions. To kill the psyBNC you have to kill the process id.
-
-Q03: How to change my CTCP VERSION reply?
-A03: Edit the config.h and insert "#define CTCPVERSION "my own ctcp reply" recompile the psyBNC. done.
-
-Q04: I try to compile psyBNC and get this error:
-     This needs the ncurses library. If it is not available, menuconf wont work.
-     If you are using curses, use make menuconfig-curses instead.
-     make: *** [menuconfig] Error 1
-     What should i do?
-
-A04: Install ncurses. Easy going. apt-get install ncurses or ask rpmfind for the package.
-
-Q05: I added a friend to my bouncer but he can't connect. The bouncer says 
-     "WRONG PASSWORD" although i did check the password and it's correct !
-     A05: Bouncer login is completed from two parts. One is LOGIN NAME other is PASSWORD.
-     If you do a /ADDUSER, then the first parameter of ADDUSER isn't the nick, but
-     the ident field.
-     Both must be correct in order to succesfully LOG-IN ! In mIRC you must set the 
-     IDENT to the name that you are edded in bouncer. But be carefull ! Sometimes in 
-     IRC the ident doesn't work right. So you must also set E-MAIL ADDRESS to that name.
-
-Q06: I use bouncer but i can't DCC CHAT or SEND. What is wrong ?
-A06: In mIRC you should change the settings under LOCAL INFO -> LOOKUP METHOD to NORMAL. 
-     You should also make sure that you have ON CONNECT ALWAYS GET: Local host & IP checked.
-
-Q07: I connected my bouncer to BounceNet. But then i had to reinstall it. Now it won't 
-     connect again even if i added the /LINKTO correctly.
-
-A07: The link must be added again on BOTH sides. Bouncer uses a verification which was 
-     deleted when you reinstalled bouncer. Just make sure the ADMIN on the other side 
-     adds your bouncer again.
-
-Q08: I have added a BOT DCC to my bouncer. It worked great. Now it's gone. What sould i do ?
-A08: Problems like this or simmilar always use REHASH. Warning ! This will close your connection.
-
-Q09: My bouncer is active but not on the IRC NETWORK. When i do /bconnect it says: 
-     "You are not marked as quitted." What to do?
-A09: Check the server that you have added. Check that the IRC server in ServerList 
-     allows connection from that host. If both is verified then the reason is possibly 
-     this. Your bouncer got disconnected from IRC by some error. Use /BQUIT to mark 
-     it as quitted then use /BCONNECT again 
-
-Q10: Is there a way to get psyBNC to send you dcc files (recieve) directly to you and not to the shell?
-A10: Yes, /dccenable 0
-
-Q11: I set bouncer so that it asks OP from a bot. I am added in bot and i checked my 
-     password. But nothing happens. What is wrong ?
-A11: Usually eggdrops have a general command used to gain OPs . It's 
-     /MSG BotName OP password. In your case the bot might have different command to 
-     ask OPs from. Bouncer can only ask OPs the normal way.
-
-Q11: I would like to suggest a Bugfix/Change to psyBNC. Whom should i ask ?
-A12: Visit http://www.psyBNC.info/development.html and use the contact eMails.
-
-Q13: How to install psyBNC?
-A13: At first download the latest source. 
-     wget http://www.psychoid.lam3rz.de/psyBNC2.3.1.tar.gz
-     Extract the source with 'tar -xzf psyBNC2.3.1.tar.gz'
-     Now type 'cd psyBNC'.
-     Edit the 'psyBNC.conf' or create it with "menuconfig" but at first you have to compile it
-     with 'make menuconfig'.
-
-     Configuration example:
-
-     Listening ports - On which port should the psyBNC listen?
-     Links - Not needed yet.
-     Bouncer Name - Name your Bouncer. Something like 'MyBouncer' works fine.
-     Host Allows - To allow anyone set this to '*'.
-     Users - Add yourself..
-     DCC Host - The IP to use for all DCC sessions (if you enabled DCC support). Recommend setting is the same IP that your bnc use.
-
-     Setup is complete. Compile your bouncer with "make" in your psyBNC directory. Type './psyBNC' to start.
-
-Q14: How to setup a crontab for psyBNC? (10 minutes interval automatic start/restart if psyBNC isn't running)
-A14: Edit the psyBNCchk file, that the follow path points to the right dir. 
-     psyBNCPATH=/home/user/psyBNC
-     Edit the crontab with:
-     'crontab -e' and insert "0,10,20,30,40,50 * * * * /home/foobar/psyBNCchk >/dev/null 2>&1"
-     Go on with 'chmod 700 psyBNCchk' for the right permissions.
-     The ">/dev/null 2>&1" part tells crontab not to send you an eMmail whenever it restarts psyBNC.
-
-Q15: How to use psyBNC with oidentd?
-
-A15: 1. Installation:
-
-You can install odidentd with an rpm or download the source code and compile it by yourself. 
-
-a) rpm installation
-
-First change to the desired directory and download the rpm package:
-wget http://url.to/oident.tgz
-
-now install the rpm:
-rpm -Uhv oidentd-2.0.4-2.i386.rpm
-
-If everything runs configure oidentd and psyBNC.
-Now you should stop the old identd daemon: killall -9 identd
-Afterwards you should by means of: /etc/init.d/oidentd start start oidentd. 
-Delete the entries of the old identd daemons if these are still present.
-
-b) source (tar.gz) installation
-
-First you should if not already done, download the newest version of oidentd.
-Changes for example to your gome directory and enter:
-wget http://belnet.dl.sourceforge.net/sourceforge/ojnk/oidentd-2.0.4.tar.gz 
-
-Now you should extract the package:tar -xzvf oidentd-2.0.5.tar.gz
-and change to the extracted directory: cd oidentd-2.0.4
-Now its time to configure and make the oidentd:
-./configure --prefix=/usr
-make
-and as root: make install 
-
-If you receive any error after the ./configure --prefix=/usr step, your system may miss some packages. 
-In most cases you'll need these packages (they are for an i386 system and should work on most linux distributions, 
-if they dont go to rpmfind.net and search for the packages yourself):
-
-flex -> ftp://ftp.rpmfind.net/linux/redhat/7.3/en/os/i386/RedHat/RPMS/flex-2.5.4a-23.i386.rpm
-bison -> ftp://ftp.rpmfind.net/linux/redhat/7.3/en/os/i386/RedHat/RPMS/bison-1.35-1.i386.rpm
-byacc -> ftp://ftp.rpmfind.net/linux/redhat/7.3/en/os/i386/RedHat/RPMS/byacc-1.9-19.i386.rpm
-
-to install them, type "wget ftp://path/file.rpm" and "rpm -Uhv file.rpm"
-
-Oidentd should correct installed now and the you should stop the old inetd deamons with: killall -9 identd
-In order to examine the correct installation, you should check whether if the file /usr/sbin/oidentd exists.
-If it exists, everything was correctly. 
-
-2. Configuration of oidentd:
-
-After you successfully installed oidentd, it will be necessary to configure a few things.
-If not yet available the file /etc/oidentd.conf would be created and opened with an editor like vi or mcedit.
-Make sure, that the file is created in unix text mode and not in dos text mode, else you'll get a error when trying
-to start oidentd later, that says something like "can't read configuration file" or "error in configuration file". 
-In order to permit each bouncer user to get his own ident, change the /etc/oidentd.conf as follows and make sure that
-it can be read by any user. To ensure this, type: chmod 644 /etc/oidentd.conf
-In order to permit that each bouncer user gets his own ident, change the /etc/oidentd.conf as follows:
-
---------------------------------------------------------------------------------
-# Configuration for oidentd
-# see oidentd.conf(5)
-#
-default {
-default {
-allow spoof
-allow spoof_all
-allow spoof_privport
-allow random
-allow random_numeric
-allow numeric
-allow hide
-}
-}
---------------------------------------------------------------------------------
-
-3. Configuration of psyBNC:
-
-So that psyBNC work together with oidentd, you must activate the oidentd support for psyBNC.
-This can be realized either by make menuconfig, or however manually, editing the file config.h and insert into a free line:
-#define OIDENTD
-Afterwards you must recompile psyBNC. All psyBNC passwords would become invalid.
-To prevent from this use the following method: 1. You need a copy of salt.h - you can provide with: cp salt.h salt.bak
-
-4. You need a copy of its psyBNC.conf - you can provide with: cp psyBNC.conf psyBNC.bak
-
-It applies to provide both copies before the recompilation. If the file salt.h was moved or renamed,
-you must copy it back to the psyBNC directory and rename it in salt.h.
-Afterwards you could execute carelessly make. After make is finished, you must retransfer psyBNC.bak and
-rename in psyBNC.conf. cp psyBNC.bak psyBNC.conf Now psyBNC has oidentd support and you lost no passwords. 
-Now you can start oidentd manually and examine if the idents are correctly indicated:
-/usr/sbin/oidentd -m -u nobody -g nogroup
-
-Q16: How to add an IPV6 IP on psyBNC?
-A16: type /BVHOST "2001:your:ip":6667
-
-Q17: I just installed my psyBNC and connected to it, but i get this message:
-     " -- psyBNC- WARNING ! Move the file salt.h from the shell to a safe place"
-A17: Logon to your shell, type "cd psybnc" and "rm salt.h". 
-
-Q18: I forgot my password or need a new one.
-A19: If your have shell access goto the psybnc dir and replace your password in the psybnc.conf with a plaintext password.
-
-Q20: My bouncer is connecting to servers that i dont want it to, how can i solve that?
-A20: The reason this is happening is because you have added more than one server into your bouncers config.
-     When your bouncer splits from the irc network you are on it trys to recconect to the server, 
-     if it can't and you have another network in your list it will simple try that one.
-     To find out what servers you have in your server list type /LISTSERVERS on your bouncer,
-     to delete them simply type /DELSERVER (server number).
-
-Q21: I am getting a message when i logon to my bouncer from Q bot saying 'you are already authed' 
-A21: When you first login to your bnc it takes your auth details and auths the bot so to speak.
-     From this moment on you are permently authed on your bouncer and there is no need to auth everytime you connect.
-     The reason you get the message is due to your Qnet auth still being in your irc clients perform list.
-     To get rid of the message simple remove it from your perform list . (please ensure you keep your auth details safe)
-
-
-Q22: How to add an IPV6 ip to the server list?
-A22: Type /ADDSERVER "2001:server:ip":6667
-
-
-Q23: How to handle psyBNC with SSL Links?
-A23: Type on SSL Host /linkfrom remote :remotehost.com:<non-ssl-port> 
-     and type on SSL Client /linkto server :S=serverhost.com<ssl-port>
-     
-Q24: Is it possible set psyBNC to cycle on empty and opless channel?
-A24: No.
-
-Q25: How do I set a vhost for a secondary network?
-A25: Type /BVHOST netprefix~your.vhost.com
-
-Q26: Is it possible to make a psyBNC that doesnt use crypted password?
-A26: Yes, use the source, luke. 
-
-Q27: Is there any way to reset all user connections?
-A27: Yes, type /BREHASH
-
-Q28: How to add an IPv6 Server?
-A28: Type /ADDSERVER "
-
-+--------------------------------------------------------------------+
-| CREDITS                                                            |
-+--------------------------------------------------------------------+
-
- Corrections and Updates
-
- We welcome bug reports, updates, reports about broken links,
- comments and outright disagreements. Please send your comments
- to infect@club-23.org and/or psychoid@psychoid.net. 
- Please make sure that you are referring to the most recent version
- of the FAQ (maintained at http://channel.psybnc.info/faq);
- someone else might have caught the problem before you. 
- Please understand that we maintain the FAQ on a purely 
- voluntary basis, and that we may fall behind on making updates 
- when other responsibilities intrude. You can help us out by making
- an attempt to identify replacement links when reporting a broken one, 
- and by suggesting appropriate rewording when you have found an error in
- the text. Suggestions for new questions and answers are welcomed, 
- particularly if you are willing to contribute the text yourself. ;-) 
-
- Special thanks to:
- 
-                   <psychoid>
-		   <Chaot>
-		   <denniz>
-		   <no_mad>
-                   <Tha-Mob>
-		   <MasterJM>
-		   <iceblox>
-
-
-  There is given absolutely NO WARRANTY of functionality. I am not responsible
-  if anything gets screwed. Read the GNU-Public license which is included.
-  
-
-  hope it helps,
-  inFECT@IRCnet/EFnet/Qnet - mario@mailserver.de - http://channel.psybnc.info
+Frequently Asked Questions - up to version 2.3.2
+--------------------------
+
+Q: I tried to add a User for getting Op from psybnc with /ADDOP.
+   He tried /msg bouncer op password, but it did not work ! What is
+   wrong ?
+A: A question to psyBNC for op has always to include the channel.
+   So if a user asks for op, he has to do:
+   /msg bouncer op password #channel
+   to get op.
+
+Q: I added a friend to my bouncer but he can't connect. The bouncer says 
+   "WRONG PASSWORD" although i did check the password and it's correct !
+A: Bouncer login is completed from two parts. One is LOGIN NAME other is PASSWORD.
+   If you do a /ADDUSER, then the first parameter of ADDUSER isn't the nick, but
+   the ident field.
+   Both must be correct in order to succesfully LOG-IN ! In mIRC you must set the 
+   IDENT to the name that you are added in bouncer. But be carefull ! Sometimes in 
+   IRC the ident doesn't work right. So you must also set E-MAIL ADDRESS to that 
+   name !
+
+Q: I use bouncer but i can't DCC CHAT or SEND. What is wrong ?
+A: In mIRC you should change the settings under LOCAL INFO -> LOOKUP METHOD to NORMAL. 
+   You should also make sure that you have ON CONNECT ALWAYS GET: Local host & IP 
+   checked !
+
+Q: I connected my bouncer to BounceNet. But then i had to reinstall it. Now it won't 
+   connect again even if i added the /LINKTO correctly.
+A: The link must be added again on BOTH sides. Bouncer uses a verification which was 
+   deleted when you reinstalled bouncer. Just make sure the ADMIN on the other side 
+   adds your bouncer again.
+
+Q: I have added a BOT DCC to my bouncer. It worked great. Now it's gone. What sould i 
+   do ?
+A: Problems like this or simmilar always use REHASH. Warning ! This will close your 
+   connection !
+
+Q: My bouncer is active but not on the IRC NETWORK. When i do /bconnect it says: 
+   You are not marked as quitted. 
+   What to do ?
+A: Check the server that you have added. Check that the IRC server in ServerList 
+   allows connection from that host. If both is verified then the reason is possibly 
+   this. Your bouncer got disconnected from IRC by some error. Use /BQUIT to mark 
+   it as quitted then use /BCONNECT again 
+
+Q: I set bouncer so that it asks OP from a bot. I am added in bot and i checked my 
+   password. But nothing happens. What is wrong ?
+A: Usually eggdrops have a general command used to gain OPs . It's 
+   /MSG BotName OP password. In your case the bot might have different command to 
+   ask OPs from. Bouncer can only ask OPs the normal way.
+
+Q: I would like to suggest a Bugfix/Change to psybnc. Whom should i ask ?
+A: Please see www.psybnc.at for contact information.
+
+Q: I want psyBNC to keep my Nick ! Why doesnt it do ?
+A: psyBNC tries to keep the nick you last set using your client. So if you login 
+   using the nick 'user', it would try to regain the nick 'user' all 10 seconds.
+   
+Q: I want to have an autovoice/autonotice/automessage command in psyBNC
+   Will you build it in ?
+A: Please try to use scripting for your special purposes (e.g. msging 
+   a channel- or nickserv on networks with services)
+   Autovoice will be solved for Version 2.4, when autoop will be 
+   changed to automode.
+
+Q: I found psyBNC on a hacked Host ! Why do you code such an evil tool
+   which is being used on hacked Hosts ?
+A: psyBNC is used legally by the majority of its users on their own hosts or
+   shells. psyBNC and its author is not responsible for an intrusion, its just
+   a tool someone used unauthorized on your host. Dont mix up a used tool
+   with an incident.

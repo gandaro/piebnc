@@ -1,4 +1,4 @@
-LISTDCC [network']
+LISTDCC [network~]
 ------------------
 lists the dcc bot connections currently added. 
 Example: 

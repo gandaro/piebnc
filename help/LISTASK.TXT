@@ -1,4 +1,4 @@
-LISTASK [network']
+LISTASK [network~]
 ------------------
 lists all ask-op entrys Example:
 /LISTASK 

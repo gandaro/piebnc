@@ -1,6 +1,5 @@
-/* $Id: p_inifunc.c,v 1.3 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_inifunc.c
+ *   psybnc, src/p_inifunc.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_inifunc.c,v 1.3 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_INIFUNC
 
@@ -169,7 +164,6 @@ int writeini(char *section, char *param, char *inidat, char *data)
     char ppuf[200];
     char spuf[200];
     char buf[2048];
-    char tx[20];
     char *po;
     int wasinsection;
     char *data_p;

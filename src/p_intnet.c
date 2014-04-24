@@ -1,6 +1,5 @@
-/* $Id: p_intnet.c,v 1.6 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_intnet.c
+ *   psybnc, src/p_intnet.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_intnet.c,v 1.6 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_INTNET
 
@@ -46,6 +41,9 @@ struct clientt {
 };
 
 struct clientt *clients=NULL;
+
+int cmdintjoin(int usern, int link);
+int sendmode(int usern, char *to);
 
 /* helper to add a client */
 
@@ -212,7 +210,7 @@ int removeban(struct uchannelt *chan, char *banmask)
 int addinvite(struct uchannelt *chan, char *invite)
 {
     struct stringarray *invlist,*oinv=NULL;
-    char *q,*p;
+    char *p;
     int cnt=0;
     invlist=chan->invites;
     p=strchr(invite,' ');
@@ -242,7 +240,7 @@ int addinvite(struct uchannelt *chan, char *invite)
 int removeinvite(struct uchannelt *chan, char *invite)
 {
     struct stringarray *invlist,*oinv=NULL;
-    char *q,*p;
+    char *p;
     int cnt=0;
     invlist=chan->invites;
     p=strchr(invite,' ');
@@ -273,7 +271,7 @@ int removeinvite(struct uchannelt *chan, char *invite)
 int addintop(struct uchannelt *chan, char *intop)
 {
     struct stringarray *intoplist,*ointo=NULL;
-    char *q,*p;
+    char *p;
     int cnt=0;
     intoplist=chan->intops;
     p=strchr(intop,' ');
@@ -303,7 +301,7 @@ int addintop(struct uchannelt *chan, char *intop)
 int removeintop(struct uchannelt *chan, char *intop)
 {
     struct stringarray *intoplist,*ointop=NULL;
-    char *q,*p;
+    char *p;
     int cnt=0;
     intoplist=chan->intops;
     p=strchr(intop,' ');
@@ -368,7 +366,6 @@ int
 sendtoclient(char *nick, int notlink, char *format,...)
 {
     va_list va;
-    int sock;
     char buf[2048];
     struct clientt *client;
     va_start(va,format);
@@ -406,7 +403,6 @@ int
 sendtolink(int link, char *format,...)
 {
     va_list va;
-    int sock;
     char buf[2048];
     va_start(va,format);
     ap_vsnprintf(buf,sizeof(buf),format,va);
@@ -423,9 +419,7 @@ sendtolink(int link, char *format,...)
 int sendtochannel(char *channel, int notlink, char *format, ...)
 {
     va_list va;
-    int sock;
     char buf[2048];
-    int isextern=0;
     struct uchannelt *chan;    
     struct uchannelusert *chanu;
     struct clientt *client;
@@ -468,7 +462,6 @@ int sendtochannel(char *channel, int notlink, char *format, ...)
 int sendtochannelbutone(char *channel, char *nick, int notlink, char *format,...)
 {
     va_list va;
-    int sock;
     char buf[2048];
     int isextern=0;
     struct uchannelt *chan;    
@@ -518,9 +511,7 @@ int sendtochannelbutone(char *channel, char *nick, int notlink, char *format,...
 int sendtochannelsofnick(char *nick, int notlink, char *format, ...)
 {
     va_list va;
-    int sock;
     char buf[2048];
-    int isextern=0;
     int didsend=0;
     struct uchannelt *chan;    
     struct uchannelusert *chanu,*chanu2;
@@ -681,6 +672,7 @@ int cmdintprivmsg(int usern, int link)
 	    
 	}    	
     }
+    return 0x0;
 }
 
 /* notice is same as like privmsg, so this is just a recall */
@@ -688,6 +680,7 @@ int cmdintprivmsg(int usern, int link)
 int cmdintnotice(int usern, int link)
 {
     cmdintprivmsg(usern,link);
+    return 0x0;
 }
 
 /* adding a joined intnet channel to an internal user */
@@ -738,6 +731,7 @@ int removeconfigchannel(int usern, char *channel)
 	    }			
 	}
     }
+    return 0x0;
 }
 
 /* rejoin the client to the saved channels */
@@ -762,7 +756,9 @@ int rejoinintchannels(int usern)
 	if(rc==0)
 	{
 	    strmncpy(irccontent,value,sizeof(irccontent));
-	    cmdintjoin(usern);
+
+        // TODO: Not sure here, last argument was missing.
+	    cmdintjoin(usern, 0);
 	    if(ingroup)
 	    {
 		chan=getuserchannel(-1,irccontent);
@@ -773,11 +769,11 @@ int rejoinintchannels(int usern)
 		    {
 			if(getchannelnick(chan,client->nick)!=NULL)
 			{
-			    ssnprintf(user(usern)->insock,":%s!%s@%s JOIN :#int'%s",client->nick,client->ident,client->host,chan->name);
+			    ssnprintf(user(usern)->insock,":%s!%s@%s JOIN :#int~%s",client->nick,client->ident,client->host,chan->name);
 			    sendnames(usern+10000,chan);								
 			    if(chan->topic[0]!=0)
 			    {
-				ssnprintf(user(usern)->insock,":%s 332 %s #int'%s :%s",me,client->nick,chan->name,chan->topic);
+				ssnprintf(user(usern)->insock,":%s 332 %s #int~%s :%s",me,client->nick,chan->name,chan->topic);
 			    }
 			    if(chan->modes[0]!=0)
 			    {
@@ -926,8 +922,9 @@ int cmdintjoin(int usern, int link)
 		sendtoclient(client->nick,0,lngtxt(424),me,client->nick,currentto);
 	    }
 	    pt=pt2;
-	}    	
-    }    
+	}
+    }
+    return 0x0;
 }
 
 /* mode helpers */
@@ -1039,11 +1036,10 @@ int delvoice(struct uchannelt *chan, char *nick, struct clientt *client)
 
 int intmode(char *to, char *modes, char *params,int link, int usern)
 {
-    char *m,*p,*pt,*pt2,*p2;
+    char *m,*p,*p2 = NULL;
     char prefix='+';
     struct uchannelt *chan;
     struct clientt *client,*oc;
-    struct uchannelusert *chanuser;
     struct stringarray *bans;
     char newmode[300];
     char newparam[400];
@@ -1051,7 +1047,7 @@ int intmode(char *to, char *modes, char *params,int link, int usern)
     int rc;
     char mm[2];
     int aktbans=0;
-pcontext;
+    pcontext;
     newmode[0]=0;
     newparam[0]=0;
     mm[1]=0;
@@ -1067,7 +1063,7 @@ pcontext;
 	if(client==NULL) return 0x0;
     }
     chan=getuserchannel(-1,to);
-pcontext;
+    pcontext;
     if(chan==NULL)
     {
 	if(usern>0 && client!=NULL)
@@ -1246,6 +1242,7 @@ pcontext;
 	    sendtochannel(chan->name,link,lngtxt(435),ircfrom,to,mm,newmode,rtrim(newparam));
 	addchannelmode(chan,newmode,newparam);
     }
+    return 0x0;
 }
 
 /* send a channels mode */
@@ -1278,6 +1275,7 @@ int sendmode(int usern, char *to)
 	else
 	    sendtoclient(client->nick,0,lngtxt(440),me,client->nick,to,chan->modes);
     }
+    return 0x0;
 }
 
 /* the caller of the mode */
@@ -1290,7 +1288,6 @@ int cmdintmode(int usern, int link)
     char param[400];
     struct uchannelt *chan;
     struct clientt *client;
-    int rc;
     struct uchannelusert *chanuser;
     char *pt,*pt2;
     if(link>=0 && usern==0)
@@ -1388,6 +1385,7 @@ int cmdintmode(int usern, int link)
 	    }
 	}	
     }
+    return 0x0;
 }
 
 int cmdintpart(int usern, int link)
@@ -1395,11 +1393,8 @@ int cmdintpart(int usern, int link)
     char currentto[200];
     struct uchannelt *chan;
     struct clientt *client;
-    int rc;
     struct uchannelusert *chanuser;
     char *pt,*pt2;
-    char key[200];
-    int newchan=0;
     if(link>=0 && usern==0)
     {
 	chan=getuserchannel(-1,ircto);
@@ -1470,8 +1465,9 @@ int cmdintpart(int usern, int link)
 		sendtoclient(client->nick,0,lngtxt(450),me,client->nick,currentto);
 	    }
 	    pt=pt2;
-	}    	
-    }    
+	}
+    }
+    return 0x0;
 }
 
 /* got the kick ? */
@@ -1484,14 +1480,11 @@ int cmdintkick(int usern, int link)
     struct uchannelt *chan;
     struct clientt *client;
     struct clientt *kclient;
-    int rc;
     struct uchannelusert *chanuser;
     char *pt,*pt2;
     char *ot,*ot2;
     char *onicks;
-    char key[200];
     char bop[200];
-    int newchan=0;
     if(link>=0 && usern==0)
     {
 	pt=strstr(ircbuf,lngtxt(451));
@@ -1614,6 +1607,7 @@ int cmdintkick(int usern, int link)
 	    pt=pt2;
 	}
     }
+    return 0x0;
 }
 
 /* make a nickchange */
@@ -1660,6 +1654,7 @@ int cmdintnick(int usern, int link)
 	    strmncpy(client->nick,ircto,sizeof(client->nick));
 	}
     }
+    return 0x0;
 }
 
 /* userhost command */
@@ -1667,8 +1662,6 @@ int cmdintnick(int usern, int link)
 int cmdintuserhost(int usern, int link)
 {
     struct clientt *client,*client2;
-    char *pt;
-    char ocoll[200];
     if(link>=0 && usern==0)
     {
 	return 0x0;
@@ -1685,8 +1678,9 @@ int cmdintuserhost(int usern, int link)
         if(client==client2)
     	    ssnprintf(user(usern)->insock,":%s-psybnc.net 302 %s :%s=+%s!%s",me,user(usern)->nick,client->nick,client->ident,client->host);
 	else
-	    ssnprintf(user(usern)->insock,":%s-psybnc.net 302 %s :int'%s=+%s!%s",me,user(usern)->nick,client->nick,client->ident,client->host);
+	    ssnprintf(user(usern)->insock,":%s-psybnc.net 302 %s :int~%s=+%s!%s",me,user(usern)->nick,client->nick,client->ident,client->host);
     }
+    return 0x0;
 }
 
 /* ison command */
@@ -1694,8 +1688,6 @@ int cmdintuserhost(int usern, int link)
 int cmdintison(int usern, int link)
 {
     struct clientt *client,*client2;
-    char *pt;
-    char ocoll[200];
     if(link>=0 && usern==0)
     {
 	return 0x0;
@@ -1712,8 +1704,9 @@ int cmdintison(int usern, int link)
 	if(client==client2)
 	    ssnprintf(user(usern)->insock,":%s-psybnc.net 303 %s :%s",me,user(usern)->nick,client->nick);
 	else
-	    ssnprintf(user(usern)->insock,":%s-psybnc.net 303 %s :int'%s",me,user(usern)->nick,client->nick);
+	    ssnprintf(user(usern)->insock,":%s-psybnc.net 303 %s :int~%s",me,user(usern)->nick,client->nick);
     }
+    return 0x0;
 }
 
 /* names */
@@ -1748,6 +1741,7 @@ int cmdintnames(int usern, int link)
 	    }
 	}
     }
+    return 0x0;
 }
 
 /* quit */
@@ -1831,6 +1825,7 @@ int cmdintwho(int usern, int link)
 	    }
 	}
     }
+    return 0x0;
 }
 
 /* whois */
@@ -1892,19 +1887,16 @@ int cmdintwhois(int usern, int link)
 	    sendtoclient(client->nick,0,lngtxt(479),me,client->nick,listclient->nick);
 	}
     }
+    return 0x0;
 }
 
 /* user received */
 
 int cmdintuser(int usern, int link)
 {
-    
-    struct uchannelt *chan;
-    struct uchannelusert *chanuser;
     struct clientt *client;
     char *pt,*ept;
     char nick[64],ident[16],host[200],server[200];
-    char renam[64];
     if(link>=0 && usern==0)
     {
 	strmncpy(server,irccontent,sizeof(server));
@@ -1939,6 +1931,7 @@ int cmdintuser(int usern, int link)
 		    cmdrelink(1);
 #endif
 		    sendtoclient(client->nick,link,lngtxt(481),nick,ident,host,client->nick,datalink(link)->iam);
+			p_log(LOG_ERROR,usern,lngtxt(1450),ircnick,ircident,irchost,client->nick,datalink(link)->iam);
 		} else {
 		    createclient(0,nick,ident,host,server);
 		    client=getclientbynick(nick);
@@ -1961,9 +1954,7 @@ int cmdinttopic(int usern, int link)
 {
     struct uchannelt *chan;
     struct uchannelusert *chanuser;
-    struct clientt *client,*listclient;
-    int gotchan=0;
-    char chanbuf[4096];
+    struct clientt *client;
     if(link>=0 && usern==0)
     {
 	chan=getuserchannel(-1,ircto);
@@ -2004,6 +1995,7 @@ int cmdinttopic(int usern, int link)
 	    }
 	}
     }
+    return 0x0;
 }
 
 /* add an invite */
@@ -2012,16 +2004,12 @@ int cmdintinvite(int usern, int link)
 {
     char currentto[200];
     char nicks[400];
-    char currentnick[64];
     struct uchannelt *chan;
     struct clientt *client;
-    int rc;
     struct uchannelusert *chanuser;
     char *pt,*pt2;
     char *ot,*ot2;
     char *onicks;
-    char key[200];
-    int newchan=0;
     if(link>=0 && usern==0)
     {
 	chan=getuserchannel(-1,irccontent);
@@ -2103,6 +2091,7 @@ int cmdintinvite(int usern, int link)
 	    pt=pt2;
 	}
     }
+    return 0x0;
 }
 
 /* join the network to a link */

@@ -1,4 +1,4 @@
-SETAWAYNICK [network']nick
+SETAWAYNICK [network~]nick
 --------------------------
 Questo comando permette di impostare un nick, che verra' cambiato
 dal bouncer, quando esci dal bouncer medesimo.

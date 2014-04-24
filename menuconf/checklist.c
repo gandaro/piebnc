@@ -1,4 +1,3 @@
-/* $Id: checklist.c,v 1.3 2005/06/04 17:55:53 hisi Exp $ */
 /*
  *  checklist.c -- implements the checklist box
  *
@@ -116,6 +115,7 @@ print_buttons( WINDOW *dialog, int height, int width, int selected)
 int
 dialog_checklist (const char *title, const char *prompt, int height, int width,
 	int list_height, int item_no, const char * const * items, int flag)
+	
 {
     int i, x, y, box_x, box_y;
     int key = 0, button = 0, choice = 0, ascroll = 0, max_choice, *status;
@@ -217,7 +217,7 @@ dialog_checklist (const char *title, const char *prompt, int height, int width,
     while (key != ESC) {
 	key = wgetch (dialog);
 
-	for (i = 0; i < max_choice; i++)
+    	for (i = 0; i < max_choice; i++)
             if (toupper(key) == toupper(items[(ascroll+i)*3+1][0]))
                 break;
 
@@ -242,7 +242,7 @@ dialog_checklist (const char *title, const char *prompt, int height, int width,
 				status[ascroll], 0, TRUE);
 		    wnoutrefresh (list);
 
-		    print_arrows(dialog, choice, item_no, ascroll,
+    		    print_arrows(dialog, choice, item_no, ascroll,
 				box_y, box_x + check_x + 5, list_height);
 
 		    wrefresh (dialog);
@@ -270,7 +270,7 @@ dialog_checklist (const char *title, const char *prompt, int height, int width,
 				max_choice - 1, TRUE);
 		    wnoutrefresh (list);
 
-		    print_arrows(dialog, choice, item_no, ascroll,
+    		    print_arrows(dialog, choice, item_no, ascroll,
 				box_y, box_x + check_x + 5, list_height);
 
 		    wrefresh (dialog);
@@ -330,7 +330,7 @@ dialog_checklist (const char *title, const char *prompt, int height, int width,
 		}
 		wnoutrefresh (list);
 		wrefresh (dialog);
-
+            
 		for (i = 0; i < item_no; i++) {
 		    if (status[i]) {
 			if (flag == FLAG_CHECK) {

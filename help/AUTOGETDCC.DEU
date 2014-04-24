@@ -1,4 +1,4 @@
-AUTOGETDCC [netzwerk'] :0|1
+AUTOGETDCC [netzwerk~] :0|1
 ---------------------------
 Ermoeglicht oder verhindert das automatische Annehmen von
 angebotenen DCC-Dateitransferangeboten.

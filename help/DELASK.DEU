@@ -1,4 +1,4 @@
-DELASK [netzwerk'] :nummer
+DELASK [netzwerk~] :nummer
 --------------------------
 Entfernt eine Op Abfrage von einem Bot oder einem User. Die Nummer
 kannst Du anhand von /LISTASK herausfinden.

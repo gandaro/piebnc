@@ -1,6 +1,9 @@
-BCONNECT [network']
+BCONNECT [ident/network~]
 -------------------
-Connects bouncer back to the network 
+Connects bouncer back to the network.
+If used by BounceAdmin an ident can be
+specified to quit the idents primary
+network.
 Example 
 /BCONNECT 
-See also: BQUIT
+See also: BQUIT BQUITN and BCONNECTN

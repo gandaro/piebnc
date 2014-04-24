@@ -1,4 +1,4 @@
-PROXY [network']host:port
+PROXY [network~]host:port
 -------------------------
 sets a proxy to relay through to connect to irc. This was thought for
 possibly firewalled networks.

@@ -1,4 +1,4 @@
-ADDDCC [network']botname user pass :[S=]host:port
+ADDDCC [network~]botname user pass :[S=]host:port
 -------------------------------------------------
 Aggiunge una nuova connessione dcc verso un bot. Si puo' aggiungere una
 connessione sicura diretta ad un eggdrop.

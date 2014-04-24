@@ -1,6 +1,5 @@
-/* $Id: p_crypt.c,v 1.3 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_crypt.c
+ *   psybnc src/p_crypt.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -25,10 +24,6 @@
  * the password for proxy authorisation is from now on build by
  * blowfish, but still downwards compatible.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_crypt.c,v 1.3 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 /*
  * psyCrypt
@@ -68,7 +63,6 @@ char *psycrypt(char *st)
     char hbuf[3];
     int res;
     int slen=0;
-    unsigned int zn;
     unsigned int tslt1 = CODE1;
     unsigned int tslt2 = CODE2;
     int p1,p2,p3,p4,p5;

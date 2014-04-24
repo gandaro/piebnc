@@ -1,4 +1,4 @@
-ADDDCC [netzwerk']botname Nutzer password :[S=]host:port
+ADDDCC [netzwerk~]botname Nutzer password :[S=]host:port
 --------------------------------------------------------
 Fuegt eine neue statische DCC-Bot Chat-Verbindung hinzu.
 Du kannst damit eine permanent bestehende Verbindung zu Deinen

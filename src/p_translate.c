@@ -1,4 +1,3 @@
-/* $Id: p_translate.c,v 1.4 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
  *   psybnc2.3.2, src/p_translate.c
  *   Copyright (C) 2003 the most psychoid  and
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_translate.c,v 1.4 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_TRANSLATE
 
@@ -45,8 +40,6 @@ int addtranslate(int usern, char *totranslate, char *from, char *dest, int direc
     struct translatet *lkm;
     int lastuid;
     int cnt=0;
-    int sock;
-    int rc;
     char buf[200];
     pcontext;
     if(translate==NULL)
@@ -165,11 +158,11 @@ int translateconnected(int uid)
     ap_snprintf(buf,sizeof(buf),lngtxt(865),lkm->translatetext,lkm->lang);
     ap_snprintf(buf2,sizeof(buf2),lngtxt(866),strlen(buf),buf);
     writesock_URGENT(lkm->sock,buf2);
+    return 0x0;
 }
 
 int translatederror(int uid, int err)
 {
-    char buf[200];
     struct translatet *lkm;
     pcontext;
     p_log(LOG_ERROR,-1,lngtxt(867),uid,err);
@@ -177,7 +170,8 @@ int translatederror(int uid, int err)
     pcontext;
     if(lkm==NULL)
 	return 0x0;
-    erasetranslate(uid);    
+    erasetranslate(uid);
+    return 0x0;
 }
 
 int translatedone(int uid)
@@ -185,6 +179,7 @@ int translatedone(int uid)
     pcontext;
     /* we dont say anyting on disconnection */
     erasetranslate(uid);
+    return 0x0;
 }
 
 int translatedpart1(int uid)
@@ -203,7 +198,8 @@ int translatedpart1(int uid)
 		lkm->sock->handler=translatedpart2;
 	    }
 	}
-    }	
+    }
+    return 0x0;
 }
 
 int translatedpart2(int uid)
@@ -258,11 +254,12 @@ int translatedpart2(int uid)
     } else {
 	lkm->sock->handler=translatedpart3;
     }
+    return 0x0;
 }
 
 int translatedpart3(int uid)
 {
-    char *ept,*apt;
+    char *ept;
     struct translatet *th;
     struct socketnodes *lkm;
     pcontext;
@@ -293,6 +290,7 @@ int translatedpart3(int uid)
 	if(strstr(ircbuf,"</strong>")!=NULL)
 	    lkm->sock->handler=translatedpart4;
     }
+    return 0x0;
 }
 
 int translatedpart4(int uid)
@@ -380,6 +378,7 @@ int translatedpart4(int uid)
 	    th->translatedtext=strmcat(th->translatedtext," ");
 	}
     }
+    return 0x0;
 }
 
 /* periodically checking the translation sockets */
@@ -387,7 +386,6 @@ int translatedpart4(int uid)
 int cleartranslates()
 {
     struct translatet *lkm,*pre;
-    char buf[100];
     lkm=translate;
     pre=NULL;
     pcontext;
@@ -410,6 +408,4 @@ int cleartranslates()
     }
     return 0x0;
 }
-
 #endif
-

@@ -1,6 +1,5 @@
-/* $Id: p_link.c,v 1.4 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_link.c
+ *   psybnc, src/p_link.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_link.c,v 1.4 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_LINK
 
@@ -159,8 +154,6 @@ int killrelaylink(int nlink)
 
 int connectedlink(int nlink)
 {
-    char buf[400];
-    struct socketnodes *lkm;
     int tmpsock;
     pcontext;
     tmpsock=datalink(nlink)->outsock;
@@ -204,7 +197,6 @@ int errorlink(int nlink,int errn)
 
 int killedlink(int nlink)
 {
-    char buf[400];
     pcontext;
     p_log(LOG_WARNING,-1,lngtxt(519),
 	nlink,datalink(nlink)->host,datalink(nlink)->port);
@@ -224,20 +216,23 @@ int relay(int nlink)
 	writesock(datalink(nlink)->insock,ircbuf);
     if(currentsocket->sock->syssock==datalink(nlink)->insock)
 	writesock(datalink(nlink)->outsock,ircbuf);
+    return 0x0;
 }
 
 /* process a single link */
 
 int processlink(int nlink, int sock, int state)
 {
-    struct usernodes *th,*th2;
+    struct usernodes *th;
     struct linknodes *lh;
-    struct stringarray *lkm,*pre;
-    int rc,rr=0;
+    int rc;
     char *pt,*pt2;
-    char buf[600];
-    char buf1[400];
-    char l,k;
+#ifdef PARTYCHANNEL
+    int rr = 0;
+    char buf[600] = "";
+    char buf1[400] = "";
+#endif
+    char l;
     char o[]="->";
     char i[]="<-";
     char r[]="R ";
@@ -556,14 +551,6 @@ int processlink(int nlink, int sock, int state)
     }
 #endif
     pcontext;
-}
-
-/* error handler for the link checking */
-
-int checklinkerror(int nlink,int errn)
-{
-    checklinkkill(nlink);
-    currentsocket->sock->destructor=NULL;
     return 0x0;
 }
 
@@ -588,6 +575,15 @@ int checklinkkill(int nlink,int errn)
     return 0x0;
 }
 
+/* error handler for the link checking */
+
+int checklinkerror(int nlink,int errn)
+{
+    checklinkkill(nlink, errn);
+    currentsocket->sock->destructor=NULL;
+    return 0x0;
+}
+
 /* checking a single linktraffic */
 
 int checklinkdata (int nlink)
@@ -601,6 +597,7 @@ int checklinkdata (int nlink)
 	processlink(nlink,datalink(nlink)->outsock,datalink(nlink)->outstate);
     if (datalink(nlink)->type==LI_ALLOW)
 	processlink(nlink,datalink(nlink)->insock,datalink(nlink)->instate);
+    return 0x0;
 }
 
 /* linking a relay */

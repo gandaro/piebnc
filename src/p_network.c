@@ -1,6 +1,5 @@
-/* $Id: p_network.c,v 1.6 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_network.c
+ *   psybnc, src/p_network.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -20,13 +19,11 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_network.c,v 1.6 2005/06/04 18:00:14 hisi Exp $";
-#endif
-
 #define P_NETWORK
 
 #include <p_global.h>
+
+int netdefault(int usern, char *netname, char *myparentnick);
 
 /* check parent users */
 
@@ -50,6 +47,7 @@ int checkparents(int usernum)
 	   user(usernum)->rights=user(uparent)->rights;
        }
    }    
+   return 0x0;
 }
 
 /* converting a outbounded input string to the nick of the parent */
@@ -61,7 +59,6 @@ int parentnick(int usern)
     char *pt2;
     int uparent;
     char tmpbuf[8192];
-    int intnet=0;
     char nicktmp[70];
 #ifdef INTNET
     if(usern>10000)
@@ -111,6 +108,7 @@ int parentnick(int usern)
         ap_snprintf(tmpbuf,sizeof(tmpbuf),lngtxt(640),ircbuf,user(uparent)->nick,pt1);
 	strmncpy(ircbuf,tmpbuf,sizeof(ircbuf));
     }
+    return 0x0;
 }
 
 /* this routine checks for a network token - phew */
@@ -128,14 +126,14 @@ int checknetwork(int usern)
     th=usernode;
     strmncpy(tmpircbuf,ircbuf,sizeof(tmpircbuf));
     pt3=strstr(tmpircbuf,"NICK ");
-    pt=strchr(tmpircbuf,'\'');
+    pt=strchr(tmpircbuf,'~');
     if (pt!=NULL) 
     {
 	pt1=pt;
 	pt1--;
 	if (*pt1=='*' || *pt1=='!') { /* if its a userflag, try next item */
 	    pt1=pt;pt1++;
-	    pt=strchr(pt1,'\'');
+	    pt=strchr(pt1,'~');
 	    if (pt==NULL) return usern;
 	}
 	pt1=tmpircbuf+1;
@@ -214,7 +212,7 @@ int netnick(int usern, char *netname, char *myparentnick)
 {
     pcontext;
     if(strmncasecmp(user(usern)->nick,ircto)==0 && strmncasecmp(myparentnick,ircto)==0)
-	ap_snprintf(ircbuf,sizeof(ircbuf),":%s NICK :%s'%s",netircfrom,netname,ircto);
+	ap_snprintf(ircbuf,sizeof(ircbuf),":%s NICK :%s~%s",netircfrom,netname,ircto);
     else
 	ircbuf[0]=0;
     return 0x0;
@@ -223,21 +221,21 @@ int netnick(int usern, char *netname, char *myparentnick)
 int netjoin(int usern, char *netname, char *myparentnick)
 {
     pcontext;
-    ap_snprintf(ircbuf,sizeof(ircbuf),":%s JOIN :#%s'%s",netircfrom,netname,ircto);
+    ap_snprintf(ircbuf,sizeof(ircbuf),":%s JOIN :#%s~%s",netircfrom,netname,ircto);
     return 0x0;
 }
 
 int netpart(int usern, char *netname, char *myparentnick)
 {
     pcontext;
-    ap_snprintf(ircbuf,sizeof(ircbuf),":%s PART #%s'%s :%s",netircfrom,netname,ircto,irccontent);
+    ap_snprintf(ircbuf,sizeof(ircbuf),":%s PART #%s~%s :%s",netircfrom,netname,ircto,irccontent);
     return 0x0;
 }
 
 int nettopic(int usern, char *netname, char *myparentnick)
 {
     pcontext;
-    ap_snprintf(ircbuf,sizeof(ircbuf),":%s TOPIC #%s'%s :%s",netircfrom,netname,ircto,irccontent);
+    ap_snprintf(ircbuf,sizeof(ircbuf),":%s TOPIC #%s~%s :%s",netircfrom,netname,ircto,irccontent);
     return 0x0;
 }
 
@@ -253,7 +251,7 @@ int netprivmsg(int usern, char *netname, char *myparentnick)
 {
     pcontext;
     if(strchr("#!+&",ircto[0])!=NULL)
-	ap_snprintf(ircbuf,sizeof(ircbuf),":%s %s #%s'%s :%s",netircfrom,irccommand,netname,ircto,irccontent);
+	ap_snprintf(ircbuf,sizeof(ircbuf),":%s %s #%s~%s :%s",netircfrom,irccommand,netname,ircto,irccontent);
     /* hand the ircbuf unchanged, if we query ourself */
     return 0x0;
 }
@@ -278,9 +276,9 @@ int netkick(int usern, char *netname, char *myparentnick)
 	    {
 		*eo=0;
 		if(strmncasecmp(user(usern)->nick,knick)==0)
-		    ap_snprintf(tmpircbuf,sizeof(tmpircbuf),":%s KICK #%s'%s %s'%s :%s",netircfrom,netname,kchan,netname,knick,irccontent);
+		    ap_snprintf(tmpircbuf,sizeof(tmpircbuf),":%s KICK #%s~%s %s~%s :%s",netircfrom,netname,kchan,netname,knick,irccontent);
 		else
-		    ap_snprintf(tmpircbuf,sizeof(tmpircbuf),":%s KICK #%s'%s %s :%s",netircfrom,netname,kchan,knick,irccontent);
+		    ap_snprintf(tmpircbuf,sizeof(tmpircbuf),":%s KICK #%s~%s %s :%s",netircfrom,netname,kchan,knick,irccontent);
 		strmncpy(ircbuf,tmpircbuf,sizeof(ircbuf));
 	    }
 	}
@@ -290,7 +288,7 @@ int netkick(int usern, char *netname, char *myparentnick)
 
 int netnames(int usern, char *netname, char *myparentnick)
 {
-    char *pt,*pt1,*pt2;
+    char *pt,*pt1;
     int eflg=0;
     int flg=0;
     char l;
@@ -317,7 +315,7 @@ int netnames(int usern, char *netname, char *myparentnick)
 	*pt1=0;
 	pt1++;
 	/* the channel */
-	ap_snprintf(tmpircbuf,sizeof(tmpircbuf),"%s #%s'%s",ircbuf,netname,pt1);
+	ap_snprintf(tmpircbuf,sizeof(tmpircbuf),"%s #%s~%s",ircbuf,netname,pt1);
 	strmncpy(ircbuf,tmpircbuf,sizeof(ircbuf));
     }
     pt=ircbuf;
@@ -424,7 +422,7 @@ int netwhoischannels(int usern, char *netname, char *myparentnick)
 		}
 	        strcat(tmpircbuf2,"#");
 	        strcat(tmpircbuf2,netname);
-	        strcat(tmpircbuf2,"'");
+	        strcat(tmpircbuf2,"~");
 	        strcat(tmpircbuf2,pt);
 	        strcat(tmpircbuf2," ");
 	    }
@@ -492,9 +490,10 @@ int netisonuserhost(int usern, char *netname, char *myparentnick)
 	{
 	    ap_snprintf(ircbuf,sizeof(ircbuf),":%s %s %s :%s",netircfrom,irccommand,myparentnick,irccontent);
 	} else {
-	    ap_snprintf(ircbuf,sizeof(ircbuf),":%s %s %s :%s'%s",netircfrom,irccommand,myparentnick,netname,irccontent);
+	    ap_snprintf(ircbuf,sizeof(ircbuf),":%s %s %s :%s~%s",netircfrom,irccommand,myparentnick,netname,irccontent);
 	}
     }
+    return 0x0;
 }
 
 int netdefault(int usern, char *netname, char *myparentnick)
@@ -532,7 +531,7 @@ int netdefault(int usern, char *netname, char *myparentnick)
 	    pt+=nlen;
 	    pt++;
 	    if(strchr(chantypes,*pt)!=NULL) /* channel */
-		ap_snprintf(tmpircbuf,sizeof(tmpircbuf),"%s %s #%s'%s",ircbuf,myparentnick,netname,pt);
+		ap_snprintf(tmpircbuf,sizeof(tmpircbuf),"%s %s #%s~%s",ircbuf,myparentnick,netname,pt);
 	    else  /* nick */
 	    {
 		if(*pt==':')
@@ -545,7 +544,7 @@ int netdefault(int usern, char *netname, char *myparentnick)
 			pt+=strlen(checkcmd);
 			ap_snprintf(tmpircbuf,sizeof(tmpircbuf),"%s %s %s %s",ircbuf,myparentnick,myparentnick,pt);
 		    } else
-			ap_snprintf(tmpircbuf,sizeof(tmpircbuf),"%s %s %s'%s",ircbuf,myparentnick,netname,pt);
+			ap_snprintf(tmpircbuf,sizeof(tmpircbuf),"%s %s %s~%s",ircbuf,myparentnick,netname,pt);
 		}
 	    }
 	    strmncpy(ircbuf,tmpircbuf,sizeof(ircbuf));
@@ -599,7 +598,7 @@ int netmode(int usern, char *netname, char *myparentnick)
 		*inmodes=0;
 		inmodes++;
 		pmode=inmodes;
-		ap_snprintf(dest,sizeof(dest),"#%s'%s",netname,pt);
+		ap_snprintf(dest,sizeof(dest),"#%s~%s",netname,pt);
 		inparams=strchr(inmodes,' ');
 		if(inparams)
 		{
@@ -664,7 +663,7 @@ int netmode(int usern, char *netname, char *myparentnick)
 					    if(strmncasecmp(inparams,user(usern)->nick)==0 && strmncasecmp(inparams,myparentnick)==0)
 					    {
 						strcat(params,netname);
-						strcat(params,"'");
+						strcat(params,"~");
 						strcat(params,inparams);
 						strcat(params," ");	
 					    } else {
@@ -775,7 +774,7 @@ int addtoken(int usern)
 		else
 		    strmncpy(netircfrom,ircfrom,sizeof(netircfrom));
 	    } else {
-		ap_snprintf(netircfrom,sizeof(netircfrom),"%s'%s",netname,ircfrom);
+		ap_snprintf(netircfrom,sizeof(netircfrom),"%s~%s",netname,ircfrom);
 	    }
 	    ap_snprintf(tmpircbuf,sizeof(tmpircbuf),":%s %s",netircfrom,pt);
 	    strmncpy(ircbuf,tmpircbuf,sizeof(ircbuf));

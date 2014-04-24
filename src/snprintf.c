@@ -1,4 +1,3 @@
-/* $Id: snprintf.c,v 1.4 2005/06/04 18:00:14 hisi Exp $ */
 /*
  * changed slightly for the use in psyBNC 2.2.1 by psychoid
  * changed a little bit more for 2.2.2. We always use this
@@ -502,45 +501,6 @@ static char *conv_10_quad(widest_int num, register bool_int is_unsigned,
     *len = buf_end - p;
     return (p);
 }
-
-
-
-static char *conv_in_addr(struct in_addr *ia, char *buf_end, int *len)
-{
-    unsigned addr = ntohl(ia->s_addr);
-    char *p = buf_end;
-    bool_int is_negative;
-    int sub_len;
-
-    p = conv_10((addr & 0x000000FF)      , TRUE, &is_negative, p, &sub_len);
-    *--p = '.';
-    p = conv_10((addr & 0x0000FF00) >>  8, TRUE, &is_negative, p, &sub_len);
-    *--p = '.';
-    p = conv_10((addr & 0x00FF0000) >> 16, TRUE, &is_negative, p, &sub_len);
-    *--p = '.';
-    p = conv_10((addr & 0xFF000000) >> 24, TRUE, &is_negative, p, &sub_len);
-
-    *len = buf_end - p;
-    return (p);
-}
-
-
-
-static char *conv_sockaddr_in(struct sockaddr_in *si, char *buf_end, int *len)
-{
-    char *p = buf_end;
-    bool_int is_negative;
-    int sub_len;
-
-    p = conv_10(ntohs(si->sin_port), TRUE, &is_negative, p, &sub_len);
-    *--p = ':';
-    p = conv_in_addr(&si->sin_addr, p, &sub_len);
-
-    *len = buf_end - p;
-    return (p);
-}
-
-
 
 /*
  * Convert a floating point number to a string formats 'f', 'e' or 'E'.
@@ -1075,7 +1035,7 @@ int ap_vformatter(int (*flush_func)(ap_vformatter_buff *),
 		break;
 	    }
 
-	    if (prefix_char != NUL && s != S_NULL && s != char_buf) {
+	    if (prefix_char != NUL) {
 		*--s = prefix_char;
 		s_len++;
 	    }

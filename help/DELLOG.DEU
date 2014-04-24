@@ -1,4 +1,4 @@
-DELLOG [netzwerk']nummer
+DELLOG [netzwerk~]nummer
 ------------------------
 DELLOG ermoeglicht das Entfernen eines Eintrages in den
 Trafficlog-Filtern/Quellen.

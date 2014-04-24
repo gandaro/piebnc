@@ -1,6 +1,5 @@
-/* $Id: p_string.c,v 1.3 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_string.c
+ *   psybnc, src/p_string.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_string.c,v 1.3 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_STRING
 
@@ -49,13 +44,22 @@ char *lngtxt(unsigned int msgnum)
     return rcs;;
 }
 
+/* ucase */
+
+int ucase (char *inc)
+{
+   char *po;
+   for (po = inc;*po;po++) *po = toupper( *po );
+   return 0x0;
+}
+
 /* string copy with len and zero delimit */
 
 char *strmncpy(char *dest, char *source, unsigned int len)
 {
     char bf[strlen(source)+2];
     char *pt;
-    if(dest==NULL | source==NULL) return NULL;
+    if(dest==NULL || source==NULL) return NULL;
     memcpy(&bf[0],source,strlen(source)+1);
     pt=strncpy(dest,bf,len-1);
     if(strlen(source)+1>=len)
@@ -93,15 +97,6 @@ int strmcmp(char *one, char *two)
     return 0x0;
 }
 
-/* ucase */
-
-int ucase (char *inc)
-{
-   char *po;
-   for (po = inc;*po;po++) *po = toupper( *po );
-   return 0x0;
-}
-
 /* string compare with a wildcard (case insensitive)
  *
  * this compares a fixed string with a "wildcard" string.
@@ -122,7 +117,7 @@ int ucase (char *inc)
 int strmwildcmp(char *one, char *pattern)
 {
     char *pat;
-    char *pat2,*pat3,*pat4;
+    char *pat2,*pat3;
     char uone[2048];
     char upat[1024];
     char *eone;
@@ -221,6 +216,7 @@ int replace(char *rps,char whatc, char toc)
       p1++;
       p1=strchr(p1,whatc);
    }
+   return 0x0;
 }
 
 char nbr[8192];
@@ -369,7 +365,6 @@ struct stringarray *loadlist(char *afile,struct stringarray *th)
     int cnt;
     int i,rc;
     char *pt;
-    int fn;
     char buf[100];
     char section[100];
     char fname[100];
@@ -421,15 +416,15 @@ struct stringarray *writelist(char *host, char *param, char *afile,struct string
     pt=strchr(buf,'.');
     if(pt!=NULL)
     {
-	*pt=0;
-	pt++;
-	strmncpy(fname,buf,sizeof(fname));
-	strmncpy(section,pt,sizeof(section));
-	pt--;
-	*pt='.';
+        *pt=0;
+        pt++;
+        strmncpy(fname,buf,sizeof(fname));
+        strmncpy(section,pt,sizeof(section));
+        pt--;
+        *pt='.';
     } else {
-	strmncpy(fname,lngtxt(820),sizeof(fname));
-	strmncpy(section,afile,sizeof(section));
+        strmncpy(fname,lngtxt(820),sizeof(fname));
+        strmncpy(section,afile,sizeof(section));
     }
     strmncpy(entry,lngtxt(821),sizeof(entry));
     fn=countconfentries(section,entry,fname);
@@ -445,27 +440,26 @@ struct stringarray *writelist(char *host, char *param, char *afile,struct string
 struct stringarray *eraselist(int entryn, char *afile,struct stringarray *th)
 {
     char *pt;
-    int fn;
     char fbuf[200];
     char section[100];
     char fname[100];
     char entry[100];
     struct stringarray *ith;
-    int cnt,nwcnt;
+    int cnt;
     cnt=0;
     strmncpy(fbuf,afile,sizeof(fbuf));
     pt=strchr(fbuf,'.');
     if(pt!=NULL)
     {
-	*pt=0;
-	pt++;
-	strmncpy(fname,fbuf,sizeof(fname));
-	strmncpy(section,pt,sizeof(section));
-	pt--;
-	*pt='.';
+        *pt=0;
+        pt++;
+        strmncpy(fname,fbuf,sizeof(fname));
+        strmncpy(section,pt,sizeof(section));
+        pt--;
+        *pt='.';
     } else {
-	strmncpy(fname,lngtxt(824),sizeof(fname));
-	strmncpy(section,afile,sizeof(section));
+        strmncpy(fname,lngtxt(824),sizeof(fname));
+        strmncpy(section,afile,sizeof(section));
     }
     first=removestring(entryn,th);
     ap_snprintf(fbuf,sizeof(fbuf),lngtxt(825),fname,section);
@@ -474,13 +468,13 @@ struct stringarray *eraselist(int entryn, char *afile,struct stringarray *th)
     cnt=0;
     while(ith!=NULL) /* reorganisation */
     {
-	if(ith->entry!=NULL)
-	{
-	    ap_snprintf(entry,sizeof(entry),lngtxt(826),cnt);
-	    writeini(section,entry,fname,ith->entry);
-	    cnt++;
-	}
-	ith=ith->next;
+        if(ith->entry!=NULL)
+        {
+            ap_snprintf(entry,sizeof(entry),lngtxt(826),cnt);
+            writeini(section,entry,fname,ith->entry);
+            cnt++;
+        }
+        ith=ith->next;
     }
     return first;
 }
@@ -490,9 +484,6 @@ struct stringarray *eraselist(int entryn, char *afile,struct stringarray *th)
 int liststrings(struct stringarray *th, int usern)
 {
     char buf[650];
-    char ebuf[650];
-    char sbuf[650];
-    char gbuf[650];
     char *pt;
     char *pt2;
     int counter;
@@ -527,7 +518,6 @@ int checkstrings(struct stringarray *th)
     char *po;
     char *pt;
     char *pc;
-    int sze;
     char bc='-';
     char bca=')';
     int counter;
@@ -623,7 +613,7 @@ int loadlanguage(char *langf)
     if(lfile)
     {
 	/* removed dynamic counting of language file records.. processorusage at startup */
-	maxindex=1500;
+	maxindex=2200;
 	language=(char **)pmalloc((maxindex+1)*sizeof(char *)); /* i know. */
 	while(fgets(ln,sizeof(ln),lfile))
 	{

@@ -1,4 +1,3 @@
-# $Id: german.lng,v 1.3 2005/06/04 17:57:29 hisi Exp $ #
 #------------------------------------------------------------------------------
 # Language File for psyBNC - German
 # by the most psychoid
@@ -40,19 +39,19 @@ msg0012=motd/USER%d.MOTD
 ; p_client.c line 147:
 msg0013= 001 
 ; p_client.c line 165:
-msg0014=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du hast Nachrichten. Gib /QUOTE PLAYPRIVATELOG ein, um sie zu lesen.
+msg0014=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du hast Nachrichten. Gib /QUOTE PLAYPRIVATELOG ein, um sie zu lesen.
 ; p_client.c line 167:
 msg0015=AWAYþÿ
 ; p_client.c line 168:
 msg0016=.AWAYþÿ
 ; p_client.c line 205:
-msg0017=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%c %s(%s) [%s:%s] :%s [zuletzt:%-20s]þÿ
+msg0017=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%c %s(%s) [%s:%s] :%s [zuletzt:%-20s]þÿ
 ; p_client.c line 207:
-msg0018=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%c %s(%s) [%s:%s] :%sþÿ
+msg0018=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%c %s(%s) [%s:%s] :%sþÿ
 ; p_client.c line 210:
-msg0019=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%c %s(%s)@%s [%s:%s] :%s [zuletzt:%-20s]þÿ
+msg0019=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%c %s(%s)@%s [%s:%s] :%s [zuletzt:%-20s]þÿ
 ; p_client.c line 212:
-msg0020=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%c %s(%s)@%s [%s:%s] :%sþÿ
+msg0020=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%c %s(%s)@%s [%s:%s] :%sþÿ
 ; p_client.c line 218:
 msg0021=:%s!*@%s BWHO :þÿ
 ; p_client.c line 226:
@@ -60,85 +59,85 @@ msg0022=Logge aktuelle Socketstats
 ; p_client.c line 228:
 msg0023=Ende der stats.
 ; p_client.c line 237:
-msg0024=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Willkommen, %s !þÿ
+msg0024=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Willkommen, %s !þÿ
 ; p_client.c line 239:
-msg0025=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Dies ist ein anonymer psyBNC-IRC-Proxy.þÿ
+msg0025=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Dies ist ein anonymer psyBNC-IRC-Proxy.þÿ
 ; p_client.c line 241:
-msg0026=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du bist der erste Nutzer, der sich zu diesem Proxy verbunden hat.þÿ
+msg0026=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du bist der erste Nutzer, der sich zu diesem Proxy verbunden hat.þÿ
 ; p_client.c line 242:
-msg0027=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du bist der Proxy-Admin. Nutze ADDSERVER, damit Du einen IRC-Server hinzufuegen kannst, um psyBNC zu verbinden.þÿ
+msg0027=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du bist der Proxy-Admin. Nutze ADDSERVER, damit Du einen IRC-Server hinzufuegen kannst, um psyBNC zu verbinden.þÿ
 ; p_client.c line 285:
-msg0028=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Ident angegeben. Syntax ist: ADDUSER ident :Nutzernameþÿ
+msg0028=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Ident angegeben. Syntax ist: ADDUSER ident :Nutzernameþÿ
 ; p_client.c line 289:
-msg0029=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Nutzername angegeben. Syntax ist: ADDUSER ident :Nutzernameþÿ
+msg0029=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Nutzername angegeben. Syntax ist: ADDUSER ident :Nutzernameþÿ
 ; p_client.c line 293:
-msg0030=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s existiert bereits.þÿ
+msg0030=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s existiert bereits.þÿ
 ; p_client.c line 331:
 msg0031=New User:%s (%s) added by %s
 ; p_client.c line 333:
-msg0032=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Neuer Nutzer '%s' hinzugefuegt. Password auf '%s' eingestellt
+msg0032=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Neuer Nutzer '%s' hinzugefuegt. Password auf '%s' eingestellt
 ; p_client.c line 341:
 msg0033=Maximale Anzahl der Nutzer ueberschritten.
 ; p_client.c line 355:
-msg0034=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Nick angegeben. Syntax ist: DELUSER Nickþÿ
+msg0034=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Nick angegeben. Syntax ist: DELUSER Nickþÿ
 ; p_client.c line 359:
-msg0035=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s nicht gefunden.þÿ
+msg0035=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s nicht gefunden.þÿ
 ; p_client.c line 364:
-msg0036=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s ist der Eigentuemer. Er kann nicht geloescht werden.þÿ
+msg0036=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s ist der Eigentuemer. Er kann nicht geloescht werden.þÿ
 ; p_client.c line 368:
 msg0037=Nutzer %s geloescht von %s.
 ; p_client.c line 383:
-msg0038=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ein Netzwerk kann nicht zu einem Netzwerk hinzugefuegt werdenþÿ
+msg0038=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ein Netzwerk kann nicht zu einem Netzwerk hinzugefuegt werdenþÿ
 ; p_client.c line 387:
-msg0039=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Netzwerk angegeben. Syntax ist: ADDNETWORK Netzwerkþÿ
+msg0039=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Netzwerk angegeben. Syntax ist: ADDNETWORK Netzwerkþÿ
 ; p_client.c line 391:
-msg0040=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Der Netzwerk-Name darf nur maximal 10 Zeichen lang sein.þÿ
+msg0040=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Der Netzwerk-Name darf nur maximal 10 Zeichen lang sein.þÿ
 ; p_client.c line 395:
-msg0041=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Netzwerk %s existiert bereits.þÿ
+msg0041=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Netzwerk %s existiert bereits.þÿ
 ; p_client.c line 417:
 msg0042=Neues Netzwerk %s hinzugefuegt von %s
 ; p_client.c line 422:
 msg0043=Maximale Anzahl Nutzer ueberschritten.
 ; p_client.c line 433:
-msg0044=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Netzwerk angegeben. Syntax ist: DELNETWORK Netzwerkþÿ
+msg0044=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Netzwerk angegeben. Syntax ist: DELNETWORK Netzwerkþÿ
 ; p_client.c line 437:
-msg0045=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Netzwerk %s nicht gefunden.þÿ
+msg0045=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Netzwerk %s nicht gefunden.þÿ
 ; p_client.c line 441:
 msg0046=Network %s geloescht von %s.
 ; p_client.c line 458:
-msg0047=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein existierendes Netzwerk angegeben. Syntax ist: SWITCHNET NeuesNetzwerk :ExistentesNetzwerkþÿ
+msg0047=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein existierendes Netzwerk angegeben. Syntax ist: SWITCHNET NeuesNetzwerk :ExistentesNetzwerkþÿ
 ; p_client.c line 463:
-msg0048=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein neues Netzwerk angegeben. Syntax ist: SWITCHNET NeuesNetzwerk :ExistentesNetzwerkþÿ
+msg0048=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein neues Netzwerk angegeben. Syntax ist: SWITCHNET NeuesNetzwerk :ExistentesNetzwerkþÿ
 ; p_client.c line 467:
-msg0049=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Netzwerk %s nicht gefunden.þÿ
+msg0049=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Netzwerk %s nicht gefunden.þÿ
 ; p_client.c line 474:
-msg0050=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Netzwerk %s bereits vorhanden.þÿ
+msg0050=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Netzwerk %s bereits vorhanden.þÿ
 ; p_client.c line 485:
-msg0051=:irc.psybnc.at KICK %s %s :Netzwerkwechsel
+msg0051=:irc.psychoid.net KICK %s %s :Netzwerkwechsel
 ; p_client.c line 494:
-msg0052=:irc.psybnc.at KICK #%s'%s %s :Netzwerkwechsel
+msg0052=:irc.psychoid.net KICK #%s~%s %s :Netzwerkwechsel
 ; p_client.c line 526:
 msg0053=:%s!%s@%s NICK :%s
 ; p_client.c line 544:
-msg0054=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Password angegeben. Syntax ist: PASSWORD [Nutzer] :NeuesPasswordþÿ
+msg0054=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Password angegeben. Syntax ist: PASSWORD [Nutzer] :NeuesPasswordþÿ
 ; p_client.c line 550:
-msg0055=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s nicht gefundenþÿ
+msg0055=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s nicht gefundenþÿ
 ; p_client.c line 557:
-msg0056=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du kannst die Passwoerter anderer Nutzer nicht aendern.þÿ
+msg0056=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du kannst die Passwoerter anderer Nutzer nicht aendern.þÿ
 ; p_client.c line 561:
 msg0057=USER%d
 ; p_client.c line 566:
-msg0058=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Password fuer %s geaendert auf '%s'þÿ
+msg0058=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Password fuer %s geaendert auf '%s'þÿ
 ; p_client.c line 592:
-msg0059=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Serverwechsel angefordert.þÿ
+msg0059=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Serverwechsel angefordert.þÿ
 ; p_client.c line 593:
 msg0060=Serverwechsel angefordert von %s. Beende Verbindung.
 ; p_client.c line 595:
 msg0061=QUIT :Serverwechselþÿ
 ; p_client.c line 597:
-msg0062=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du bist nicht verbunden.þÿ
+msg0062=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du bist nicht verbunden.þÿ
 ; p_client.c line 617:
-msg0063=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Link '%d' nicht gefunden.þÿ
+msg0063=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Link '%d' nicht gefunden.þÿ
 ; p_client.c line 623:
 msg0064=USER%d
 ; p_client.c line 624:
@@ -146,9 +145,9 @@ msg0065=VHOST
 ; p_client.c line 626:
 msg0066=VLINK
 ; p_client.c line 629:
-msg0067=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :VHOST geaendert auf '%s' ueber Link %d. Benutze JUMP, um den geaenderten VHOST zu aktivieren.þÿ
+msg0067=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :VHOST geaendert auf '%s' ueber Link %d. Benutze JUMP, um den geaenderten VHOST zu aktivieren.þÿ
 ; p_client.c line 631:
-msg0068=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :VHOST geaendert auf '%s'.þÿ
+msg0068=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :VHOST geaendert auf '%s'.þÿ
 ; p_client.c line 648:
 msg0069=%s:%s
 ; p_client.c line 666:
@@ -158,71 +157,71 @@ msg0071=PROXY
 ; p_client.c line 669:
 msg0072=PPORT
 ; p_client.c line 672:
-msg0073=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :PROXY-Eintrag geloescht. Benutze JUMP, um die veraenderte Einstellung zu aktivieren.þÿ
+msg0073=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :PROXY-Eintrag geloescht. Benutze JUMP, um die veraenderte Einstellung zu aktivieren.þÿ
 ; p_client.c line 674:
-msg0074=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :PROXY gesetzt auf '%s:%d'. Benutze JUMP, um die Proxy zu aktivieren. Benutze PROXY : , um die Einstellung zurueckzusetzen.þÿ
+msg0074=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :PROXY gesetzt auf '%s:%d'. Benutze JUMP, um die Proxy zu aktivieren. Benutze PROXY : , um die Einstellung zurueckzusetzen.þÿ
 ; p_client.c line 691:
-msg0075=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutze AIDLE 0 oder AIDLE 1.þÿ
+msg0075=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutze AIDLE 0 oder AIDLE 1.þÿ
 ; p_client.c line 696:
 msg0076=USER%d
 ; p_client.c line 697:
 msg0077=AIDLE
 ; p_client.c line 700:
-msg0078=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :AIDLE eingeschaltet.þÿ
+msg0078=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :AIDLE eingeschaltet.þÿ
 ; p_client.c line 702:
-msg0079=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :AIDLE ausgeschaltet.þÿ
+msg0079=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :AIDLE ausgeschaltet.þÿ
 ; p_client.c line 717:
-msg0080=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutze AUTOREJOIN 0 oderr AUTOREJOIN 1.þÿ
+msg0080=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutze AUTOREJOIN 0 oderr AUTOREJOIN 1.þÿ
 ; p_client.c line 722:
 msg0081=USER%d
 ; p_client.c line 723:
 msg0082=AUTOREJOIN
 ; p_client.c line 726:
-msg0083=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :AUTOREJOIN eingeschaltet.þÿ
+msg0083=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :AUTOREJOIN eingeschaltet.þÿ
 ; p_client.c line 728:
-msg0084=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :AUTOREJOIN ausgeschaltet.þÿ
+msg0084=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :AUTOREJOIN ausgeschaltet.þÿ
 ; p_client.c line 743:
-msg0085=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutze LEAVEQUIT 0 oder LEAVEQUIT 1.þÿ
+msg0085=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutze LEAVEQUIT 0 oder LEAVEQUIT 1.þÿ
 ; p_client.c line 748:
 msg0086=USER%d
 ; p_client.c line 749:
 msg0087=LEAVEQUIT
 ; p_client.c line 752:
-msg0088=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :LEAVEQUIT eingeschaltet.þÿ
+msg0088=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :LEAVEQUIT eingeschaltet.þÿ
 ; p_client.c line 754:
-msg0089=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :LEAVEQUIT ausgeschaltet.þÿ
+msg0089=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :LEAVEQUIT ausgeschaltet.þÿ
 ; p_client.c line 769:
-msg0090=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutze DCCENABLE 0 oder DCCENABLE 1.þÿ
+msg0090=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutze DCCENABLE 0 oder DCCENABLE 1.þÿ
 ; p_client.c line 774:
 msg0091=USER%d
 ; p_client.c line 775:
 msg0092=DCCENABLED
 ; p_client.c line 778:
-msg0093=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Dynamische DCCs eingeschaltet.þÿ
+msg0093=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Dynamische DCCs eingeschaltet.þÿ
 ; p_client.c line 780:
-msg0094=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Dynamische DCCs ausgeschaltet.þÿ
+msg0094=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Dynamische DCCs ausgeschaltet.þÿ
 ; p_client.c line 794:
 msg0095=USER%d
 ; p_client.c line 797:
-msg0096=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :AWAY-Text geaendert auf '%s'.þÿ
+msg0096=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :AWAY-Text geaendert auf '%s'.þÿ
 ; p_client.c line 810:
 msg0097=USER%d
 ; p_client.c line 811:
 msg0098=LEAVEMSG
 ; p_client.c line 813:
-msg0099=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :LEAVE-Text geandert auf '%s'. Der Text wird in die Channels geposted, wenn der Nutzer die Verbindung trennt.þÿ
+msg0099=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :LEAVE-Text geandert auf '%s'. Der Text wird in die Channels geposted, wenn der Nutzer die Verbindung trennt.þÿ
 ; p_client.c line 826:
 msg0100=USER%d
 ; p_client.c line 827:
 msg0101=AWAYNICK
 ; p_client.c line 829:
-msg0102=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :AWAY-Nick geaendert auf '%s'.þÿ
+msg0102=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :AWAY-Nick geaendert auf '%s'.þÿ
 ; p_client.c line 843:
 msg0103=USER%d
 ; p_client.c line 846:
-msg0104=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Username geaendert auf '%s'. JUMP aufrufen, um die Aenderung zu aktivieren.þÿ
+msg0104=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Username geaendert auf '%s'. JUMP aufrufen, um die Aenderung zu aktivieren.þÿ
 ; p_client.c line 865:
-msg0105=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Server angegeben. Syntax ist: ADDSERVER Hostname :portþÿ
+msg0105=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Server angegeben. Syntax ist: ADDSERVER Hostname :portþÿ
 ; p_client.c line 868:
 msg0106=USER%d
 ; p_client.c line 872:
@@ -240,11 +239,11 @@ msg0112=SERVER%d
 ; p_client.c line 908:
 msg0113=SERVERS
 ; p_client.c line 910:
-msg0114=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Server %s port %s (password: %s) hinzugefuegt.þÿ
+msg0114=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Server %s port %s (password: %s) hinzugefuegt.þÿ
 ; p_client.c line 916:
-msg0115=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein freier Server-Eintrag.þÿ
+msg0115=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein freier Server-Eintrag.þÿ
 ; p_client.c line 928:
-msg0116=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Server angegeben. Syntax ist: DELSERVER Nummerþÿ
+msg0116=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Server angegeben. Syntax ist: DELSERVER Nummerþÿ
 ; p_client.c line 931:
 msg0117=USER%d
 ; p_client.c line 932:
@@ -260,41 +259,41 @@ msg0122=SERVER%s
 ; p_client.c line 937:
 msg0123=SERVERS
 ; p_client.c line 939:
-msg0124=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Server %s geloescht.þÿ
+msg0124=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Server %s geloescht.þÿ
 ; p_client.c line 957:
 msg0125=USER%d
 ; p_client.c line 963:
-msg0126=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Server #%d: %s port %dþÿ
+msg0126=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Server #%d: %s port %dþÿ
 ; p_client.c line 967:
-msg0127=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende der Server.þÿ
+msg0127=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende der Server.þÿ
 ; p_client.c line 998:
-msg0128=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du hast diesem Bouncer noch keinen Namen gegeben. Nutze zuerst NAMEBOUNCER Name.þÿ
+msg0128=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du hast diesem Bouncer noch keinen Namen gegeben. Nutze zuerst NAMEBOUNCER Name.þÿ
 ; p_client.c line 1002:
-msg0129=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keinen Host angegeben. Nutze %s name :host:port.þÿ
+msg0129=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keinen Host angegeben. Nutze %s name :host:port.þÿ
 ; p_client.c line 1006:
-msg0130=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keinen Namen angegeben. Nutze %s name :host:port.þÿ
+msg0130=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keinen Namen angegeben. Nutze %s name :host:port.þÿ
 ; p_client.c line 1010:
-msg0131=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keinen Port angegeben. Nutze %s name :host:port.þÿ
+msg0131=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keinen Port angegeben. Nutze %s name :host:port.þÿ
 ; p_client.c line 1024:
-msg0132=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Unzulaessiger Port. Nutze %s name :host:port.þÿ
+msg0132=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Unzulaessiger Port. Nutze %s name :host:port.þÿ
 ; p_client.c line 1036:
-msg0133=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Link %s existiert bereits.þÿ
+msg0133=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Link %s existiert bereits.þÿ
 ; p_client.c line 1041:
-msg0134=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine freien Links zur Verfuegung.þÿ
+msg0134=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine freien Links zur Verfuegung.þÿ
 ; p_client.c line 1053:
 msg0135=Neuer Link '%s' %s %s:%d hinzugefuegt von %s.
 ; p_client.c line 1070:
-msg0136=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Wert unzulaessig. Nutze RELAYLINK Linknummer :0|1.þÿ
+msg0136=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Wert unzulaessig. Nutze RELAYLINK Linknummer :0|1.þÿ
 ; p_client.c line 1074:
-msg0137=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Linknummer angegeben. Nutze RELAYLINK Linknummer :0|1.þÿ
+msg0137=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Linknummer angegeben. Nutze RELAYLINK Linknummer :0|1.þÿ
 ; p_client.c line 1081:
-msg0138=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Link %s unbekannt.þÿ
+msg0138=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Link %s unbekannt.þÿ
 ; p_client.c line 1090:
 msg0139=Relay fuer link '%s' %st von %s
 ; p_client.c line 1103:
-msg0140=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Linknummer definiert.þÿ
+msg0140=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Linknummer definiert.þÿ
 ; p_client.c line 1110:
-msg0141=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Link %s unbekannt.þÿ
+msg0141=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Link %s unbekannt.þÿ
 ; p_client.c line 1113:
 msg0142=Link %d entfernt von %s
 ; p_client.c line 1116:
@@ -302,233 +301,233 @@ msg0143=Link zu %s entfernt von %s
 ; p_client.c line 1122:
 msg0144=Link von %s entfernt von %s
 ; p_client.c line 1136:
-msg0145=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%s
+msg0145=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%s
 ; p_client.c line 1154:
-msg0146=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Wiedergabe lokal definierter Links.þÿ
+msg0146=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Wiedergabe lokal definierter Links.þÿ
 ; p_client.c line 1173:
-msg0147=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%c%d %s %s %s(%d)þÿ
+msg0147=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%c%d %s %s %s(%d)þÿ
 ; p_client.c line 1178:
-msg0148=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Der Link-Baumþÿ
+msg0148=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Der Link-Baumþÿ
 ; p_client.c line 1180:
-msg0149=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende des Baums.þÿ
+msg0149=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende des Baums.þÿ
 ; p_client.c line 1243:
-msg0150=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Falscher Parameter. Nutze ADDDCC botname Nutzer password :host:portþÿ
+msg0150=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Falscher Parameter. Nutze ADDDCC botname Nutzer password :host:portþÿ
 ; p_client.c line 1305:
-msg0151=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutze AUTOGETDCC 0 oder AUTOGETDCC 1.þÿ
+msg0151=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutze AUTOGETDCC 0 oder AUTOGETDCC 1.þÿ
 ; p_client.c line 1310:
 msg0152=USER%d
 ; p_client.c line 1311:
 msg0153=AUTOGETDCC
 ; p_client.c line 1314:
-msg0154=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :AUTOGETDCC eingeschaltet.þÿ
+msg0154=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :AUTOGETDCC eingeschaltet.þÿ
 ; p_client.c line 1316:
-msg0155=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :AUTOGETDCC ausgeschaltet.þÿ
+msg0155=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :AUTOGETDCC ausgeschaltet.þÿ
 ; p_client.c line 1342:
-msg0156=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :
+msg0156=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :
 ; p_client.c line 1342:
 msg0157= Hilfe (* = nur fuer BouncerAdmins)ÿ
 ; p_client.c line 1343:
-msg0158=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :--------------------------------------ÿ
+msg0158=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :--------------------------------------ÿ
 ; p_client.c line 1345:
-msg0159=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :BHELP - Ende der Hilfeÿ
+msg0159=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :BHELP - Ende der Hilfeÿ
 ; p_client.c line 1348:
-msg0160=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :BHELP - Ende der Hilfeÿ
+msg0160=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :BHELP - Ende der Hilfeÿ
 ; p_client.c line 1362:
-msg0161=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Host angegeben. Nutze ADDOP [#chan] password :host
+msg0161=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Host angegeben. Nutze ADDOP [#chan] password :host
 ; p_client.c line 1366:
-msg0162=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Password angegeben. Nutze ADDOP [#chan] password :host
+msg0162=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Password angegeben. Nutze ADDOP [#chan] password :host
 ; p_client.c line 1370:
-msg0163=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verwende kein ; in Hostnamen
+msg0163=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verwende kein ; in Hostnamen
 ; p_client.c line 1373:
 msg0164=USER%d.OP
 ; p_client.c line 1375:
-msg0165=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Op fuer Hostmask %s (%s) hinzugefuegt
+msg0165=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Op fuer Hostmask %s (%s) hinzugefuegt
 ; p_client.c line 1388:
-msg0166=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Host angegeben. Nutze ADDAUTOOP #chan :host
+msg0166=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Host angegeben. Nutze ADDAUTOOP #chan :host
 ; p_client.c line 1392:
-msg0167=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Channel angegeben. Nutze ADDAUTOOP #chan :host
+msg0167=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Channel angegeben. Nutze ADDAUTOOP #chan :host
 ; p_client.c line 1396:
-msg0168=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verwende kein ; in Hostnamen
+msg0168=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verwende kein ; in Hostnamen
 ; p_client.c line 1399:
 msg0169=USER%d.AOP
 ; p_client.c line 1401:
-msg0170=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Auto-op hinzugefuegt fuer hostmaske %s (%s)
+msg0170=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Auto-op hinzugefuegt fuer hostmaske %s (%s)
 ; p_client.c line 1414:
-msg0171=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Host angegeben. Nutze ADDASK [#chan] password :host
+msg0171=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Host angegeben. Nutze ADDASK [#chan] password :host
 ; p_client.c line 1418:
-msg0172=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Password angegeben. Nutze ADDASK [#chan] password :host
+msg0172=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Password angegeben. Nutze ADDASK [#chan] password :host
 ; p_client.c line 1422:
-msg0173=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verwende kein ; in Hostnamen
+msg0173=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verwende kein ; in Hostnamen
 ; p_client.c line 1425:
 msg0174=USER%d.ASK
 ; p_client.c line 1427:
-msg0175=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Op von hostmask %s (%s) hinzugefuegt
+msg0175=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Op von hostmask %s (%s) hinzugefuegt
 ; p_client.c line 1440:
-msg0176=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Host angegeben. Nutze ADDALLOW :hostmaske
+msg0176=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Host angegeben. Nutze ADDALLOW :hostmaske
 ; p_client.c line 1444:
-msg0177=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verwende kein ; in Hostnamen
+msg0177=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verwende kein ; in Hostnamen
 ; p_client.c line 1447:
 msg0178=PSYBNC.HOSTALLOWS
 ; p_client.c line 1449:
-msg0179=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Host allow von hostmask %s hinzugefuegt
+msg0179=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Host allow von hostmask %s hinzugefuegt
 ; p_client.c line 1462:
-msg0180=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Host angegeben. Nutze ADDBAN [#chan] Grund :host
+msg0180=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Host angegeben. Nutze ADDBAN [#chan] Grund :host
 ; p_client.c line 1466:
-msg0181=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Grund angegeben. Nutze ADDBAN [#chan] Grund :host
+msg0181=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Grund angegeben. Nutze ADDBAN [#chan] Grund :host
 ; p_client.c line 1470:
-msg0182=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verwende kein ; in Hostnamen
+msg0182=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verwende kein ; in Hostnamen
 ; p_client.c line 1473:
 msg0183=USER%d.BAN
 ; p_client.c line 1475:
-msg0184=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ban fuer host %s (%s) hinzugefuegt
+msg0184=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ban fuer host %s (%s) hinzugefuegt
 ; p_client.c line 1490:
-msg0185=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Log-Filter angegeben (Nutze * fuer alles). Nutze ADDLOG [#chan/logziel.] :filter(enthaltener text zum loggen)
+msg0185=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Log-Filter angegeben (Nutze * fuer alles). Nutze ADDLOG [#chan/logziel.] :filter(enthaltener text zum loggen)
 ; p_client.c line 1494:
-msg0186=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Ziel angegeben (Channel/Nutzer). Nutze ADDLOG [#chan/logziel.] :filter
+msg0186=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Ziel angegeben (Channel/Nutzer). Nutze ADDLOG [#chan/logziel.] :filter
 ; p_client.c line 1498:
-msg0187=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verwende kein ; in Filtern
+msg0187=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verwende kein ; in Filtern
 ; p_client.c line 1501:
 msg0188=USER%d.LGI
 ; p_client.c line 1503:
-msg0189=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Log-Eintrag hinzugefuegt fuer Ziel %s (Filter: %s)
+msg0189=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Log-Eintrag hinzugefuegt fuer Ziel %s (Filter: %s)
 ; p_client.c line 1522:
-msg0190=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Link '%d' nicht gefunden.þÿ
+msg0190=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Link '%d' nicht gefunden.þÿ
 ; p_client.c line 1530:
-msg0191=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Link '%d' zuruckgesetzt und getrennt.þÿ
+msg0191=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Link '%d' zuruckgesetzt und getrennt.þÿ
 ; p_client.c line 1547:
-msg0192=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein channel oder nick angegeben. Verwende ENCRYPT password :#channel oder nick
+msg0192=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein channel oder nick angegeben. Verwende ENCRYPT password :#channel oder nick
 ; p_client.c line 1551:
-msg0193=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Password angegeben. Verwende ENCRYPT password :#channel oder nick
+msg0193=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Password angegeben. Verwende ENCRYPT password :#channel oder nick
 ; p_client.c line 1555:
-msg0194=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verwende kein ; im Channel oder im Nick
+msg0194=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verwende kein ; im Channel oder im Nick
 ; p_client.c line 1558:
 msg0195=USER%d.ENC
 ; p_client.c line 1561:
-msg0196=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verschluesselung hinzugefuegt fuer %s (%s)
+msg0196=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verschluesselung hinzugefuegt fuer %s (%s)
 ; p_client.c line 1590:
-msg0197=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Sprachen angegeben. Verwende TRANSLATE #channel oderr nick :Sprache-von Sprache-zu
+msg0197=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Sprachen angegeben. Verwende TRANSLATE #channel oderr nick :Sprache-von Sprache-zu
 ; p_client.c line 1594:
-msg0198=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Channel oder User angegeben. Verwende TRANSLATE #channel oder nick :Sprache-von Sprache-zu
+msg0198=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Channel oder User angegeben. Verwende TRANSLATE #channel oder nick :Sprache-von Sprache-zu
 ; p_client.c line 1598:
-msg0199=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verwende kein ; in der Sprache-Angabe
+msg0199=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verwende kein ; in der Sprache-Angabe
 ; p_client.c line 1605:
-msg0200=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ungenuegende Sprachangaben. Gib zwei Sprachen an.
+msg0200=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ungenuegende Sprachangaben. Gib zwei Sprachen an.
 ; p_client.c line 1611:
-msg0201=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Unbekannte Sprachangaben. Nutze en_de,en_fr,en_it,en_pt,de_en,fr_en,it_en,pt_en,en_zh,en_ja,en_ko,en_es,en_ru,fr_de,de_fr,ja_en,ko_en,ru_en oder es_en.
+msg0201=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Unbekannte Sprachangaben. Nutze en_de,en_fr,en_it,en_pt,de_en,fr_en,it_en,pt_en,en_zh,en_ja,en_ko,en_es,en_ru,fr_de,de_fr,ja_en,ko_en,ru_en oder es_en.
 ; p_client.c line 1623:
 msg0202=USER%d.TRA
 ; p_client.c line 1626:
-msg0203=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Uebersetzer hinzugefuegt fuer %s (%s)
+msg0203=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Uebersetzer hinzugefuegt fuer %s (%s)
 ; p_client.c line 1628:
-msg0204=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Unbekannte Sprachangabe. Nutze en_de,en_fr,en_it,en_pt,de_en,fr_en,it_en oder pt_en
+msg0204=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Unbekannte Sprachangabe. Nutze en_de,en_fr,en_it,en_pt,de_en,fr_en,it_en oder pt_en
 ; p_client.c line 1641:
-msg0205=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Zahl angegeben. Verwende DELOP Zahl
+msg0205=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Zahl angegeben. Verwende DELOP Zahl
 ; p_client.c line 1644:
 msg0206=USER%d.OP
 ; p_client.c line 1646:
-msg0207=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Op Nummer %s entfernt
+msg0207=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Op Nummer %s entfernt
 ; p_client.c line 1657:
-msg0208=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Nummer angegeben. Nutze DELOP Nummer
+msg0208=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Nummer angegeben. Nutze DELOP Nummer
 ; p_client.c line 1660:
 msg0209=USER%d.AOP
 ; p_client.c line 1662:
-msg0210=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Auto-Op Nummer %s entfernt
+msg0210=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Auto-Op Nummer %s entfernt
 ; p_client.c line 1672:
-msg0211=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Nummer angegeben. Verwende DELASK Nummer
+msg0211=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Nummer angegeben. Verwende DELASK Nummer
 ; p_client.c line 1675:
 msg0212=USER%d.ASK
 ; p_client.c line 1677:
-msg0213=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :AskOp Nummer %s entfernt
+msg0213=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :AskOp Nummer %s entfernt
 ; p_client.c line 1687:
-msg0214=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Nummer angegeben. Verwende DELALLOW Nummer
+msg0214=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Nummer angegeben. Verwende DELALLOW Nummer
 ; p_client.c line 1690:
 msg0215=PSYBNC.HOSTALLOWS
 ; p_client.c line 1692:
-msg0216=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Host Allow Nummer %s entfernt
+msg0216=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Host Allow Nummer %s entfernt
 ; p_client.c line 1704:
-msg0217=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Nummer angegeben. Verwende DELBAN Nummer
+msg0217=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Nummer angegeben. Verwende DELBAN Nummer
 ; p_client.c line 1707:
 msg0218=USER%d.BAN
 ; p_client.c line 1711:
-msg0219=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ban Nummer %s entfernt
+msg0219=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ban Nummer %s entfernt
 ; p_client.c line 1724:
-msg0220=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Nummer angegeben. Nutze DELLOG Nummer
+msg0220=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Nummer angegeben. Nutze DELLOG Nummer
 ; p_client.c line 1727:
 msg0221=USER%d.LGI
 ; p_client.c line 1729:
-msg0222=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Log-Eintrag Nummer %s entfernt
+msg0222=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Log-Eintrag Nummer %s entfernt
 ; p_client.c line 1741:
-msg0223=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Nummer angegeben. Nutze DELENCRYPT Nummer
+msg0223=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Nummer angegeben. Nutze DELENCRYPT Nummer
 ; p_client.c line 1744:
 msg0224=USER%d.ENC
 ; p_client.c line 1746:
-msg0225=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verschluesselungseintrag Nummer %s entfernt
+msg0225=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verschluesselungseintrag Nummer %s entfernt
 ; p_client.c line 1760:
-msg0226=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Nummer angegeben. Verwende DELTRANSLATE Nummer
+msg0226=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Nummer angegeben. Verwende DELTRANSLATE Nummer
 ; p_client.c line 1763:
 msg0227=USER%d.TRA
 ; p_client.c line 1765:
-msg0228=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Uebersetzer Nummer %s entfernt
+msg0228=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Uebersetzer Nummer %s entfernt
 ; p_client.c line 1777:
-msg0229=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Liste OPs:
+msg0229=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Liste OPs:
 ; p_client.c line 1779:
-msg0230=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende der Liste.
+msg0230=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende der Liste.
 ; p_client.c line 1789:
-msg0231=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Liste Auto-OPs:
+msg0231=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Liste Auto-OPs:
 ; p_client.c line 1791:
-msg0232=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende der Liste.
+msg0232=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende der Liste.
 ; p_client.c line 1801:
-msg0233=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Liste AskOPs:
+msg0233=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Liste AskOPs:
 ; p_client.c line 1803:
-msg0234=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende der Liste.
+msg0234=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende der Liste.
 ; p_client.c line 1813:
-msg0235=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Liste Host Allows:
+msg0235=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Liste Host Allows:
 ; p_client.c line 1815:
-msg0236=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende der Liste.
+msg0236=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende der Liste.
 ; p_client.c line 1825:
-msg0237=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Liste Bans:
+msg0237=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Liste Bans:
 ; p_client.c line 1827:
-msg0238=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende der Liste.
+msg0238=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende der Liste.
 ; p_client.c line 1839:
-msg0239=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Liste Verschluesselungen:
+msg0239=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Liste Verschluesselungen:
 ; p_client.c line 1841:
-msg0240=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende der Liste.
+msg0240=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende der Liste.
 ; p_client.c line 1855:
-msg0241=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Liste Uebersetzer:
+msg0241=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Liste Uebersetzer:
 ; p_client.c line 1857:
-msg0242=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende der Liste.
+msg0242=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende der Liste.
 ; p_client.c line 1872:
-msg0243=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Liste Log-Eintraege:
+msg0243=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Liste Log-Eintraege:
 ; p_client.c line 1874:
-msg0244=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende der Liste.
+msg0244=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende der Liste.
 ; p_client.c line 1888:
-msg0245=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :NEUSTART !! Alle Verbindungen werden getrennt:
+msg0245=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :NEUSTART !! Alle Verbindungen werden getrennt:
 ; p_client.c line 1889:
 msg0246=NEUSTART durch %s
 ; p_client.c line 1915:
-msg0247=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Nutzer angegeben. Syntax ist: MADMIN Nutzer.
+msg0247=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Nutzer angegeben. Syntax ist: MADMIN Nutzer.
 ; p_client.c line 1921:
 msg0248=Nutzer %s hat Nutzer %s zum admin berufen
 ; p_client.c line 1923:
-msg0249=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s nicht gefunden.
+msg0249=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s nicht gefunden.
 ; p_client.c line 1937:
-msg0250=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Nutzer angegeben. Syntax ist: UNADMIN Nutzer.
+msg0250=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Nutzer angegeben. Syntax ist: UNADMIN Nutzer.
 ; p_client.c line 1941:
 msg0251=Nutzer %s hat die Admin-Rechte von Nutzer %s geloescht
 ; p_client.c line 1946:
-msg0252=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s nicht gefunden.
+msg0252=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s nicht gefunden.
 ; p_client.c line 1960:
-msg0253=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Nutzer angegeben. Syntax ist: BKILL Nutzer.
+msg0253=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Nutzer angegeben. Syntax ist: BKILL Nutzer.
 ; p_client.c line 1965:
-msg0254=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Er ist nicht online. Warum einen toten killen ?.
+msg0254=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Er ist nicht online. Warum einen toten killen ?.
 ; p_client.c line 1968:
 msg0255=Nutzer %s hat Nutzer %s gekillt.
 ; p_client.c line 1969:
-msg0256=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du wurdest gekillt von %s.
+msg0256=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du wurdest gekillt von %s.
 ; p_client.c line 1975:
-msg0257=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s nicht gefunden.
+msg0257=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s nicht gefunden.
 ; p_client.c line 1995:
-msg0258=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Script neugeladenþÿ
+msg0258=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Script neugeladenþÿ
 ; p_client.c line 2008:
 msg0259=Logge Tasks
 ; p_client.c line 2013:
@@ -536,15 +535,15 @@ msg0260=PID: %d  STDIN: %d STDOUT: %d STDERR: %d PROGRAMM: %s
 ; p_client.c line 2017:
 msg0261=Ende der Tasks
 ; p_client.c line 2030:
-msg0262=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du bist bereits gequitted.ÿ
+msg0262=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du bist bereits gequitted.ÿ
 ; p_client.c line 2034:
-msg0263=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du wurdest auf gequitted gesetzt.ÿ
+msg0263=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du wurdest auf gequitted gesetzt.ÿ
 ; p_client.c line 2037:
 msg0264=QUIT :ÿ
 ; p_client.c line 2040:
-msg0265=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Die Verbindung wurde getrennt.ÿ
+msg0265=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Die Verbindung wurde getrennt.ÿ
 ; p_client.c line 2054:
-msg0266=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du bist nicht auf gequitted gesetzt.ÿ
+msg0266=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du bist nicht auf gequitted gesetzt.ÿ
 ; p_client.c line 2073:
 msg0267=SYSTEM
 ; p_client.c line 2075:
@@ -558,7 +557,7 @@ msg0271=%s%s%sþÿ
 ; p_client.c line 2203:
 msg0272=%s%s%sþÿ
 ; p_client.c line 2276:
-msg0273=:irc.psybnc.at PONG irc.psybnc.at :%s
+msg0273=:irc.psychoid.net PONG irc.psychoid.net :%s
 ; p_client.c line 2278:
 msg0274=:%s PONG %s :%s
 ; p_client.c line 2379:
@@ -596,15 +595,15 @@ msg0290=USER%d
 ; p_dcc.c line 105:
 msg0291=ENTRY%d
 ; p_dcc.c line 159:
-msg0292=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Liste DCCsþÿ
+msg0292=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Liste DCCsþÿ
 ; p_dcc.c line 168:
-msg0293=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%d%c %s (%s:%d)þÿ
+msg0293=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%d%c %s (%s:%d)þÿ
 ; p_dcc.c line 173:
-msg0294=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende der DCCsþÿ
+msg0294=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende der DCCsþÿ
 ; p_dcc.c line 211:
-msg0295=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Unbekannter DCC.þÿ
+msg0295=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Unbekannter DCC.þÿ
 ; p_dcc.c line 217:
-msg0296=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :DCC %d Verbindung beendet.þÿ
+msg0296=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :DCC %d Verbindung beendet.þÿ
 ; p_dcc.c line 235:
 msg0297=USER%d
 ; p_dcc.c line 236:
@@ -616,7 +615,7 @@ msg0300=ENTRY%d
 ; p_dcc.c line 247:
 msg0301=ENTRY%d
 ; p_dcc.c line 249:
-msg0302=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :DCC %d geloscht.þÿ
+msg0302=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :DCC %d geloscht.þÿ
 ; p_dcc.c line 304:
 msg0303=:%s%c%s!DCC@%s PRIVMSG %s :%sþÿ
 ; p_dcc.c line 328:
@@ -650,13 +649,13 @@ msg0317=:%s(%s!DCCChat@%s PRIVMSG %s :%s
 ; p_dcc.c line 735:
 msg0318=:%s(%s!DCCChat@%s PRIVMSG %s :[%d] Chat hergestellt
 ; p_dcc.c line 755:
-msg0319=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Dateitransfer von %s durch %s%s abgebrochen.
+msg0319=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Dateitransfer von %s durch %s%s abgebrochen.
 ; p_dcc.c line 774:
-msg0320=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Dateitransfer von %s durch %s%s gestoppt.
+msg0320=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Dateitransfer von %s durch %s%s gestoppt.
 ; p_dcc.c line 805:
 msg0321=Datei %s gesandt zu %s%s vollendet.
 ; p_dcc.c line 850:
-msg0322=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s%s(%s) nahm Datei %s an. Starte Transfer.
+msg0322=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s%s(%s) nahm Datei %s an. Starte Transfer.
 ; p_dcc.c line 876:
 msg0323=downloads
 ; p_dcc.c line 877:
@@ -664,17 +663,17 @@ msg0324=downloads/USER%d
 ; p_dcc.c line 884:
 msg0325=Kann Datei %s nicht anlegen - Abbruch.
 ; p_dcc.c line 890:
-msg0326=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verbunden zu %s%s(%s). Empfange Datei %s.
+msg0326=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verbunden zu %s%s(%s). Empfange Datei %s.
 ; p_dcc.c line 910:
-msg0327=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verbindung zu %s%s(%s) unterbrochen. Datei %s unvollstaendig.
+msg0327=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verbindung zu %s%s(%s) unterbrochen. Datei %s unvollstaendig.
 ; p_dcc.c line 938:
-msg0328=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Dateischreibfehler waehrend des Empfangs von %s%s(%s). Datei %s unvollstaendig.
+msg0328=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Dateischreibfehler waehrend des Empfangs von %s%s(%s). Datei %s unvollstaendig.
 ; p_dcc.c line 965:
-msg0329=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :EOF waehrend des Empfangs von %s%s(%s). Datei %s unvollstaendig.
+msg0329=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :EOF waehrend des Empfangs von %s%s(%s). Datei %s unvollstaendig.
 ; p_dcc.c line 967:
 msg0330=Datei %s von %s%s(%s) empfangen.
 ; p_dcc.c line 1017:
-msg0331=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du bist nicht verbunden.
+msg0331=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du bist nicht verbunden.
 ; p_dcc.c line 1022:
 msg0332=Keine IP definiert fuer DCC-Nutzung. Erzeuge die Zeile 'PSYBNC.SYSTEM.DCCHOST=IP' in der Datei psybnc.conf.
 ; p_dcc.c line 1034:
@@ -682,7 +681,7 @@ msg0333=Konnte keinen listening Port in 20 Versuchen anlegen.. ich gebs auf.
 ; p_dcc.c line 1040:
 msg0334=Kann Socket nicht anlegen.. ich gebs auf.
 ; p_dcc.c line 1063:
-msg0335=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :DCC Chat Anfrage versandt an %s%s (%s:%d)
+msg0335=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :DCC Chat Anfrage versandt an %s%s (%s:%d)
 ; p_dcc.c line 1067:
 msg0336=NOTICE %s :SSL-DCC Chat (%s)
 ; p_dcc.c line 1070:
@@ -692,13 +691,13 @@ msg0338=PRIVMSG %s :%cDCC CHAT chat %s %d%c
 ; p_dcc.c line 1089:
 msg0339=PRIVMSG %s :%cDCC CHAT chat %lu %d%c
 ; p_dcc.c line 1112:
-msg0340=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%s%s schickt eine DCC Chat Anfrage. Verwende /DCCANSWER %s oder /DCCANSWER S=%s (SSL) um die Verbindung herzustellen (%s/%d).
+msg0340=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%s%s schickt eine DCC Chat Anfrage. Verwende /DCCANSWER %s oder /DCCANSWER S=%s (SSL) um die Verbindung herzustellen (%s/%d).
 ; p_dcc.c line 1114:
-msg0341=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%s%s schickt eine DCC Chat Anfrage. Verwende /DCCANSWER %s um die Verbindung herzustellen (%s/%d).
+msg0341=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%s%s schickt eine DCC Chat Anfrage. Verwende /DCCANSWER %s um die Verbindung herzustellen (%s/%d).
 ; p_dcc.c line 1161:
-msg0342=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine DCC Anfrage von '%s'
+msg0342=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine DCC Anfrage von '%s'
 ; p_dcc.c line 1166:
-msg0343=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du bist nicht verbunden.
+msg0343=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du bist nicht verbunden.
 ; p_dcc.c line 1171:
 msg0344=Keine IP definiert fuer DCC-Nutzung. Erzeuge die Zeile 'PSYBNC.SYSTEM.DCCHOST=IP' in der Datei psybnc.conf.
 ; p_dcc.c line 1177:
@@ -706,15 +705,15 @@ msg0345=Unzulaessiger Dateiname '%s'.
 ; p_dcc.c line 1183:
 msg0346=downloads/USER%d/%s
 ; p_dcc.c line 1187:
-msg0347=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Datei %s nicht gefunden.
+msg0347=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Datei %s nicht gefunden.
 ; p_dcc.c line 1204:
 msg0348=Konnte keinen listening Port in 20 Versuchen anlegen.. ich gebs auf.
 ; p_dcc.c line 1210:
 msg0349=Kann Socket nicht anlegen.. ich gebs auf.
 ; p_dcc.c line 1245:
-msg0350=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :SSL-DCC Dateiversand fuer %s, Anfrage geschickt an %s%s (%s:%d)
+msg0350=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :SSL-DCC Dateiversand fuer %s, Anfrage geschickt an %s%s (%s:%d)
 ; p_dcc.c line 1248:
-msg0351=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :DCC Dateiversand fuer %s, Anfrage geschickt an %s%s (%s:%d)
+msg0351=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :DCC Dateiversand fuer %s, Anfrage geschickt an %s%s (%s:%d)
 ; p_dcc.c line 1253:
 msg0352=NOTICE %s :SSL-DCC Send %s (%s)
 ; p_dcc.c line 1256:
@@ -726,23 +725,23 @@ msg0355=PRIVMSG %s :%cDCC SEND %s %lu %d %lu%c
 ; p_dcc.c line 1282:
 msg0356=downloads/USER%d/%s
 ; p_dcc.c line 1302:
-msg0357=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%s%s schickt eine DCC Dateiversandanfrage fuer Datei %s. Die Datei wird automatisch heruntergeladen. (%s/%d).
+msg0357=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%s%s schickt eine DCC Dateiversandanfrage fuer Datei %s. Die Datei wird automatisch heruntergeladen. (%s/%d).
 ; p_dcc.c line 1307:
-msg0358=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%s%s schickt eine DCC Dateiversandanfrage fuer Datei %s. Verwende /DCCGET %s%s :%s oder /DCCGET %sS=%s :%s (SSL), um die Datei zu empfangen. (%s/%d).
+msg0358=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%s%s schickt eine DCC Dateiversandanfrage fuer Datei %s. Verwende /DCCGET %s%s :%s oder /DCCGET %sS=%s :%s (SSL), um die Datei zu empfangen. (%s/%d).
 ; p_dcc.c line 1309:
-msg0359=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%s%s schickt eine DCC Dateiversandanfrage fuer Datei %s. Verwende /DCCGET %s%s :%s, um die Datei zu empfangen. (%s/%d).
+msg0359=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%s%s schickt eine DCC Dateiversandanfrage fuer Datei %s. Verwende /DCCGET %s%s :%s, um die Datei zu empfangen. (%s/%d).
 ; p_dcc.c line 1371:
-msg0360=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine DCC Dateiversandanfrage von '%s' fuer %s
+msg0360=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine DCC Dateiversandanfrage von '%s' fuer %s
 ; p_dcc.c line 1486:
-msg0361=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s : Liste dynamische DCCs
+msg0361=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s : Liste dynamische DCCs
 ; p_dcc.c line 1490:
-msg0362=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s : %d %s %s (%s)
+msg0362=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s : %d %s %s (%s)
 ; p_dcc.c line 1492:
-msg0363=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s : %d %s %s
+msg0363=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s : %d %s %s
 ; p_dcc.c line 1498:
-msg0364=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s : Ende der dynamischen DCCs
+msg0364=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s : Ende der dynamischen DCCs
 ; p_dcc.c line 1548:
-msg0365=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Unbekannter DCC. Verwende /DCCCANCEL nick :datei oder /DCCCANCEL nick.
+msg0365=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Unbekannter DCC. Verwende /DCCCANCEL nick :datei oder /DCCCANCEL nick.
 ; p_dcc.c line 1562:
 msg0366=VERSION
 ; p_dcc.c line 1564:
@@ -778,7 +777,7 @@ msg0381=log/USER%d.TRA
 ; p_inifunc.c line 325:
 msg0382=USER%d.
 ; p_intnet.c line 132:
-msg0383=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Das interne Netzwek (int') konnte nicht betreten werden, da Dein Nick bereits in Verwendung ist durch %s!%s@%s. Aendere deinen Nick, dann versuchs nochmal.
+msg0383=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Das interne Netzwek (int~) konnte nicht betreten werden, da Dein Nick bereits in Verwendung ist durch %s!%s@%s. Aendere deinen Nick, dann versuchs nochmal.
 ; p_intnet.c line 137:
 msg0384=:intnet!intnet@%s INTNET *@* :USER %s %s %s :%s
 ; p_intnet.c line 295:
@@ -1060,9 +1059,9 @@ msg0522=QUERY
 ; p_link.c line 254:
 msg0523=:psyBNC!*@%s SYSMSG %s@%s :%s - No such userþÿ
 ; p_link.c line 259:
-msg0524=:$%s*%s!psyBNC@psyBNC.at PRIVMSG %s :%sþÿ
+msg0524=:$%s*%s!psyBNC@psyBNC.dk PRIVMSG %s :%sþÿ
 ; p_link.c line 261:
-msg0525=:$%s@%s!psyBNC@psyBNC.at PRIVMSG %s :%sþÿ
+msg0525=:$%s@%s!psyBNC@psyBNC.dk PRIVMSG %s :%sþÿ
 ; p_link.c line 266:
 msg0526=SYSMSG
 ; p_link.c line 302:
@@ -1072,7 +1071,7 @@ msg0528=%s*%s
 ; p_link.c line 320:
 msg0529=:$%s*%s!%s@%s. JOIN :
 ; p_link.c line 342:
-msg0530=:%s!psyBNC@psyBNC.at NOTICE %s :%sþÿ
+msg0530=:%s!psyBNC@psyBNC.dk NOTICE %s :%sþÿ
 ; p_link.c line 353:
 msg0531=Dieser Link hat keinen Namen. Er wird geloescht.
 ; p_link.c line 368:
@@ -1146,7 +1145,7 @@ msg0565=%s :%sÿ
 ; p_log.c line 84:
 msg0566=salt.h
 ; p_log.c line 89:
-msg0567=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :ACHTUNG ! Verschiebe die Datei salt.h von Deiner Shell auf einen sicheren Rechnerÿ
+msg0567=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :ACHTUNG ! Verschiebe die Datei salt.h von Deiner Shell auf einen sicheren Rechnerÿ
 ; p_log.c line 92:
 msg0568=log/USER%d.LOG
 ; p_log.c line 104:
@@ -1160,57 +1159,57 @@ msg0572=HTTP://
 ; p_log.c line 134:
 msg0573=log/USER%d.LOG
 ; p_log.c line 139:
-msg0574=%s'%s :(%s) %sÿ
+msg0574=%s~%s :(%s) %sÿ
 ; p_log.c line 156:
 msg0575=log/USER%d.LOG
 ; p_log.c line 158:
-msg0576=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Starte Wiedergabe des Logsÿ
+msg0576=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Starte Wiedergabe des Logsÿ
 ; p_log.c line 162:
-msg0577=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%sÿ
+msg0577=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%sÿ
 ; p_log.c line 164:
-msg0578=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verwende ERASEPRIVATELOG, um das Log zu loeschenÿ
+msg0578=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verwende ERASEPRIVATELOG, um das Log zu loeschenÿ
 ; p_log.c line 178:
-msg0579=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du bist kein Adminÿ
+msg0579=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du bist kein Adminÿ
 ; p_log.c line 186:
-msg0580=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Starte Wiedergabe des Haupt-Logsÿ
+msg0580=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Starte Wiedergabe des Haupt-Logsÿ
 ; p_log.c line 188:
-msg0581=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%sÿ
+msg0581=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%sÿ
 ; p_log.c line 190:
-msg0582=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verwende ERASEMAINLOG, um das Log zu loeschenÿ
+msg0582=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verwende ERASEMAINLOG, um das Log zu loeschenÿ
 ; p_log.c line 217:
 msg0583=log/USER%d.TRL
 ; p_log.c line 220:
-msg0584=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Filter definiert. Benutze PLAYTRAFFICLOG quelle mm-tt-jj ss:mm:ss mm-tt-jj ss:mm:ss :text (oder * fuer alles). Du kannst auch PLAYTRAFFICLOG last nutzen.þÿ
+msg0584=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Filter definiert. Benutze PLAYTRAFFICLOG quelle mm-tt-jj ss:mm:ss mm-tt-jj ss:mm:ss :text (oder * fuer alles). Du kannst auch PLAYTRAFFICLOG last nutzen.þÿ
 ; p_log.c line 234:
 msg0585=%s %d-%d-%d %d:%d:%d %d-%d-%d %d:%d:%d :%sÿ
 ; p_log.c line 260:
-msg0586=:-psyBNC!psyBNC@psyBNC.at PRIVMSG * :Starte Wiedergabe des Logs seit letztem Abruf.þÿ
+msg0586=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG * :Starte Wiedergabe des Logs seit letztem Abruf.þÿ
 ; p_log.c line 262:
-msg0587=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Starte Wiedergabe des Logs (%s, ab %04d-%02d-%02d %02d:%02d:%02d bis %04d-%02d-%02d %02d:%02d:%02d, filter %s)þÿ
+msg0587=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Starte Wiedergabe des Logs (%s, ab %04d-%02d-%02d %02d:%02d:%02d bis %04d-%02d-%02d %02d:%02d:%02d, filter %s)þÿ
 ; p_log.c line 268:
 msg0588=%d-%d-%d-%d-%d-%d:%s:
 ; p_log.c line 312:
-msg0589=:-psyBNC!psyBNC@psyBNC.at PRIVMSG * :Ende des logs.þÿ
+msg0589=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG * :Ende des logs.þÿ
 ; p_log.c line 314:
-msg0590=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende des log (%s)þÿ
+msg0590=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende des log (%s)þÿ
 ; p_log.c line 321:
-msg0591=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Falscher Syntax. Verwende PLAYTRAFFICLOG quelle mm-tt-jj ss:mm:ss mm-tt-jj ss:mm:ss :text (oderr * fuer alles)þÿ
+msg0591=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Falscher Syntax. Verwende PLAYTRAFFICLOG quelle mm-tt-jj ss:mm:ss mm-tt-jj ss:mm:ss :text (oderr * fuer alles)þÿ
 ; p_log.c line 333:
 msg0592=%s.old
 ; p_log.c line 345:
 msg0593=log/USER%d.LOG
 ; p_log.c line 347:
-msg0594=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Log geloeschtÿ
+msg0594=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Log geloeschtÿ
 ; p_log.c line 359:
-msg0595=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du bist kein Adminÿ
+msg0595=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du bist kein Adminÿ
 ; p_log.c line 365:
-msg0596=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Haupt-Log geloeschtÿ
+msg0596=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Haupt-Log geloeschtÿ
 ; p_log.c line 381:
 msg0597=log/USER%d.TRL
 ; p_log.c line 385:
-msg0598=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Traffic-Log geloeschtÿ
+msg0598=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Traffic-Log geloeschtÿ
 ; p_log.c line 387:
-msg0599=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein geoeffnetes Traffic-Logÿ
+msg0599=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein geoeffnetes Traffic-Logÿ
 ; p_log.c line 433:
 msg0600=log/USER%d.TRL
 ; p_log.c line 438:
@@ -1286,7 +1285,7 @@ msg0635=Empfange Ill-Signal - fahre fort.
 ; p_memory.c line 513:
 msg0636=Gekillt - Stoppe AppliKation.
 ; p_network.c line 86:
-msg0637=:int'%s!%s
+msg0637=:int~%s!%s
 ; p_network.c line 88:
 msg0638=:%s!%s
 ; p_network.c line 110:
@@ -1300,11 +1299,11 @@ msg0642=%s %s
 ; p_network.c line 184:
 msg0643=%s - Unbekanntes Netzwerkÿ
 ; p_network.c line 261:
-msg0644=%s%c#%s'%s
+msg0644=%s%c#%s~%s
 ; p_network.c line 282:
-msg0645=%s:%s'%s
+msg0645=%s:%s~%s
 ; p_network.c line 292:
-msg0646=%c%s'%s
+msg0646=%c%s~%s
 ; p_network.c line 333:
 msg0647=%s%c%s%c
 ; p_network.c line 335:
@@ -1312,33 +1311,33 @@ msg0648=%s%s%c
 ; p_network.c line 338:
 msg0649=%s%s%c
 ; p_network.c line 342:
-msg0650=%s%c%s'%s%c
+msg0650=%s%c%s~%s%c
 ; p_network.c line 344:
-msg0651=%s%s'%s%c
+msg0651=%s%s~%s%c
 ; p_network.c line 377:
-msg0652=%s %s'%s
+msg0652=%s %s~%s
 ; p_network.c line 423:
 msg0653=%s :%s
 ; p_network.c line 443:
 msg0654=%s %s %s
 ; p_network.c line 445:
-msg0655=%s %s'%s %s
+msg0655=%s %s~%s %s
 ; p_network.c line 485:
 msg0656=0123456789
 ; p_network.c line 490:
 msg0657=%s%s%c
 ; p_network.c line 492:
-msg0658=%s%s'%s%c
+msg0658=%s%s~%s%c
 ; p_network.c line 495:
 msg0659=%s%s%c
 ; p_network.c line 504:
 msg0660=INVITE
 ; p_network.c line 511:
-msg0661=%s :#%s'%s
+msg0661=%s :#%s~%s
 ; p_network.c line 535:
 msg0662=%s %s %s
 ; p_network.c line 537:
-msg0663=%s %s'%s %s
+msg0663=%s %s~%s %s
 ; p_peer.c line 132:
 msg0664=LINK %d: Erstmals ueber SSL verlinkt. Speichere Zertifikat
 ; p_peer.c line 137:
@@ -1358,7 +1357,7 @@ msg0671=Verlinkt zu %s
 ; p_peer.c line 166:
 msg0672=Linked to %s
 ; p_peer.c line 175:
-msg0673=:-psyBNC!psyBNC@psyBNC.at PRIVMSG * :Keine Relays zugelassen. Tschuess.þÿ
+msg0673=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG * :Keine Relays zugelassen. Tschuess.þÿ
 ; p_peer.c line 262:
 msg0674=Nutzer %s: Erstmalig mit SSL. Zertifikat empfangen und gespeichert.
 ; p_peer.c line 269:
@@ -1368,7 +1367,7 @@ msg0676=Nutzer %s hat eingelogged.
 ; p_peer.c line 277:
 msg0677=Nutzer %s hat eingelogged.
 ; p_peer.c line 289:
-msg0678=:-psyBNC!psychiod@lam3rz.de NOTICE %s :Neue Verbindung von %sÿ
+msg0678=:-psyBNC!psychiod@EuShells.com NOTICE %s :Neue Verbindung von %sÿ
 ; p_peer.c line 294:
 msg0679=User %s logged in (not on Partyline).
 ; p_peer.c line 297:
@@ -1378,9 +1377,9 @@ msg0681=:%s!%s@%s NICK :%sþÿ
 ; p_peer.c line 335:
 msg0682=NICK %sþÿ
 ; p_peer.c line 343:
-msg0683=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du hast Nachrichten. Verwende /QUOTE PLAYPRIVATELOG, um Deine Nachrichten zu lesen.
+msg0683=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du hast Nachrichten. Verwende /QUOTE PLAYPRIVATELOG, um Deine Nachrichten zu lesen.
 ; p_peer.c line 345:
-msg0684=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Du hast keine neuen Nachrichten.
+msg0684=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Du hast keine neuen Nachrichten.
 ; p_peer.c line 374:
 msg0685=Verlorene Verbindung zu %s (%s)
 ; p_peer.c line 385:
@@ -1396,11 +1395,11 @@ msg0690=CONNECT
 ; p_peer.c line 431:
 msg0691=RELAY
 ; p_peer.c line 440:
-msg0692=:-psyBNC!psyBNC@psyBNC.at NOTICE %s :Dein IRC-Client hat kein Password angegeben. Verwende /QUOTE PASS yourpassword, um die Verbindung herzustellen.
+msg0692=:-psyBNC!psyBNC@psyBNC.dk NOTICE %s :Dein IRC-Client hat kein Password angegeben. Verwende /QUOTE PASS yourpassword, um die Verbindung herzustellen.
 ; p_peer.c line 451:
 msg0693=Fehlgeschlagener eingehender Link %s (%s)
 ; p_peer.c line 463:
-msg0694=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Falsches Password. Verbindung wird getrennt.ÿ
+msg0694=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Falsches Password. Verbindung wird getrennt.ÿ
 ; p_peer.c line 464:
 msg0695=Fehlgeschlagene Authentifizierung von %s vom host %s
 ; p_peer.c line 481:
@@ -1414,7 +1413,7 @@ msg0699=Zu viele Verbindungen. Loesche Verbindung von %s
 ; p_peer.c line 514:
 msg0700=Zu viele Host-Verbindungenÿ
 ; p_peer.c line 518:
-msg0701=:Welcome!psyBNC@psyBNC.at NOTICE * :
+msg0701=:Welcome!psyBNC@psyBNC.dk NOTICE * :
 ; p_peer.c line 532:
 msg0702=gekillt durch Nutzer-Abbruch
 ; p_peer.c line 573:
@@ -1502,27 +1501,27 @@ msg0743=:%s!%s@%s JOIN :%s%sÿ
 ; p_server.c line 255:
 msg0744=:%s 332 %s %s%s :%sÿ
 ; p_server.c line 266:
-msg0745=:irc.psybnc.at MODE %s%s +%c %sþÿ
+msg0745=:irc.psychoid.net MODE %s%s +%c %sþÿ
 ; p_server.c line 284:
 msg0746=MODE %s +b %s
 ; p_server.c line 285:
 msg0747=KICK %s %s :gebanned: %s
 ; p_server.c line 288:
-msg0748=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s(%s) entspricht ban(%s), gekickt und gebannt auf %s
+msg0748=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s(%s) entspricht ban(%s), gekickt und gebannt auf %s
 ; p_server.c line 302:
 msg0749=MODE %s +o %s
 ; p_server.c line 305:
-msg0750=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s(%s) entspricht autoop(%s), geopped auf %s
+msg0750=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s(%s) entspricht autoop(%s), geopped auf %s
 ; p_server.c line 330:
 msg0751=MODE %s +o %s
 ; p_server.c line 332:
-msg0752=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s(%s) entspricht op (%s), geopped auf %s
+msg0752=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s(%s) entspricht op (%s), geopped auf %s
 ; p_server.c line 358:
 msg0753=.op %s %sþÿ
 ; p_server.c line 366:
 msg0754=PRIVMSG %s :op %s %s
 ; p_server.c line 369:
-msg0755=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Frage %s(%s) nach op auf %s
+msg0755=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Frage %s(%s) nach op auf %s
 ; p_server.c line 398:
 msg0756=%s!%s@%s
 ; p_server.c line 423:
@@ -1668,7 +1667,7 @@ msg0826=ENTRY%d
 ; p_string.c line 467:
 msg0827=%s:%s
 ; p_string.c line 470:
-msg0828=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Eintrag #%d: %s
+msg0828=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Eintrag #%d: %s
 ; p_string.c line 573:
 msg0829=lang/%s.lng
 ; p_string.c line 583:
@@ -1678,15 +1677,15 @@ msg0831=MSG%04d
 ; p_sysmsg.c line 37:
 msg0832=:%s!%s@%s JOIN :
 ; p_sysmsg.c line 40:
-msg0833=:irc.psybnc.at 332 %s 
+msg0833=:irc.psychoid.net 332 %s 
 ; p_sysmsg.c line 40:
 msg0834= :%sþÿ
 ; p_sysmsg.c line 42:
-msg0835=:irc.psybnc.at 353 %s = 
+msg0835=:irc.psychoid.net 353 %s = 
 ; p_sysmsg.c line 50:
-msg0836=:irc.psybnc.at 353 %s = 
+msg0836=:irc.psychoid.net 353 %s = 
 ; p_sysmsg.c line 59:
-msg0837=:irc.psybnc.at 366 %s 
+msg0837=:irc.psychoid.net 366 %s 
 ; p_sysmsg.c line 59:
 msg0838= :Ende der NAMES Liste.þÿ
 ; p_sysmsg.c line 60:
@@ -1698,15 +1697,15 @@ msg0841=psyBNC
 ; p_sysmsg.c line 193:
 msg0842=PRIVMSG
 ; p_sysmsg.c line 216:
-msg0843=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%sÿ
+msg0843=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%sÿ
 ; p_sysmsg.c line 244:
-msg0844=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%sÿ
+msg0844=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%sÿ
 ; p_sysmsg.c line 326:
 msg0845=:%s!*@%s PARTY * :%sþÿ
 ; p_sysmsg.c line 343:
 msg0846=:%s!*@%s QUERY %s :%sþÿ
 ; p_sysmsg.c line 354:
-msg0847=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s nicht auf dem Bouncer
+msg0847=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s nicht auf dem Bouncer
 ; p_sysmsg.c line 367:
 msg0848=psyBNC
 ; p_sysmsg.c line 369:
@@ -1724,9 +1723,9 @@ msg0854=:$%s!%s@%s. %s %s:%s
 ; p_sysmsg.c line 446:
 msg0855=:$%s!%s@%s %s %s :%s
 ; p_sysmsg.c line 455:
-msg0856=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nutzer %s nicht auf dem Bouncer
+msg0856=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nutzer %s nicht auf dem Bouncer
 ; p_sysmsg.c line 478:
-msg0857=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :DCC Verbindung %s unbekannt oder nicht hergestellt
+msg0857=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :DCC Verbindung %s unbekannt oder nicht hergestellt
 ; p_sysmsg.c line 481:
 msg0858=%sþÿ
 ; p_topology.c line 112:
@@ -1790,7 +1789,7 @@ msg0887=KEY%d
 ; p_uchannel.c line 476:
 msg0888=CHANNELS
 ; p_uchannel.c line 601:
-msg0889=#int'
+msg0889=#int~
 ; p_uchannel.c line 606:
 msg0890=:%s 353 %s = %s%s :
 ; p_uchannel.c line 635:
@@ -1824,7 +1823,7 @@ msg0904=USER%d
 ; p_userfile.c line 39:
 msg0905=QUIT :Neustartÿ
 ; p_userfile.c line 46:
-msg0906=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Neustartÿ
+msg0906=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Neustartÿ
 ; p_userfile.c line 53:
 msg0907=LOGIN
 ; p_userfile.c line 60:
@@ -1982,7 +1981,7 @@ msg0983= |_|  |____/   |__|  |___||_|  \_| \___| ÿ
 ; psybnc.c line 150:
 msg0984=    Version DE
 ; psybnc.c line 150:
-msg0985= (c) 1999-2003ÿ
+msg0985= (c) 1999-2011ÿ
 ; psybnc.c line 151:
 msg0986=              the most psychoid          ÿ
 ; psybnc.c line 152:
@@ -2064,7 +2063,7 @@ msg1024=BVHOST
 ; p_hash.c line 56:
 msg1025=Setzt Deinen Vhost
 ; p_hash.c line 56:
-msg1026=help/VHOST.DEU
+msg1026=help/BVHOST.DEU
 ; p_hash.c line 58:
 msg1027=PROXY
 ; p_hash.c line 58:
@@ -2622,21 +2621,21 @@ msg1303=:%s-psybnc.net 481 %s :Zugriff verweigert - Du bist kein Bouncer-Admin
 ; p_hash.c line 279:
 msg1304=%s-psybnc.net 421 %s %s :Unbekannter Befehl
 ; p_hash.c line 305:
-msg1305=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :BHELP %c %-15s - %sÿ
+msg1305=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :BHELP %c %-15s - %sÿ
 ; p_hash.c line 309:
-msg1306=:-psyBNC!psyBNC@psyBNC.at PRIVMSG NOTICE %s :BHELP Verwende /QUOTE bhelp <Befehl> fuer detailliertere Hinweise.ÿ
+msg1306=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG NOTICE %s :BHELP Verwende /QUOTE bhelp <Befehl> fuer detailliertere Hinweise.ÿ
 ; p_hash.c line 316:
-msg1307=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Hilfe fuer: %sÿ
+msg1307=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Hilfe fuer: %sÿ
 ; p_hash.c line 321:
 msg1308=r
 ; p_hash.c line 323:
-msg1309=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Hilfedatei %s nicht vorhanden.ÿ
+msg1309=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Hilfedatei %s nicht vorhanden.ÿ
 ; p_hash.c line 328:
-msg1310=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :%sÿ
+msg1310=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :%sÿ
 ; p_hash.c line 337:
-msg1311=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Hilfe gefunden fuer: %sÿ
+msg1311=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Hilfe gefunden fuer: %sÿ
 ; p_hash.c line 372:
-msg1312=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Nur Admins duerfen diesen Befehl nutzen.þÿ
+msg1312=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Nur Admins duerfen diesen Befehl nutzen.þÿ
 ; p_hash.c line 425:
 msg1313=PONG :%sþÿ
 ; p_hash.c line 431:
@@ -2676,25 +2675,25 @@ msg1330=help/LISTIGNORES.DEU
 ; p_userfile.c line 219:
 msg1331=USER%d.IGN
 ; p_client.c line 1491:
-msg1332=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Host angegeben. Verwende ADDIGNORE Inhalt :host (* als Platzhalter)
+msg1332=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Host angegeben. Verwende ADDIGNORE Inhalt :host (* als Platzhalter)
 ; p_client.c line 1495:
-msg1333=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Kein Inhalt angegeben. Verwende ADDIGNORE Inhalt :host (* als Platzhalter)
+msg1333=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Kein Inhalt angegeben. Verwende ADDIGNORE Inhalt :host (* als Platzhalter)
 ; p_client.c line 1499:
-msg1334=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Verwende kein ; in Hostnamen
+msg1334=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Verwende kein ; in Hostnamen
 ; p_client.c line 1502:
 msg1335=USER%d.IGN
 ; p_client.c line 1504:
-msg1336=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ignore fuer Host %s (%s) hinzugefuegt
+msg1336=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ignore fuer Host %s (%s) hinzugefuegt
 ; p_client.c line 1754:
-msg1337=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Nummer angegeben. Nutze DELIGNORE nummer
+msg1337=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Nummer angegeben. Nutze DELIGNORE nummer
 ; p_client.c line 1757:
 msg1338=USER%d.IGN
 ; p_client.c line 1761:
-msg1339=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ignore Nummer %s geloescht
+msg1339=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ignore Nummer %s geloescht
 ; p_client.c line 1887:
-msg1340=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Liste Ignores:
+msg1340=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Liste Ignores:
 ; p_client.c line 1889:
-msg1341=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Ende der Liste.
+msg1341=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Ende der Liste.
 ; p_hash.c line 170:
 msg1342=SETLANG
 ; p_hash.c line 170:
@@ -2702,11 +2701,11 @@ msg1343=Setzt die Sprache (global)
 ; p_hash.c line 170:
 msg1344=help/SETLANG.DEU
 ; p_client.c line 2164:
-msg1345=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Keine Sprache angegeben. Verwende SETLANG sprache.
+msg1345=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Keine Sprache angegeben. Verwende SETLANG sprache.
 ; p_client.c line 2182:
-msg1346=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Sprache auf '%s' gesetzt.
+msg1346=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Sprache auf '%s' gesetzt.
 ; p_client.c line 2178:
-msg1347=:-psyBNC!psyBNC@psyBNC.at PRIVMSG %s :Die Sprache '%s' konnte nicht geladen werden.
+msg1347=:-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Die Sprache '%s' konnte nicht geladen werden.
 ; p_client.c line 2183:
 msg1348=Sprache auf '%s' gesetzt von %s.
 ; p_hash.c line 210

@@ -4,7 +4,7 @@ LINKFROM fuegt einen Link von einem anderen Bouncer zu der Liste der Links
 hinzu.
 Man kann so viele Bouncer verlinken, wie man mag. Dies ermoeglicht
 desweiteren das Einrichten einer Partyline, entweder ueber das sogenannte
-int'-Net oder ueber den internen Channel &partyline, falls dieser bei
+int~-Net oder ueber den internen Channel &partyline, falls dieser bei
 Compilierung eingeschaltet wurde.
 Die Verlinkung von Bouncern veraendert keinerlei Rechte der Nutzer
 auf dem verlinkten Bouncer, der Zugriff der anderen Nutzer ist trotzdem

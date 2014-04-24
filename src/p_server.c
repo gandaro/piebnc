@@ -1,6 +1,5 @@
-/* $Id: p_server.c,v 1.7 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_server.c
+ *   psybnc, src/p_server.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -20,34 +19,28 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_server.c,v 1.7 2005/06/04 18:00:14 hisi Exp $";
-#endif
-
 #define P_SERVER
 
 #include <p_global.h>
-
-#ifndef FREEZEFIX
-
-jmp_buf serveralarmret;
-
-#else
+void create_oidentd_conf();
 
 sigjmp_buf serveralarmret;
 
-#endif
+int rejoinchannels(int usern);
+int askforop(int usern, char *channel);
+int userconnected(int nuser);
+int connectuser(int nuser);
 
-#ifndef BLOCKDNS
-int userproxyconnectresolved(struct resolve *rp);
-int userproxyconnectnotresolved(struct resolve *rp);
-#endif
+static void userproxyconnectcb(void *arg, int status, int timeouts, struct hostent *hostent);
+static void userproxyconnectresolved(struct proxyconndata *conn);
 
 int serverinit(int usern,int msgn)
 {
     FILE *userb;
     char fname[40];
+#ifdef INTNET
     char sic[4096];
+#endif
     char *zer;
     int uusern;
     pcontext;
@@ -70,7 +63,13 @@ int serverinit(int usern,int msgn)
 	           strcat(ircbuf,user(uusern)->host);
 	   }
        }
+       
        user(usern)->welcome=1;
+
+       #ifdef OIDENTD
+       create_oidentd_conf();
+       #endif
+
        if (user(usern)->channels!=NULL && user(usern)->leavequit==0) {
           rejoinchannels(usern);
        }
@@ -139,6 +138,7 @@ int pong(int usern)
 	    chan=chan->next;
        }
     }
+    return 0x0;
 }
 
 char nnick[64];
@@ -157,7 +157,6 @@ char *numnick(char *original)
 int nickused(int usern)
 {
     char buf[400];
-    int cnt;
     char *pt;
     char *pt2;
     pcontext;
@@ -301,7 +300,7 @@ int rejoinclient(int usern)
     chan=user(usern)->channels;
     if (user(usern)->parent != 0)
     {
-	ap_snprintf(netc,sizeof(netc),"#%s'",user(usern)->network);
+	ap_snprintf(netc,sizeof(netc),"#%s~",user(usern)->network);
 	strmncpy(mynick,user(user(usern)->parent)->nick,sizeof(mynick));
     } else {
 	netc[0]=0;
@@ -352,6 +351,7 @@ int checkbans(int usern)
 	    }
 	}
     }
+    return 0x0;
 }
 
 int checkautoop(int usern)
@@ -370,6 +370,7 @@ int checkautoop(int usern)
 	    }
 	}
     }
+    return 0x0;
 }
 
 int checkop(int usern)
@@ -516,11 +517,13 @@ int askforop(int usern, char *channel)
 
 int sendwho(int usern)
 {
+/*
     struct uchannelt *chan;
     pcontext;
     chan=getuserchannel(usern,ircto);
     if(chan!=NULL) removeallusersfromchannel(chan);
     ssnprintf(user(usern)->outsock,lngtxt(757),ircto);
+*/
     return 0x0;
 }
 
@@ -536,7 +539,6 @@ int performwho(int usern)
     char flags[10];
     char *p1;
     char *p2;
-    char *pt;
     struct uchannelt *chan;
     struct uchannelusert *chanuser;
     pcontext;
@@ -651,7 +653,7 @@ int gotpart(int usern)
 int gotkick(int usern)
 {
     struct uchannelt *chan;
-    char *pt,*pt1,*pt2;
+    char *pt,*pt2;
     char knick[64],kchan[200];
     char kreason[511];
     pcontext;
@@ -700,14 +702,13 @@ int gotkick(int usern)
 
 int gotquit(int usern)
 {
-    struct uchannelt *chan;
     pcontext;
     
     if(strmcmp(ircnick,user(usern)->nick)==1)
     {
-	resetallchannels(usern);
+    	resetallchannels(usern);
     } else {
-	removenickfromallchannels(usern,ircnick);
+    	removenickfromallchannels(usern,ircnick);
     }
     return 0x0;
 }
@@ -962,6 +963,7 @@ int msg324(int usern)
 	    }
 	}
     }
+    return 0x0;
 }
 
 /* a names line */
@@ -1005,6 +1007,7 @@ int msg332(int usern)
 	    }
 	}
     }
+    return 0x0;
 }
 
 /* a single names line, needs to be saved */
@@ -1134,133 +1137,195 @@ int msgprivmsg(int usern)
 
 void gotalrm(int sig)
 {
-
-#ifndef FREEZEFIX 
-
-    longjmp(serveralarmret,0x0);
-
-#else
-
+    //longjmp(serveralarmret,0x0);
     siglongjmp(serveralarmret, 1);
+}
 
-#endif
+static void freeproxyconndata(struct proxyconndata *conn)
+{
+    if (conn != NULL)
+    {
+        if (conn->host != NULL) free(conn->host);
+        if (conn->host_addr != NULL) free(conn->host_addr);
 
+        free(conn);
+    }
 }
 
 int userproxyconnected(int nuser)
-{
-#ifdef BLOCKDNS
-    struct hostent *he;
-    int proto;
-    char buf[40];
-    char gip[5];
-    pcontext;
-    signal(SIGALRM,gotalrm);
-#ifndef FREEZEFIX    
-if(setjmp(serveralarmret)==0x0)
-#else
-if(!sigsetjmp(serveralarmret, 1))
-#endif 
+{   
+    struct proxyconndata *conn;
+    struct socketnodes *snode = getpsocketbysock(user(nuser)->outsock);
+    int family = AF_INET; /* IPv6 not supported by SOCKS? */
+    
+    if (snode && snode->sock)
     {
-        alarm(10);
-        he=gethostbyname(user(nuser)->server);
-        signal(SIGALRM,SIG_IGN);
-        alarm(0);
-    } else
-        he=NULL;
-    if(!he)
-    {
-        killsocket(user(nuser)->outsock);
-        return 0x0;
+        snode->sock->flag = SOC_RESOLVE;
     }
-    signal(SIGALRM,SIG_IGN);
-    memcpy(&gip[0],&he->h_addr[0],4);
-#else
-    char data[8];
-    struct socketnodes *snode;
-    pcontext;
-    snode=getpsocketbysock(user(nuser)->outsock);
-    if(snode!=NULL)
+
+    conn = calloc(1, sizeof(*conn));
+    conn->user = nuser;
+    conn->host = strdup(user(nuser)->server);
+
+    // When connecting to a 'socks' proxy we will need to resolve the hostname to an IP address.
+    // Because there is no way of specifying the type of proxy we'll just assume here that if
+    // someone connects to port 1080 they are connecting to a 'socks' proxy. This is a big hack
+    // and is not reliable, but that's how it has worked for ages..
+
+    if (user(nuser)->pport == 1080)
     {
-	ap_snprintf(data,sizeof(data),"%d",nuser);
-	if(snode->sock)
-	    snode->sock->flag=SOC_RESOLVE;
-	if(dns_forward(user(nuser)->server,userproxyconnectresolved,userproxyconnectnotresolved,data)==0x2)
-	{
-	    killsocket(user(nuser)->outsock);
-	}	
+        p_dns_gethostbyname(conn->host, family, userproxyconnectcb, conn);
     }
+    else
+    {
+        userproxyconnectresolved(conn);
+    }
+
     return 0x0;
 }
 
-
-int userproxyconnectnotresolved(struct resolve *rp)
+static void userproxyconnectcb(void *arg, int status, int timeouts, struct hostent *hostent)
 {
-    int nuser;
-    if(rp)
+    struct proxyconndata *conn = (struct proxyconndata *)arg;
+    if (!p_dns_success(status))
     {
-	if(rp->data)
-	{
-	    nuser=atoi(rp->data);
-	    killsocket(user(nuser)->outsock);
-	}
+        // The host or vhost could not be resolved. We can't continue connecting so a message is
+        // displayed and the connection is closed.
+
+        p_log(LOG_ERROR, -1, "Cannot resolve host '%s': %s. Connection through proxy cancelled", conn->host, p_dns_strerror(status));
+
+        killsocket(user(conn->user)->outsock);
+        freeproxyconndata(conn);
+        return;
     }
+
+    conn->host_addr = duplicate_in_addr(hostent->h_addrtype, (struct in_addr *)hostent->h_addr_list[0], NULL);   
+    userproxyconnectresolved(conn);
+}
+
+static int userproxysockshandler(int usern)
+{
+    struct socketnodes *snode = getpsocketbysock(user(usern)->outsock);
+
+    // Socks4 reply, from wikipedia:
+
+    // field 1: null byte
+    // field 2: status, 1 byte:
+    //    0x5a = request granted
+    //    0x5b = request rejected or failed
+    //    0x5c = request failed because client is not running identd (or not reachable from the server)
+    //    0x5d = request failed because client's identd could not confirm the user ID string in the request
+    // field 3: 2 arbitrary bytes, that should be ignored
+    // field 4: 4 arbitrary bytes, that should be ignored
+
+    p_log(LOG_INFO, -1, "Proxy: Received data on a SOCKS socket. Data length: %d bytes.", snode->sock->datalen);
+
+    if (snode->sock->datalen == 8 && ircbuf[0] == '\0')
+    {
+        p_log(LOG_INFO, -1, "Proxy: This looks like a valid SOCKS packet.");
+        p_log(LOG_INFO, -1, "Proxy: `- SOCKS status byte: %d (success: %d)", ircbuf[1], (ircbuf[1] == 0x5a));
+
+        if (ircbuf[1] != 0x5a)
+        {
+            p_log(LOG_INFO, -1, "Proxy: The SOCKS server could not connect us to the server, aborting..");
+            killsocket(user(usern)->outsock);
+            return 0x0;
+        }
+
+        snode->sock->dataflow = SD_ASCII;
+        snode->sock->handler  = useroutbound;
+
+        userconnected(usern);
+        return 0x1;
+    }
+
+    p_log(LOG_INFO, -1, "Proxy: This is not a valid SOCKS response, aborting..");
+    killsocket(user(usern)->outsock);
     return 0x0;
 }
 
-int userproxyconnectresolved(struct resolve *rp)
+static void userproxyconnectresolved(struct proxyconndata *conn)
 {
-    int nuser;
-    char gip[5];
-    char buf[40];
-    struct socketnodes *snode;
-    if(rp)
-    {
-	if(rp->data)
-	{
-	    nuser=atoi(rp->data);
-	    if(rp->state==STATE_FINISHED && rp->protocol==AF_INET)
-		memcpy(&gip[0],&rp->ip,4);
-	    else
-		memset(&gip[0],0x0,4);
-	} else {
-	    return 0x0;
-	}
-	snode=getpsocketbysock(user(nuser)->outsock);
+    int pport = user(conn->user)->pport;
+    int sockt = user(conn->user)->outsock;
+    int port = user(conn->user)->port;
+    int done = 1;
+
+    // Update the socket state so that the BNC knows that we are now
+    // connecting the user.
+
+    struct socketnodes *snode = getpsocketbysock(user(conn->user)->outsock);
 	if(snode)
 	{
-	    snode->sock->flag=SOC_CONN;
+	    snode->sock->flag = SOC_CONN;
 	}
-    } else {
-	return 0x0;
-    }
-#endif
-    if(user(nuser)->pport==1080) /* socks 4 */
+
+    if (pport == 1080 && conn->host_addr != NULL)
     {
-	ap_snprintf(buf,sizeof(buf),lngtxt(767),
-	    (user(nuser)->port>>8) & 0xff,user(nuser)->port & 0xff,
-	    (char) gip[0],
-	    (char) gip[1],
-	    (char) gip[2],
-	    (char) gip[3]);
-	send(user(nuser)->outsock,buf,9,0);
-	currentsocket->sock->nowfds=1;
-        writesock_DELAY(user(nuser)->outsock,"\n",3);
-    } else {
-        if(user(nuser)->pport==23) /* wingate */
-        {
-    	    ssnprintf(user(nuser)->outsock,lngtxt(768),user(nuser)->server,user(nuser)->port);
-	    currentsocket->sock->nowfds=1;
-	    writesock_DELAY(user(nuser)->outsock,"\n",3);
-	} else { /* any other port, we assume a web proxy */
-    	    ap_snprintf(ircbuf,sizeof(ircbuf),lngtxt(769),user(nuser)->server,user(nuser)->port);
-	    send(user(nuser)->outsock,ircbuf,strlen(ircbuf)+1,0);
-	    currentsocket->sock->nowfds=1;
-	    writesock_DELAY(user(nuser)->outsock,"\n",3);
-	}
-    } 
-    userconnected(nuser);    
-    return 0x0;
+        char address[512] = "";
+        unsigned int ipn;
+
+        // SOCKS needs some additional handling before we can let the user be connected.
+
+        done = 0;
+
+        memcpy(&ipn, conn->host_addr, sizeof(unsigned int));
+        inet_ntop(AF_INET, conn->host_addr, address, sizeof(address));
+
+        // Assume that this is a SOCKS4 proxy. If we reach here then the hostname has been resolved to an
+        // IP address. For now it appears that only IPv4 is supported through SOCKS(4) proxies.
+
+        // We build the binary connection request and send it.
+
+        ap_snprintf(ircbuf, sizeof(ircbuf), lngtxt(767), 
+            (port >> 8) & 0xff,  // port (byte 1)
+            (port     ) & 0xff,  // port (byte 2)
+            (ipn      ) & 0xff,  // ip address (byte 1)
+	        (ipn >>  8) & 0xff,  // ip address (byte 2)
+	        (ipn >> 16) & 0xff,  // ip address (byte 3)
+	        (ipn >> 24) & 0xff   // ip address (byte 4)
+        );
+
+        send(sockt, ircbuf, 9, 0);
+
+        // Set our own handlers to handle the socks response header.
+
+        snode->sock->dataflow = SD_STREAM;
+        snode->sock->handler = userproxysockshandler;
+    }
+    else if (pport == 23)
+    {
+        // Assume that this is a 'Wingate' proxy and send a '<host> <port>'
+        // connection request.
+                
+        ap_snprintf(ircbuf, sizeof(ircbuf), lngtxt(768), conn->host, port);
+        send(sockt, ircbuf, strlen(ircbuf) + 1, 0);
+    }
+    else
+    {
+        // Assume that this is a web proxy and send a CONNECT <host>:<port> 
+        // HTTP/1.0 request.
+
+        ap_snprintf(ircbuf, sizeof(ircbuf), lngtxt(769), conn->host, port);
+        send(sockt, ircbuf, strlen(ircbuf) + 1, 0);
+    }
+
+    // Delay writing to the socket, and send a "\n" after a while to wake the
+    // socket up again.
+
+    currentsocket->sock->nowfds = 1;
+    writesock_DELAY(sockt, "\n", 3);
+
+    // At this point psyBNC assumes that the proxy is connecting it. No error
+    // checking is done, and clients could get stuck here, again something we'll
+    // just have to work with.
+
+    if (done)
+    {
+        userconnected(conn->user);
+    }
+
+    freeproxyconndata(conn);
 }
 
 int userconnected(int nuser)
@@ -1318,7 +1383,7 @@ int usererror(int nuser,int errn)
     char buf[400];
     pcontext;
     if(*user(nuser)->server)
-	p_log(LOG_ERROR,nuser,lngtxt(779),user(nuser)->login,user(nuser)->server,user(nuser)->port);
+	p_log(LOG_ERROR,nuser,lngtxt(779),user(nuser)->login,user(nuser)->network,user(nuser)->server,user(nuser)->port);
     th=getpsocketbysock(user(nuser)->outsock);
     if(th!=NULL)
 	th->sock->destructor=NULL;
@@ -1339,7 +1404,7 @@ int userclosed(int nuser)
     struct socketnodes *th;
     char buf[400];
     pcontext;
-    p_log(LOG_WARNING,nuser,lngtxt(781),user(nuser)->login);
+    p_log(LOG_WARNING,nuser,lngtxt(781),user(nuser)->login,user(nuser)->network);
     th=getpsocketbysock(user(nuser)->outsock);
     if(th!=NULL)
     {
@@ -1377,25 +1442,120 @@ int checkclients()
     return 0x0;
 }
 
+/**
+ * Create a detailed oidentd configuration file
+ */
+void create_oidentd_conf()
+{
+    struct usernodes *node;
+    struct socketnodes *socket;
+    char msg[1024] = "", *homedir;
+
+    pcontext;
+
+    FILE *file;
+    mode_t oldumask;
+
+    homedir = getenv("HOME");
+
+    if (homedir == NULL)
+    {
+        p_log(LOG_ERROR, -1, "Unable to generate oidentd configuration: Can't determine home directory.");
+        return;
+    }
+
+    oldumask = umask(0000);
+    umask(022);
+
+    ap_snprintf(msg, sizeof(msg), "%s/.oidentd.conf", homedir);
+    if (!(file = fopen(msg, "w")))
+    {
+        p_log(LOG_ERROR, -1, "Unable to generate oidentd configuration: Can't open configuration file: %s", strerror(errno));
+        return;
+    }
+
+    pcontext;
+
+    fprintf(file, "# psyBNC detailed oidentd configuration (generated by pid %d)\n# NOTE: Changes in this file *will* be overwritten.\n\n", (int)getpid());  
+
+    for (node = usernode; node != NULL; node = node->next)
+    {   
+        if (node->user != NULL && (socket = getpsocketbysock(node->user->outsock)) != NULL && (node->user->outstate < STD_CONN || node->user->welcome == 0))
+        {
+            pcontext;
+			char *sourceip = get_sourceip(node->user->outsock);
+			int sourceport = get_sourceport(node->user->outsock);
+
+			ap_snprintf(msg, sizeof(msg), "to %s fport %d from %s lport %d { reply \"%s\" }",
+                socket->sock->dest,                     // to    The host that we're connecting TO 
+                socket->sock->dport,                    // fport The port that we're connecting TO
+                sourceip,      // from  The host that we're connecting FROM
+                sourceport,    // lport The port that we're connecting FROM
+                node->user->login
+            );                      
+
+            pcontext;
+
+            fprintf(file, "# User %s (socket %d) - Connecting to %s:%d from %s:%d\n%s\n\n",
+                node->user->login, 
+                node->user->outsock,
+                socket->sock->dest, 
+                socket->sock->dport, 
+                sourceip,
+                sourceport,
+                msg
+            );
+
+            free(sourceip);
+        }
+    }
+
+    fprintf(file, "# End of psyBNC detailed oidentd config\n");
+    fclose(file);
+
+    pcontext;
+
+    umask(oldumask);
+}
+
 
 /* connect User #nuser */
 
 int connectuser(int nuser)
 {
-   char buf[400];
    char *ho;
    int issl=SSL_OFF;
    char vsl[10];
+
+#if defined(OIDENTD) && !defined(OIDENTD_DETAIL)
    char *ep;
+   char buf[400];
+#endif
+
+   int rc;
+   int connectdelay=30;
    static unsigned long lastconnect=0;
+   static unsigned long lastconnectwarn=0;
    unsigned long thistime=time(NULL);
    struct socketnodes *lkm;
 #ifdef OIDENTD
    mode_t oldum;
    FILE *oid;
 #endif
-   int nlink=0; 
-   if((thistime-lastconnect)<5) return 0x0;
+   int nlink=0;
+	rc = getini(lngtxt(994),lngtxt(1468),INIFILE);
+	if (rc == 0) {
+		if (strcmp(value, "0") == 0 || (atoi(value) > 0 && atoi(value)<=600))
+			connectdelay = atoi(value);
+	}
+   if(connectdelay==0) {
+	   if ((thistime-lastconnectwarn)>600) { /* Put a warning entry in the log each 600th second, if we are not connecting clients */
+		   lastconnectwarn=thistime;
+		   p_log(LOG_INFO,-1,lngtxt(1469));
+	   }
+	   return 0x0;
+   }
+   if((thistime-lastconnect)<connectdelay) return 0x0;
    vsl[0]=0;   
    if (user(nuser)->outstate == STD_NOCON)
    {
@@ -1408,14 +1568,14 @@ int connectuser(int nuser)
 	    user(nuser)->outstate = STD_NOCON;
 	    p_log(LOG_INFO,nuser,lngtxt(783),user(nuser)->login,user(nuser)->network);
 	    memset(user(nuser)->server,0x0,sizeof(user(nuser)->server));
-	    user(nuser)->delayed = 5;
+	    user(nuser)->delayed = 30;
 	    return 0x0;
 	}
 	if (user(nuser)->port == 0) {
 	    user(nuser)->outstate = STD_NOCON;
 	    p_log(LOG_INFO,nuser,lngtxt(784),user(nuser)->login,user(nuser)->network);
 	    memset(user(nuser)->server,0x0,sizeof(user(nuser)->server));
-	    user(nuser)->delayed = 5;
+	    user(nuser)->delayed = 30;
 	    return 0x0;
 	}
 	user(nuser)->delayed = 0;
@@ -1454,7 +1614,9 @@ int connectuser(int nuser)
 #endif	
 		ho=user(nuser)->server;
 	}
-#ifdef OIDENTD
+
+#if defined(OIDENTD) && !defined(OIDENTD_DETAIL)
+	
 	ep=getenv("HOME");
 	if(ep!=NULL)
 	{
@@ -1479,7 +1641,9 @@ int connectuser(int nuser)
 	    }
 	    umask(oldum);
 	}
+
 #endif
+
 	if(user(nuser)->pport!=0)
 	    user(nuser)->outsock=createsocket(0,ST_CONNECT,nuser,SGR_NONE,NULL,userproxyconnected,usererror,useroutbound,userclosed,userremap,AF_INET,issl);
 	else
@@ -1504,7 +1668,7 @@ int connectuser(int nuser)
 	if (user(nuser)->outsock == 0) 
 	{
 	    if(*user(nuser)->server)
-		p_log(LOG_ERROR,nuser,lngtxt(789),user(nuser)->login,user(nuser)->server,user(nuser)->port);
+		p_log(LOG_ERROR,nuser,lngtxt(789),user(nuser)->login,user(nuser)->network,user(nuser)->server,user(nuser)->port);
 	    return 0x0;
 	}
         user(nuser)->outstate=STD_CONN;

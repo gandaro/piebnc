@@ -1,4 +1,4 @@
-PLAYTRAFFICLOG [netzwerk']quelle abdatum abzeit bisdatum biszeit :filter
+PLAYTRAFFICLOG [netzwerk~]quelle abdatum abzeit bisdatum biszeit :filter
 oder
 PLAYTRAFFICLOG last
 ------------------------------------------------------------------------

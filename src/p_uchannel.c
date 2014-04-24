@@ -1,6 +1,5 @@
-/* $Id: p_uchannel.c,v 1.6 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_uchannel.c
+ *   psybnc, src/p_uchannel.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_uchannel.c,v 1.6 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_UCHANNEL
 
@@ -95,7 +90,6 @@ struct uchannelt *addchanneltouser(int usern, char *channel,int nowrite)
 {
     struct uchannelt *lkm,*llkm=NULL;
     char uc[255],uc1[255];
-    char cfg[]="ENTRY%d";
     char bf[400];
     pcontext;
     strmncpy(uc,channel,sizeof(uc));
@@ -297,30 +291,6 @@ int removenickfromchannel(struct uchannelt *channel, char *nick)
     return 0x0;    
 }
 
-/* remove a nick from all channels of a user */
-
-int removenickfromallchannels(int usern, char *nick)
-{
-    struct uchannelt *channel,*echannel;
-#ifdef INTNET
-    if(usern==-1)
-	channel=intchan;
-    else
-#endif
-	channel=user(usern)->channels;
-    while(channel!=NULL)
-    {
-	removenickfromchannel(channel,nick);
-	echannel=channel;
-	channel=channel->next;
-	if(echannel->users==NULL)
-	{
-	    removechannelfromuser(usern,echannel->name);
-	}
-    }
-    return 0x0;
-}
-
 /* nickchange */
 
 int nickchange(int usern, char *oldnick,char *newnick)
@@ -478,11 +448,34 @@ int removechannelfromuser(int usern, char *channel)
     return 0x0;
 }
 
+/* remove a nick from all channels of a user */
+
+int removenickfromallchannels(int usern, char *nick)
+{
+    struct uchannelt *channel,*echannel;
+#ifdef INTNET
+    if(usern==-1)
+	channel=intchan;
+    else
+#endif
+	channel=user(usern)->channels;
+    while(channel!=NULL)
+    {
+	removenickfromchannel(channel,nick);
+	echannel=channel;
+	channel=channel->next;
+	if(echannel->users==NULL)
+	{
+	    removechannelfromuser(usern,echannel->name);
+	}
+    }
+    return 0x0;
+}
+
 /* set initial channelmodes */
 
 int setchannelmode(struct uchannelt *lkm,char *mode, char *param)
 {
-    int i;
     char *par,*pt,*md;
     char sb[20],eb[20];
     strmncpy(lkm->modes,mode,sizeof(lkm->modes));
@@ -651,7 +644,7 @@ int sendnames(int usern, struct uchannelt *chan)
 	if(user(usern)->parent!=0) 
 	{
 	    userp=user(usern)->parent;
-	    ap_snprintf(token,sizeof(token),"#%s'",user(usern)->network);
+	    ap_snprintf(token,sizeof(token),"#%s~",user(usern)->network);
 	}
     }
 #ifdef INTNET
@@ -882,7 +875,6 @@ int convertlastwhois(int usern, char *lastwhois)
 {
     char *pt,*ept,*pt2;
     char lastsic[2048];
-    int chan=0;
     strmncpy(lastsic,lastwhois,sizeof(lastsic));
     ept=lastsic;
     while(ept!=NULL)
@@ -927,25 +919,26 @@ int loadchannels(int usern)
     ap_snprintf(bf,sizeof(bf),lngtxt(899),usern);
     for(i=0;i<40;i++)
     {
-	ap_snprintf(bf2,sizeof(bf2),lngtxt(900),i);	
-	rc=getini(lngtxt(901),bf2,bf);
-	if(rc==0)
-	{
-	    chan=addchanneltouser(usern,value,1);
-	    ap_snprintf(bf2,sizeof(bf2),lngtxt(902),i);
-	    rc=getini(lngtxt(903),bf2,bf);
-	    if(chan!=NULL) 
-	    {
-		chan->isentry=i;
-		if(rc==0)
-		{
-		    strcpy(chan->modes,"tnk");
-		    if(value[0]=='+') /* if its crypted */
-			strmncpy(chan->key,decryptit(value),sizeof(chan->key));
-		    else /* or not */
-			strmncpy(chan->key,value,sizeof(chan->key));
-		}
-	    }
-	}
+        ap_snprintf(bf2,sizeof(bf2),lngtxt(900),i);	
+        rc=getini(lngtxt(901),bf2,bf);
+        if(rc==0)
+        {
+            chan=addchanneltouser(usern,value,1);
+            ap_snprintf(bf2,sizeof(bf2),lngtxt(902),i);
+            rc=getini(lngtxt(903),bf2,bf);
+            if(chan!=NULL) 
+            {
+                chan->isentry=i;
+                if(rc==0)
+                {
+                    strcpy(chan->modes,"tnk");
+                    if(value[0]=='+') /* if its crypted */
+                    strmncpy(chan->key,decryptit(value),sizeof(chan->key));
+                    else /* or not */
+                    strmncpy(chan->key,value,sizeof(chan->key));
+                }
+            }
+        }
     }
+    return 0x0;
 }

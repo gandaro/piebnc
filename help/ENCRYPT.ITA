@@ -1,4 +1,4 @@
-ENCRYPT [network']password :#canale o nick
+ENCRYPT [network~]password :#canale o nick
 --------------------------------------------
 ENCRYPT cripta i messaggi per un canale od una persona, per permettere
 una maggiore privacy su irc. Devi decidere una key con la persona

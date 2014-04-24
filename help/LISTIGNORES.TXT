@@ -1,4 +1,4 @@
-LISTIGNORES [network']
+LISTIGNORES [network~]
 ----------------------
 Lists all added Ignores
 Example:

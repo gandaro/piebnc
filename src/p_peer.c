@@ -1,6 +1,5 @@
-/* $Id: p_peer.c,v 1.4 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_peer.c
+ *   psybnc, src/p_peer.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -20,13 +19,69 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_peer.c,v 1.4 2005/06/04 18:00:14 hisi Exp $";
-#endif
-
 #define P_PEER
 
 #include <p_global.h>
+
+/* MySQL for IP check */
+#ifdef MYSQL_IPCHECK
+#ifdef HAVE_MYSQL
+#include <mysql.h>
+int dbconnect();
+unsigned int mysqltimeout = MYSQL_TIMEOUT;
+void dbquery(char *query);
+
+MYSQL mysql, *sock = NULL;
+MYSQL_RES *res = NULL;
+MYSQL_ROW row;
+int dbconnect() 
+{
+    mysql_options(&mysql, MYSQL_OPT_CONNECT_TIMEOUT, (const char *)&mysqltimeout);
+    if (!(sock = mysql_real_connect(&mysql,MYSQL_SERVER,MYSQL_USER,MYSQL_PASS,MYSQL_DB,MYSQL_PORT,NULL,0)))
+    {
+        p_log(LOG_ERROR,-1,"[MySQL] Could not connect to to %s@%s using %s: %s", MYSQL_USER, MYSQL_SERVER, MYSQL_DB, mysql_error(&mysql));
+        return 0;
+    } else {
+/*		p_log(LOG_INFO,-1,"[MySQL] Connected to %s@%s using %s", MYSQL_USER, MYSQL_SERVER, MYSQL_DB); */
+        return 1;
+    }
+}
+
+void dbquery(char *query) 
+{
+	if(mysql_query(sock, query))
+	{
+		p_log(LOG_ERROR,-1,"[MySQL] Query (%s) failed (%s)", query, mysql_error(sock));
+        res = NULL;
+	} else {
+/*		p_log(LOG_INFO,-1,"[MySQL] Query: %s", query); */
+		res = mysql_store_result(sock);
+	}
+}
+
+void EndDbQuery(void) {
+/* p_log(LOG_INFO,-1,"Cleaning up..."); */
+    if (res != NULL) {
+        mysql_free_result(res);
+        res = NULL;
+    }
+
+    if (sock != NULL) {
+        mysql_close(sock);
+        sock = NULL;
+    }
+}
+
+char *escapequery (char *query) {
+  char *escaped = malloc(2*strlen(query)+1);
+
+  mysql_real_escape_string(&mysql, escaped, query, strlen(query));
+
+  return escaped;
+}
+
+#endif
+#endif
 
 /* check, if host is already connected */
 
@@ -191,6 +246,7 @@ int linklink(int npeer)
 	}
 	return linkrelay(npeer,lnk);
     }
+    return 0x0;
 }
 
 #endif
@@ -206,10 +262,8 @@ int userinboundsocket(int usern, int newsock)
 int linkpeer(int npeer)
 {
     int rc;
-    int rc2;
     struct usernodes *th;
     struct socketnodes *lkm;
-    int sck;
     char buf[200];
     char *pt;
     pcontext;
@@ -312,7 +366,7 @@ int linkpeer(int npeer)
 #ifndef PARTYCHANNEL
     sysparty(lngtxt(676),newpeer(npeer)->login);
 #endif
-    p_log(LOG_INFO,-1,lngtxt(677),newpeer(npeer)->login);
+    p_log(LOG_INFO,-1,lngtxt(677),newpeer(npeer)->login,currentsocket->sock->source);
     lkm=getpsocketbysock(newpeer(npeer)->insock);
     pcontext;
     if(lkm!=NULL)
@@ -426,7 +480,7 @@ int killoldlistener(int npeer)
     if(npeer==0) return 0x0;
     p_log(LOG_WARNING,-1,lngtxt(685),newpeer(npeer)->host,newpeer(npeer)->login);
     erasepeer(npeer);
-    return;	  
+    return 0x0;	  
 }
 
 /* if an new peer gets killed */
@@ -438,17 +492,13 @@ int erroroldlistener(int npeer,int errn)
     p_log(LOG_ERROR,-1,lngtxt(686),newpeer(npeer)->host,newpeer(npeer)->login);
     currentsocket->sock->destructor=NULL;
     erasepeer(npeer);
-    return;	  
+    return 0x0;	  
 }
 
 /* checking data coming on a peer */
 
 int checkoldlistener(int npeer)
 {
-    int rc;
-    int i;
-    struct socketnodes *lkm;
-    char buf[200];
     char *po;
     pcontext;
     if (newpeer(npeer)->state != STD_NOUSE) {
@@ -457,7 +507,7 @@ int checkoldlistener(int npeer)
 	     /* all your bases are belong to us */
 	     writesock(newpeer(npeer)->insock,lngtxt(687));
 	     erasepeer(npeer);
-	     return;
+	     return 0x0;
 	  }
           pcontext;
 	  parse();
@@ -507,7 +557,7 @@ int checkoldlistener(int npeer)
 	         if (linklink(npeer)==-1)
 		 {
 		     p_log(LOG_ERROR,-1,lngtxt(693),newpeer(npeer)->host,newpeer(npeer)->name);
-	             erasepeer(npeer);
+	         erasepeer(npeer);
 		     pcontext;
 		     return 0x0;		     
 		 }
@@ -516,19 +566,84 @@ int checkoldlistener(int npeer)
 #endif
 	  }
 	  pcontext;
-	  if (strlen(newpeer(npeer)->nick) != 0) {
-  	    if (strlen(newpeer(npeer)->login) != 0) {
-	      if (strlen(newpeer(npeer)->pass) != 0) {
-	          if (linkpeer(npeer) ==-1) {
-		     ssnprintf(newpeer(npeer)->insock,lngtxt(694),newpeer(npeer)->nick);
-		     p_log(LOG_ERROR,-1,lngtxt(695),newpeer(npeer)->login,newpeer(npeer)->host);
-	             erasepeer(npeer);
+	  if ((strlen(newpeer(npeer)->nick) != 0) && (strlen(newpeer(npeer)->login) != 0) && (strlen(newpeer(npeer)->pass) != 0)) {
+#ifdef MYSQL_IPCHECK
+#ifdef HAVE_MYSQL
+        /* This is the MySQL IP Check.
+            It uses a shared table for banning and for IP restricting an account. If an entry has a comment it is a ban, if not it is an IP restriction.
+            The comment is provided as is for the client when being rejected. The 'server' field is so a shared database can be used for multiple psyBNC instances.
+            The 'server' matches the PSYBNC.SYSTEM.ME name (can be undefined, empty). Using a * (star) in the table makes the entry match any psyBNC connected to that table.
+
+            We connect to the database every time to make sure we have a valid working connection. It could be optimized to keep-alive the connection, but guess performance wise it is not that big an issue,
+            unless you have a very high amount of users (re-)connecting constantly.
+        */
+        pcontext;
+        if (dbconnect() == 1) {
+            char tmpvar[300] = "";
+            int mysqlcount;
+				/* Check for banned IP or banned ident */
+				ap_snprintf(tmpvar, sizeof(tmpvar), "SELECT ip, ident, comments FROM `%s` WHERE (`server` = '%s' OR `server` = '*') AND (`ident` = '%s' OR `ip` = '%s') AND comments <> '' LIMIT 1", MYSQL_TABLE, me, escapequery(newpeer(npeer)->login), currentsocket->sock->source);
+				dbquery(tmpvar);
+                if (res != NULL) {
+                    if ((mysqlcount = mysql_num_rows(res)) != 0) { /* User matches some kind of ban. We kick them off */
+                        row = mysql_fetch_row(res);
+                        pcontext;
+                        ssnprintf(newpeer(npeer)->insock,lngtxt(2000),newpeer(npeer)->nick,row[2]);
+                        p_log(LOG_WARNING,-1,"User rejected by filter: %s from host %s (%s) (%s)", newpeer(npeer)->login, newpeer(npeer)->host, currentsocket->sock->source, row[2]);
+                        erasepeer(npeer);
+                        EndDbQuery();
+                        return 0x0;
+                    }
+                    /* Check if user has IP check enabled */
+                    ap_snprintf(tmpvar, sizeof(tmpvar), "SELECT ip FROM `%s` WHERE (`server` = '%s' OR `server` = '*') AND `ident` = '%s' AND comments = ''", MYSQL_TABLE, me, escapequery(newpeer(npeer)->login));
+                    dbquery(tmpvar);
+                    if ((mysqlcount = mysql_num_rows(res)) != 0) { /* User has IP check */
+                        ap_snprintf(tmpvar, sizeof(tmpvar), "SELECT ip FROM `%s` WHERE (`server` = '%s' OR `server` = '*') AND `ident` = '%s' AND `ip` = '%s' AND comments = '' LIMIT 1", MYSQL_TABLE, me, escapequery(newpeer(npeer)->login), currentsocket->sock->source);
+                        dbquery(tmpvar);
+                        if ((mysqlcount = mysql_num_rows(res)) != 0) { /* User has IP check and user matches */
+                            pcontext;
+                            p_log(LOG_INFO,-1,"[MySQL_IPCHECK] Successful match for ident %s. IP: %s", newpeer(npeer)->login, currentsocket->sock->source);
+                        } else { /* User has IP check and user mismatched */
+                            pcontext;
+                            ssnprintf(newpeer(npeer)->insock,lngtxt(694),newpeer(npeer)->nick,newpeer(npeer)->login);
+                            p_log(LOG_WARNING,-1,"Failed Authentification for %s from host %s (User IP %s did not match database)", newpeer(npeer)->login, newpeer(npeer)->host, currentsocket->sock->source);
+                            erasepeer(npeer);
+                            EndDbQuery();
+                            return 0x0;
+                        }
+                    }
+                } else { /* MySQL query failed or somehow bugged up, so we wipe off the user */
+                    pcontext;
+                    ssnprintf(newpeer(npeer)->insock,":-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Failed to handle the incoming connection. Please try again in a while", newpeer(npeer)->nick);
+                    p_log(LOG_ERROR,-1,"Failed to handle the incoming connection from %s@%s. MySQL query failed. See previous log entry for details", newpeer(npeer)->login,newpeer(npeer)->host);
+                    erasepeer(npeer);
+                    EndDbQuery();
+                    return 0x0;
+                }
+                EndDbQuery();
+            } else { /* Connection to MySQL failed or somehow bugged up, so we wipe off the user */
+                pcontext;
+                ssnprintf(newpeer(npeer)->insock,":-psyBNC!psyBNC@psyBNC.dk PRIVMSG %s :Failed to handle the incoming connection. Please try again in a while", newpeer(npeer)->nick);
+                p_log(LOG_ERROR,-1,"Failed to handle the incoming connection from %s@%s. MySQL failed to connect", newpeer(npeer)->login,newpeer(npeer)->host);
+                erasepeer(npeer);
+                return 0x0;
+            }
+#endif
+#endif
+            if (linkpeer(npeer) ==-1) {
+            ssnprintf(newpeer(npeer)->insock,lngtxt(694),newpeer(npeer)->nick,newpeer(npeer)->login);
+            p_log(LOG_ERROR,-1,lngtxt(695),newpeer(npeer)->login,newpeer(npeer)->host);
+            erasepeer(npeer);
+#ifdef MYSQL_IPCHECK
+#ifdef HAVE_MYSQL
+				 EndDbQuery();
+#endif
+#endif
 		  }
-	      }
-	    }  
-	  }
+      }
     }
     pcontext;
+    return 0x0;
 }
 
 /* checking a hosts allow */
@@ -556,25 +671,22 @@ int checkhostallows(char *host)
 
 int checknewlistener(int i)
 {
-    int ret,rc;
     int asocket;
     int npeer;
-    int issl=0;
-    struct socketnodes *lkm,*akm;
-    int listensocket;
+    int dummy;
     pcontext;
     asocket = currentsocket->sock->syssock;
     if (checkpeerhostname(accepthost) == -1) {
-	write(asocket,lngtxt(698),39);
-	killsocket(asocket);
-	return;
+    	dummy = write(asocket,lngtxt(698),39);
+	    killsocket(asocket);
+    	return 0x0;
     }
     npeer=getnewpeer();
     if (npeer == -1) {
-	p_log(LOG_ERROR,-1,lngtxt(699),accepthost);
+    	p_log(LOG_ERROR,-1,lngtxt(699),accepthost);
         writesock(asocket,lngtxt(700));
-	killsocket(asocket);
-	return;
+    	killsocket(asocket);
+	    return 0x0;
     }
     ssnprintf(asocket,"%s%s%s",lngtxt(701),APPNAME,APPVER);
     currentsocket->sock->param=npeer;
@@ -584,7 +696,7 @@ int checknewlistener(int i)
     strmncpy(newpeer(npeer)->host,accepthost,sizeof(newpeer(npeer)->host));
     newpeer(npeer)->state = STD_NEWCON;
     newpeer(npeer)->delayed = 0;
-    return;
+    return 0x0;
 }
 /* create listening sock */
 
@@ -599,7 +711,7 @@ void killed ()
 void errored ()
 {
    errn = 1;
-   return;
+   return; /* Not needed? */
 }
 
 /* creating listening ports on the hosts given in the config for the demon */
@@ -608,7 +720,6 @@ int createlisteners ()
 {
   struct sigaction sv;
   struct sigaction sx;
-  struct socketnodes *lkm;
   int proto;
   int rc;
   char entry[40];
@@ -618,15 +729,15 @@ int createlisteners ()
   int successes=0;
   char *ho;
 #ifdef IPV6
-  struct sockaddr_in6 sin6;
   unsigned char ip6[16];
-  int ernu;
+#ifdef SUNOS
+    int ernu;
+#endif
 #endif
 #ifdef SUNOS
   struct hostent *hesun=NULL;
 #endif
   struct sockaddr_in sin;
-  unsigned long uip;
   struct hostent *he;
   dcchost[0]=0;
   dcc6host[0]=0;
@@ -643,6 +754,7 @@ int createlisteners ()
   umask( ~S_IRUSR & ~S_IWUSR );
   srand( time( NULL) ); /* here we randomize to the timer (for randstring) */
   srandom(rand()); /* salt of random bases on rand of time */
+
   if(getini(lngtxt(703),lngtxt(704),lngtxt(705))==0)
   {
       if(inet_addr(value)<=0)
@@ -672,13 +784,7 @@ int createlisteners ()
 	  }
 	  if(strmcmp(host,"*"))
 	  {
-#ifdef IPV6
-	      if(createlistener("*",listenport,AF_INET,0,checknewlistener,erroroldlistener,checkoldlistener,killoldlistener)>0) successes++;
-
-	      proto=AF_INET6;
-#else
-	      proto=AF_INET;
-#endif
+	      proto = AF_INET;
 	  } else {
 	      /* at startup, always blocking dns will be used. */
 	      he=NULL;

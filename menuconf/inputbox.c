@@ -1,4 +1,3 @@
-/* $Id: inputbox.c,v 1.2 2005/06/04 17:55:53 hisi Exp $ */
 /*
  *  inputbox.c -- implements the input box
  *

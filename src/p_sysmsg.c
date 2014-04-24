@@ -1,6 +1,5 @@
-/* $Id: p_sysmsg.c,v 1.4 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_sysmsg.c
+ *   psybnc, src/p_sysmsg.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -20,16 +19,13 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_sysmsg.c,v 1.4 2005/06/04 18:00:14 hisi Exp $";
-#endif
-
 #define P_SYSMSG
 
 #include <p_global.h>
 
 /* querying text to the linked network */
 
+int querybounce(int usern);
 int issys=0;
 
 int 
@@ -199,6 +195,7 @@ int lostlink(char *namelink)
 #ifdef INTNET
     removeinternal(namelink);
 #endif
+    return 0x0;
 }
 
 /* sending system notice to a user */
@@ -268,6 +265,7 @@ int broadcast(int nlink)
 	}
 	th=th->next;
     }
+    return 0x0;
 }
 
 /* broadcasting a link message to #nlink */
@@ -295,6 +293,7 @@ int broadcasttolink(int nlink)
 	}
 	th=th->next;
     }
+    return 0x0;
 }
 
 /* query to a user on the bounce */
@@ -305,12 +304,14 @@ int querybounce(int usern)
     int rc;
     int all;
     int ext;
-    char *pt,*pt1,*pt2;
+#ifdef PARTYCHANNEL
+    char *pt,*pt2;
     struct stringarray *lkm,*par;
-    char buf[4096];
     char sic[500];
     char sic2[500];
     int rr=0;
+#endif
+    char buf[4096];
     po = ircto;
     po++;
     ext=1;
@@ -446,12 +447,13 @@ int querybounce(int usern)
 	   }						   
 	}
       } else {
-	ssnprintf(user(usern)->insock,lngtxt(856),user(usern)->nick,po);
-      }  
-      if (all==0) ext=0;
-      rc++;
-      if(rc>=MAXUSER) ext=0;
+        ssnprintf(user(usern)->insock,lngtxt(856),user(usern)->nick,po);
+    }  
+    if (all==0) ext=0;
+    rc++;
+    if(rc>=MAXUSER) ext=0;
     }
+    return 0x0;
 }
 
 /* query to a dcc bot */
@@ -460,7 +462,6 @@ int querybot(int usern)
 {
     struct datalinkt *th;
     char *po;
-    int rc;
     int userp;
     if (user(usern)->parent!=0) userp=user(usern)->parent; else userp=usern;
     po = ircto;

@@ -1,4 +1,4 @@
-LISTSERVERS [network']
+LISTSERVERS [network~]
 ----------------------
 displays your serverlist. 
 See also: DELSERVER ADDSERVER

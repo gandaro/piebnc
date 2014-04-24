@@ -1,6 +1,5 @@
-/* $Id: psybnc.c,v 1.4 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/psybnc.c
+ *   psybnc, src/psybnc.c
  *   Copyright (C) 2003 the most psychoid  and
  *                           the cool lam3rz IRC Group, IRCnet
  *			     http://www.psychoid.lam3rz.de
@@ -30,10 +29,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: psybnc.c,v 1.4 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_MAIN
 
@@ -104,9 +99,9 @@ int bncalarm(void)
 {
     slice++;
     delayinc=1;
-    if(slice==1)
-	checkclients();
-    else 
+//    if(slice==1)
+//	checkclients(); /* Moved to bncmain for faster connects */
+//    else 
     if(slice==2)
         checklinks();
     else 
@@ -119,7 +114,8 @@ int bncalarm(void)
 	checkdcctimeouts();
 	slice=0;
     }
-    return;
+    return 0x0;
+    /* return */
 }
 
 /* main bounce-loop */
@@ -129,6 +125,7 @@ int bncmain(void) {
    delayinc=1;
    while(1)
    {
+       checkclients();
        em+=socketdriver();
        if(em>=5)
        {
@@ -152,7 +149,7 @@ int printbanner(void)
            fprintf(stdout,"%s", APPVER);
    }
    if(getuid()==0)
-       fprintf(stdout,lngtxt(990));
+       fprintf(stdout, "%s", lngtxt(990));
    fflush(stdout);
    return 0x0;
 }
@@ -164,10 +161,8 @@ main (int argc, char **argv)
 {
   int rc;
   char *pt;
-  char buf[200];
   char *bversion;
   FILE *pidfile,*conffile;
-  int i;
   if(argc==2)
   {
       strmncpy(configfile,argv[1],sizeof(configfile));
@@ -177,7 +172,7 @@ main (int argc, char **argv)
   conffile=fopen(configfile,"r");
   if(conffile==NULL)
   {
-     printf("Configuration File %s not found, aborting\nRun 'make menuconfig' for creating a configuration or create the file manually.\n",conffile); /* rcsid */
+     printf("Configuration File %s not found, aborting\nRun 'make menuconfig' for creating a configuration or create the file manually.\n",configfile); /* rcsid */
      exit (0x0);
   }
   fclose(conffile);
@@ -202,7 +197,7 @@ main (int argc, char **argv)
   ap_snprintf(logfile,sizeof(logfile),lngtxt(993));
   rc = getini(lngtxt(994),lngtxt(995),INIFILE);
   if (rc != 0) {
-     printf(lngtxt(996));
+     printf("%s", lngtxt(996));
      exit (0x0);
   }
   listenport = atoi(value);
@@ -216,7 +211,7 @@ main (int argc, char **argv)
   ap_snprintf(me,sizeof(me),"%s",value);
   rc = getini(lngtxt(998),lngtxt(999),INIFILE);
   if (rc < 0) {
-     printf(lngtxt(1000));
+     printf("%s", lngtxt(1000));
      ap_snprintf(value,sizeof(value),lngtxt(1001));
   }
   ap_snprintf(logfile,sizeof(logfile),"%s",value);
@@ -225,17 +220,27 @@ main (int argc, char **argv)
   socketnode=(struct socketnodes *) pmalloc(sizeof(struct usernodes));
   socketnode->sock=NULL;
   socketnode->next=NULL;
+
+  #ifdef IPV6
+  /* set the default ipv6 preference for users without a PREFERIPV6 setting */
+  rc = getini("SYSTEM", "DEFAULTIPV6", INIFILE);
+  if (rc == 0)
+  {
+     defaultipv6 = atoi(value);
+  }
+  #endif
+
   /* creating the demon socket */
   rc = createlisteners();
   if (rc == 0) {
-    printf(lngtxt(1002));
+    printf("%s", lngtxt(1002));
     exit (0x0);
   }
   /* creating background */
   pidfile = fopen(lngtxt(1003),"w");
   if(pidfile==NULL)
   {
-      printf(lngtxt(1004));
+      printf("%s", lngtxt(1004));
       exit(0x0);
   }
   if(mainlog!=NULL)
@@ -244,13 +249,17 @@ main (int argc, char **argv)
       mainlog=NULL;
   }
   fflush(stdout);
+  
+
   pid = fork();
+  //pid = 0;
   if (pid < 0) {
   
   }
   if (pid == 0) {
      rc= errorhandling();
      makesalt();
+
 #ifdef HAVE_SSL
      initSSL();
      pcontext;
@@ -293,12 +302,15 @@ main (int argc, char **argv)
      exit (0x0);
   }  
   pcontext;
-#ifndef BLOCKDNS
-  if(init_dns_core()==0)
-  {
-     dns_err(0,1);
-  }
-#endif
+//#ifndef BLOCKDNS
+//  if(init_dns_core()==0)
+//  {
+//     dns_err(0,1);
+//  }
+//#endif
+
+  p_dns_init();
   bncmain();
+  return 0x0;
 }
 

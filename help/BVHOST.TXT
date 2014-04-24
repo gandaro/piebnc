@@ -1,4 +1,4 @@
-VHOST [network'][link number or nick] :host
+VHOST [network~][link number or nick] :host
 -------------------------------------------
 sets your VHOST - You can also set the bouncer to use your virtual hosts if 
 present on the server from which the bouncer is running. 

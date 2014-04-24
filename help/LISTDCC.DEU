@@ -1,4 +1,4 @@
-LISTDCC [netzwerk']
+LISTDCC [netzwerk~]
 -------------------
 Listet die BOT-DCC-Verbindungen, welche derzeit hinzugefuegt sind.
 Beispiel:: 

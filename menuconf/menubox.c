@@ -1,4 +1,3 @@
-/* $Id: menubox.c,v 1.3 2005/06/04 17:55:53 hisi Exp $ */
 /*
  *  menubox.c -- implements the menu box
  *
@@ -27,7 +26,7 @@
  *
  *    *)  A bugfix for the Page-Down problem
  *
- *    *)  Formerly when I used Page Down and Page Up, the cursor would be set
+ *    *)  Formerly when I used Page Down and Page Up, the cursor would be set 
  *        to the first position in the menu box.  Now lxdialog is a bit
  *        smarter and works more like other menu systems (just have a look at
  *        it).
@@ -90,8 +89,8 @@ print_item (WINDOW * win, const char *item, int choice, int selected, int hotkey
     wattrset (win, selected ? item_selected_attr : item_attr);
     mvwaddstr (win, choice, item_x, menu_item);
     if (hotkey) {
-	wattrset (win, selected ? tag_key_selected_attr : tag_key_attr);
-	mvwaddch(win, choice, item_x+j, menu_item[j]);
+    	wattrset (win, selected ? tag_key_selected_attr : tag_key_attr);
+    	mvwaddch(win, choice, item_x+j, menu_item[j]);
     }
 }
 
@@ -290,17 +289,17 @@ dialog_menu (const char *title, const char *prompt, int height, int width,
         for (i = choice+1; i < max_choice; i++) {
 		j = first_alpha(items[(ascroll+i)*2+1], "YyNnMm");
 		if (key == tolower(items[(ascroll+i)*2+1][j]))
-			break;
+                	break;
 	}
 	if (i == max_choice)
-		for (i = 0; i < max_choice; i++) {
+       		for (i = 0; i < max_choice; i++) {
 			j = first_alpha(items[(ascroll+i)*2+1], "YyNnMm");
 			if (key == tolower(items[(ascroll+i)*2+1][j]))
-				break;
+                		break;
 		}
 	}
 
-	if (max_choice && (i < max_choice ||
+	if (max_choice && (i < max_choice || 
             key == KEY_UP || key == KEY_DOWN ||
             key == '-' || key == '+' ||
             key == KEY_PPAGE || key == KEY_NPAGE)) {
@@ -347,10 +346,10 @@ dialog_menu (const char *title, const char *prompt, int height, int width,
 	        scrollok (menu, TRUE);
                 for (i=0; (i < max_choice); i++) {
                     if (ascroll > 0) {
-			wscrl (menu, -1);
-			ascroll--;
-			print_item (menu, items[ascroll * 2 + 1], 0, FALSE,
-			(items[ascroll*2][0] != ':'));
+                	wscrl (menu, -1);
+                	ascroll--;
+                	print_item (menu, items[ascroll * 2 + 1], 0, FALSE,
+                	(items[ascroll*2][0] != ':'));
                     } else {
                         if (choice > 0)
                             choice--;
@@ -364,8 +363,8 @@ dialog_menu (const char *title, const char *prompt, int height, int width,
 			scrollok (menu, TRUE);
 			scroll(menu);
 			scrollok (menu, FALSE);
-			ascroll++;
-			print_item (menu, items[(ascroll+max_choice-1)*2+1],
+                	ascroll++;
+                	print_item (menu, items[(ascroll+max_choice-1)*2+1],
 			            max_choice-1, FALSE,
 			            (items[(ascroll+max_choice-1)*2][0] != ':'));
 		    } else {

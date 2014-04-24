@@ -1,4 +1,3 @@
-/* $Id: match.c,v 1.2 2005/06/04 18:00:14 hisi Exp $ */
 /*
  * This code was useful also for psybnc.c, so why should we change it
  */
@@ -23,6 +22,7 @@
  * I hereby release this code into the public domain
  *
  * =================================================================== */
+#include <string.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>

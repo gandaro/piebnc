@@ -1,4 +1,4 @@
-/* $Id: dialog.h,v 1.3 2005/06/04 17:55:53 hisi Exp $ */
+
 /*
  *  dialog.h -- common declarations for all dialog modules
  *
@@ -90,7 +90,7 @@ extern char selection[100];
 #define ACS_DARROW 'v'
 #endif
 
-/*
+/* 
  * Attribute names
  */
 #define screen_attr                   attributes[0]
@@ -160,7 +160,7 @@ int dialog_msgbox (const char *title, const char *prompt, int height,
 		int width, int pause);
 int dialog_textbox (const char *title, const char *file, int height, int width);
 int dialog_menu (const char *title, const char *prompt, int height, int width,
-		int menu_height, const char *choice, int item_no,
+		int menu_height, const char *choice, int item_no, 
 		const char * const * items);
 int dialog_checklist (const char *title, const char *prompt, int height,
 		int width, int list_height, int item_no,

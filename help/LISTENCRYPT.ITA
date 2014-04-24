@@ -1,4 +1,4 @@
-LISTENCRYPT [network']
+LISTENCRYPT [network~]
 ----------------------
 LISTENCRYPT mostra tutte le entry per le criptazioni con un
 indice numerico.

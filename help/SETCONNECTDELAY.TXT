@@ -1,0 +1,10 @@
+SETCONNECTDELAY [duration in seconds]
+-------------------------------------------
+Changes the delay psyBNC (re)connects users to their IRC-servers.
+Duration must be an integer value between 0 (zero) and 600 seconds.
+This affects all users and are available for bounceadmins only.
+If set to zero, NO users will (re)connect at all.
+Each 10th minute, a log will be put in the psybnc.log if SETCONNECTDELAY is 0.
+Example:
+/SETCONNECTDELAY 60
+

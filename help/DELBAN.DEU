@@ -1,4 +1,4 @@
-DELBAN [netzwerk'] :nummer
+DELBAN [netzwerk~] :nummer
 --------------------------
 Entfernt einen Ban aus der BanListe. Um herauszufinden, welche Nummer
 anzugeben ist, benutze LISTBANS.

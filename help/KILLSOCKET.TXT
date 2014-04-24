@@ -1,0 +1,9 @@
+KILLSOCKET <ID/IP>
+------------------
+KILLSOCKET allows you to kill one or more sockets matching a
+given ID or a specific IP.
+Example:
+/KILLSOCKET 4
+would remove (kill) the socket called 4. The current sockets can
+be viewed with SOCKSTAT.
+See also: SOCKSTAT and FIXLISTENER

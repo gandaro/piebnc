@@ -1,4 +1,4 @@
-PLAYTRAFFICLOG [network']sorgente datainizio orainizio datafine orafine :filtro
+PLAYTRAFFICLOG [network~]sorgente datainizio orainizio datafine orafine :filtro
 oppure
 PLAYTRAFFICLOG last
 -----------------------------------------------------------------------

@@ -2,7 +2,11 @@
 # This is the crontab script for psybnc.
 #
 # Please change the following path to your psybnc-directory.
-
+#
+# To run this script through cron, edit your crontab with crontab -e
+# Then insert a line similar to:
+# 0,10,20,30,40,50 * * * * /home/foobar/psybnc/psybncchk
+# That will cause crontab to check if psyBNC is running every tenth minute
 PSYBNCPATH=/home/foobar/psybnc
 
 # the rest should be kept as is

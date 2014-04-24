@@ -1,4 +1,4 @@
-DELENCRYPT [netzwerk']nummer
+DELENCRYPT [netzwerk~]nummer
 ----------------------------
 DELENCRYPT entfernt eine hinzugefuegte Verschluesselung
 aus der Liste der Channel- oder Nutzerverschluesselungen.

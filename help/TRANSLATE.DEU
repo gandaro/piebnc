@@ -1,4 +1,4 @@
-TRANSLATE [netzwerk']#channel/nutzer :sprache-von sprache-zu
+TRANSLATE [netzwerk~]#channel/nutzer :sprache-von sprache-zu
 ------------------------------------------------------------
 TRANSLATE ermoeglicht das Hinzufuegen von Uebersetzern fuer
 Channels und Nutzer. Die Nachrichten in den Channels bzw. von 

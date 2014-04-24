@@ -1,4 +1,4 @@
-ADDLOG [network']source :filter
+ADDLOG [network~]source :filter
 -------------------------------
 ADDLOG allows you to add an entry to the logging specifications
 for traffic logging.

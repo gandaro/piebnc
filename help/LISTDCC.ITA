@@ -1,4 +1,4 @@
-LISTDCC [network']
+LISTDCC [network~]
 ------------------
 lista le connessioni verso i bot correntemente presenti.
 Esempio

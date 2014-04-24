@@ -1,0 +1,23 @@
+This document provides information regarding MySQL IP check.
+If it has been enabled and MySQL is present, you need to configure some variables in config.h
+as well as prepare a MySQL database.
+
+Please add the following entries to config.h manually:
+#define MYSQL_SERVER "localhost"
+#define MYSQL_USER "psybnc"
+#define MYSQL_PASS "some-password"
+#define MYSQL_DB "psybnc"
+#define MYSQL_TABLE "iplock"
+#define MYSQL_TIMEOUT 2
+
+Please create a MySQL database with the following table:
+CREATE TABLE IF NOT EXISTS `iplock` (
+  `id` int(5) unsigned NOT NULL AUTO_INCREMENT,
+  `ident` varchar(10) NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `server` varchar(20) NOT NULL DEFAULT '*',
+  `comments` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+Please see /BHELP when logged on the bouncer for the administration commands for the feature.

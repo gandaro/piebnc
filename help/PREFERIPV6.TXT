@@ -1,0 +1,13 @@
+PREFERIPV6 [user|network~] :[0|1]
+--------------------------------
+Sets whether or not to prefer IPv6 addresses when doing DNS lookups.
+If enabled the bouncer will try IPv6 before trying IPv4 when connecting.
+It is possible as a BounceAdmin to change a users primary network.
+If set this overrides what was globally set with DEFAULTIPV6.
+The default value is 0.
+Example:
+PREFERIPV6 EFNet~1
+(Prefers IPv6 for the network EFNet)
+PREFERIPV6 TestIdent:0
+(Prefers IPv4 over IPv6 for TestIdents primary network
+See also: DEFAULTIPV6

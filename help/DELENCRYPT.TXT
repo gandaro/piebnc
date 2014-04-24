@@ -1,4 +1,4 @@
-DELENCRYPT [network']number
+DELENCRYPT [network~]number
 ---------------------------
 DELENCRYPT allows you to remove an added ENCRYPT entry from
 the list of Encryption-Settings. See /LISTENCRYPT to get

@@ -1,4 +1,4 @@
-DELAUTOOP [network']number
+DELAUTOOP [network~]number
 --------------------------
 cancella un autoop per numero.
 Il numero puoi ottenerlo con /LISTAUTOOPS.

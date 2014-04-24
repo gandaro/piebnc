@@ -1,4 +1,4 @@
-ADDSERVER [network'][S=]server :port password
+ADDSERVER [network~][S=]server :port password
 ---------------------------------------------
 aggiunge un nuovo server IRC alla lista. Puoi aggiungere diversi servers. Se il
 bouncer non puo' connettersi ad uno di essi provera' il successivo in lista.

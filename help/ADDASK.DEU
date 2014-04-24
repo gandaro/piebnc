@@ -1,4 +1,4 @@
-ADDASK [netzwerk'][#chan] password :hostmask oderr )bot
+ADDASK [netzwerk~][#chan] password :hostmask oderr )bot
 --------------------------------------------------------
 Du kannst Deinen Bouncer so einstellen, dass er Bots oder andere 
 Nutzer nach Op fragt, auch, wenn Du nicht zum Bouncer verbunden bist.

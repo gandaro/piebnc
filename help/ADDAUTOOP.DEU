@@ -1,4 +1,4 @@
-ADDAUTOOP [netzwerk']#channel :hostmaske
+ADDAUTOOP [netzwerk~]#channel :hostmaske
 ----------------------------------------
 Dieser Befehl ermoeglicht das Hinzufuegen von Nutzern,
 welche autmatisch geopped werden, wenn sie den Channel

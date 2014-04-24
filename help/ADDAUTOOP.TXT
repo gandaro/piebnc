@@ -1,4 +1,4 @@
-ADDAUTOOP [network']#channel :hostmask
+ADDAUTOOP [network~]#channel :hostmask
 --------------------------------------
 This command allows you to add Users for being autoopped if 
 they join the channel.

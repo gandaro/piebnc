@@ -1,6 +1,5 @@
-/* $Id: p_idea.c,v 1.3 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_idea.c
+ *   psybnc, src/p_idea.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -31,11 +30,6 @@
  *
  */
 
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_idea.c,v 1.3 2005/06/04 18:00:14 hisi Exp $";
-#endif
-
 /* IDEA - Encryption Algorithm 
  * Implementation by psychoid
  * normal c - should also be portable :)
@@ -60,8 +54,13 @@ extern char ctxt[50];
 extern char cfunc[60];
 extern int cline;
 
-#define pcontext { strmncpy(ctxt,__FILE__,sizeof(ctxt));strmncpy(cfunc,__FUNCTION__,sizeof(cfunc)); cline=__LINE__; }
-#define pmalloc(n) __pmalloc((n),__FILE__,__FUNCTION__,__LINE__)
+char *strmncpy(char *dest, char *source, size_t len);
+
+unsigned long *__pmalloc(unsigned long size,char *module,char *function,int line);
+void _pfree(void * pointer,char *module, char *function, int line);
+
+#define pcontext { strmncpy(ctxt,__FILE__,sizeof(ctxt));strmncpy(cfunc,(char*)__FUNCTION__,sizeof(cfunc)); cline=__LINE__; }
+#define pmalloc(n) __pmalloc((n),__FILE__,(char*)__FUNCTION__,__LINE__)
 
 #ifdef CRYPT
 
@@ -104,7 +103,7 @@ unsigned short IDEA_MUL(unsigned short x,unsigned short y)
 
 unsigned short MulInv(unsigned short x)
 {
-    unsigned short t0, t1, q, y;
+    unsigned short t0, t1, q = 0, y;
     pcontext;
     if (x<=1)
     {
@@ -155,7 +154,7 @@ void generatePartKeys()
     }
     for(i=0;j<IDEAKEYLEN;j++) {
 	i++;
-	ek[i+7]=(ek[i & 7] <<9) | (ek[i + 1 & 7] >> 7);
+	ek[i+7]=(ek[i & 7] <<9) | (ek[(i + 1) & 7] >> 7);
 	ek+=i & 8;
 	i &= 7;
     }
@@ -229,6 +228,8 @@ int IDEAKEY_generate(char *UserKey)
     else
 	memcpy((void *)IDEAUserKey,(void *)UserKey,16);
     generatePartKeys();
+
+    return 0;
 }
 
 int IDEAKEY_clear()
@@ -237,13 +238,15 @@ int IDEAKEY_clear()
     memset(IDEAUserKey,0x0,sizeof(IDEAUserKey));    
     memset(IDEAEncryptionKey,0x0,sizeof(IDEAEncryptionKey));    
     memset(IDEADecryptionKey,0x0,sizeof(IDEADecryptionKey));    
+
+    return 0;
 }
 
 /* the cipher routine, main part of this little snippet */
 void cipher(unsigned char const inbuf[8], unsigned char outbuf[8], unsigned short const *key)
 {
     register unsigned short x1,x2,x3,x4,s2,s3;
-    unsigned short *in,*sout;
+    unsigned short *sout;
     unsigned short out[4];    
     unsigned char cout[8];
     int r = IDEAROUNDS;
@@ -363,9 +366,9 @@ void IDEA_keyset(char *key)
     pcontext;
     if (*key==0)
     {
-	generateKey_start;
-	generateKey_action;
-	generateKey_end;
+	generateKey_start();
+	generateKey_action();
+	generateKey_end();
     } else
 	IDEAKEY_generate(key);
     return;
@@ -403,7 +406,6 @@ int wrong=0;
 unsigned int unhashdot(unsigned char *hash)
 {
     unsigned int lf=baselen;
-    unsigned char *pt;
     unsigned int erg=0;
     unsigned long ln=0;
     wrong=0;
@@ -493,13 +495,14 @@ char *IDEA_getdecryptionkey()
 char *IDEA_gethashedencryptionkey()
 {
     char *dkey;
-    char *hsh;
     unsigned size;
-    char *ekey;
-    int chr;
+
     pcontext;
     dkey=IDEA_getdecryptionkey();
     size=IDEAKEYLEN * 2;
+
+    // TODO: This function didn't return anything?! It doesn't appear to be used tho.
+    return NULL;
 }
 
 char *IDEA_gethasheddecryptionkey()

@@ -1,4 +1,4 @@
-SETLEAVEMSG [network']messaggio
+SETLEAVEMSG [network~]messaggio
 --------------------------
 Imposta un messaggio che verra' inviato ai canale in cui sei
 quando esci dal bouncer.

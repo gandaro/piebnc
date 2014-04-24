@@ -1,4 +1,4 @@
-ADDBAN [network'][#canale] motivo :hostmask
+ADDBAN [network~][#canale] motivo :hostmask
 -----------------------------------------
 Il bouncer banna le persone che corrispondono ad una entry presente
 in lista anche se non sei connesso ad esso.

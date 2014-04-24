@@ -1,0 +1,3 @@
+SETREALNAME [network~] :real name
+--------------------------------
+sets your real name

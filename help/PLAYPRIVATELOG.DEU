@@ -1,4 +1,4 @@
-PLAYPRIVATELOG [netzwerk']
+PLAYPRIVATELOG [netzwerk~]
 --------------------------
 Falls private Nachrichten an den Nutzer in seiner Abwesenheit geschickt
 wurden, werden diese im private Log vermerkt. Mit PLAYPRIVATELOG wird 

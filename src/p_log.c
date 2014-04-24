@@ -1,6 +1,5 @@
-/* $Id: p_log.c,v 1.9 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_log.c
+ *   psybnc, src/p_log.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -20,17 +19,13 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_log.c,v 1.9 2005/06/04 18:00:14 hisi Exp $";
-#endif
-
 #define P_LOG
 
 #include <p_global.h>
 
 /* write to log */
 
-int __p_log (char *what, int usern,int level) {
+int __log (char *what, int usern,int level) {
   char tx [20];
   time_t tm;
   time ( &tm );
@@ -62,7 +57,7 @@ p_log(int level, int usern, char *format,...)
     inwrite=1;
     va_start(va,format);
     ap_vsnprintf(buf,sizeof(buf),format,va);
-    __p_log(buf,usern,level);
+    __log(buf,usern,level);
     va_end(va);
     inwrite=0;
     return strlen(buf);
@@ -72,7 +67,6 @@ p_log(int level, int usern, char *format,...)
 
 int checkforlog ( int usern ) {
   char fname[40];
-  FILE *salt;
   FILE *log;
   pcontext;
   strmncpy(fname,lngtxt(566),sizeof(fname));
@@ -141,7 +135,7 @@ int playprivatelog ( int usern ) {
   ssnprintf(user(usern)->insock,lngtxt(576),user(usern)->nick);
   while(fgets(buf,sizeof(buf),log)) {
       pt=buf;
-      if(*pt=='\'') pt++; /* stripping none-network msgs */
+      if(*pt=='~') pt++; /* stripping none-network msgs */
       ssnprintf(user(usern)->insock,lngtxt(577),user(userp)->nick,pt);
   }      
   ssnprintf(user(usern)->insock,lngtxt(578),user(userp)->nick);
@@ -188,8 +182,7 @@ int playtrafficlog ( int usern )
   char buf [4200];
   char fname[40];
   int last=0;
-  char *apt;
-  int rc;
+  int rc=0;
   char *pt,*ept;
   int fyy=0,fmm=0,fdd=0,tyy=0,tmm=0,tdd=0,fh=0,fs=0,fm=0,th=0,ts=0,tm=0;
   int xyy,xmm,xdd,xh,xm,xs;
@@ -334,7 +327,6 @@ int eraseprivatelog ( int usern ) {
 /* backup main log */
 
 int erasemainlog ( int usern ) {
-  char fname[40];
   int userp;
   pcontext;
   if (user(usern)->parent!=0) userp=user(usern)->parent; else userp=usern;

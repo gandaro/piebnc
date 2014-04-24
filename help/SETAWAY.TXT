@@ -1,4 +1,4 @@
-SETAWAY [network']:text
+SETAWAY [network~]:text
 -----------------------
 This command allows you to set an away-text if you leave the bouncer.
 The text will be seen in your whois.

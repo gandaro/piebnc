@@ -1,6 +1,5 @@
-/* $Id: convconf.c,v 1.3 2005/06/04 18:01:32 hisi Exp $ */
 /************************************************************************
- *   psybnc2.2.2, tools/convconf.c
+ *   psybnc, tools/convconf.c
  *   Copyright (C) 2001 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: convconf.c,v 1.3 2005/06/04 18:01:32 hisi Exp $";
-#endif
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -203,9 +198,13 @@ int main(int argc,char **argv)
 	}
     }
     fconfif=fopen("config.h","r");
-
-    if(fconfif!=NULL)
+    if(fconfif==NULL)
+    {
+	fconfif=fopen("config.h","w");
+	fprintf(fconfif,"/* Empty Config File */\n");
 	fclose(fconfif);
-
+    } else {
+	fclose(fconfif);
+    }
     exit(0x0);
 }

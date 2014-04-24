@@ -81,3 +81,6 @@ $(SRC)snprintf.o : $(SRC)snprintf.c $(SRC)p_global.h config.h
 
 $(SRC)bsd-setenv.o : $(SRC)bsd-setenv.c $(SRC)p_global.h config.h
 	$(CC) $(INCLUDE) -c $(CFLAGS) $(DEFINE) $(SRC)bsd-setenv.c -o $(SRC)bsd-setenv.o
+
+$(SRC)p_dns.o : $(SRC)p_dns.c $(SRC)p_global.h config.h
+	$(CC) $(INCLUDE) -c $(CFLAGS) $(DEFINE) $(SRC)p_dns.c -o $(SRC)p_dns.o

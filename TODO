@@ -2,8 +2,22 @@ Bugs
 - dcc chats filled with big amounts of data get cutted / outputed from wrong nicks (chotaire)
 - scripting creates zombies on freebsd4.7 (netOxide)
 - #channel:*.tld doesnt get logged correctly (Borys)
+- Language files are out of sync. german.lng and italiano.lng must be brought up-2-date before public release
 
-Roadmap Feature-Requests (2.4, not before july 2004)):
+Help files that needs to be written/updated:
+BCONNECTN
+BRAW
+BQUITN
+SETCONNECTDELAY
+BVHOSTN
+BDONE
+FIXLISTENER
+KILLSOCKET
+DEFAULTIPV6
+PREFERIPV6
+MYSQLIPCHECK
+
+Roadmap Feature-Requests (2.4, not before july 2004, yeye riiight!):
 - add /automode, instead of /addautoop (dominance)
 - Fully encrypted config-files (?)
 - allow interface-entry for dcchost, usefull for dialup users (dominance)

@@ -1,4 +1,4 @@
-DELSERVER [network'] :servernumber
+DELSERVER [network~] :servernumber
 ----------------------------------
 Cancella un server dalla lista. Se ti accorgi che qualche server e' laggato
 o non ti permette di connettertici oppure ti da' una connessione +r (restricted)

@@ -1,4 +1,4 @@
-LISTIGNORES [network']
+LISTIGNORES [network~]
 ----------------------
 Lista gli ignores
 Esempio:

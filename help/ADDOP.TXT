@@ -1,4 +1,4 @@
-ADDOP [network'][#chan] password :hostmask
+ADDOP [network~][#chan] password :hostmask
 ------------------------------------------
 You can add users to your bouncer OP list. They can then get OP from bouncer 
 similar to bot oping. 

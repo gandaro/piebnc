@@ -1,4 +1,4 @@
-LISTASK [netzwerk']
+LISTASK [netzwerk~]
 -------------------
 Zeigt die Liste aller eingetragenen Bots oder Hosts, von denen 
 der Nutzer Op anfragen kann.

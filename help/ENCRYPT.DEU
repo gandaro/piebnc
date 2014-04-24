@@ -1,4 +1,4 @@
-ENCRYPT [netzwerk']password :#channel oder nick
+ENCRYPT [netzwerk~]password :#channel oder nick
 -----------------------------------------------
 ENCRYPT fuegt einen Eintrag zu der Liste der Verschluesselungen
 von Konversationen hinzu. #channel oder Nick ist das Ziel und die

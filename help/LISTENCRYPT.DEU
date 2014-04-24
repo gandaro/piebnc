@@ -1,4 +1,4 @@
-LISTENCRYPT [netzwerk']
+LISTENCRYPT [netzwerk~]
 -----------------------
 LISTENCRYPT listet die hinzugefuegten Verschluesselungen des Nutzers.
 Siehe: ENCRYPT DELENCRYPT

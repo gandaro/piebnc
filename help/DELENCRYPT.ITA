@@ -1,4 +1,4 @@
-DELENCRYPT [network']number
+DELENCRYPT [network~]number
 ---------------------------
 DELENCRYPT permette di rimuovere un ENCRYPT dalla lista.
 Usa /LISTENCRYPT per prendere nota del numero dell'encrypt

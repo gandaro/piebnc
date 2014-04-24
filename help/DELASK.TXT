@@ -1,4 +1,4 @@
-DELASK [network'] :number
+DELASK [network~] :number
 -------------------------
 deletes op request from a bot. Use /LISTASK to find out which entry you want 
 to delete. 

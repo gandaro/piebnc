@@ -1,6 +1,5 @@
-/* $Id: p_global.h,v 1.9 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_global.h
+ *   psybnc, src/p_global.h
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -28,13 +27,12 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <sys/time.h>
-#ifdef NOSYSTIME
 #include <time.h>
-#endif
 #include <netinet/in.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <arpa/inet.h>
 #include <ctype.h>
 #include <signal.h>
@@ -413,7 +411,7 @@ struct usert {
   int pport;
   char firstnick[64];    
   char away[64];
-  char awaynick[64];
+  char awaynick[16];
   char leavemsg[64];
   char network[10];    
   char last[20];
@@ -480,6 +478,9 @@ struct usert {
 #ifdef HAVE_SSL
   char cert[1024];
 #endif
+#ifdef IPV6
+  int preferipv6;
+#endif
 };
 
 /* The User Nodes */
@@ -518,46 +519,46 @@ struct peernodes {
   struct peernodes *next;
 };
 
-/* resulve-structures */
+/* resolve-structures */
 
-struct resolve {
-  struct resolve *next;
-  struct resolve *previous;
-  struct resolve *nextid;
-  struct resolve *previousid;
-  struct resolve *nextip;
-  struct resolve *previousip;
-  struct resolve *nextip6;
-  struct resolve *previousip6;
-  struct resolve *nexthost;
-  struct resolve *previoushost;
-  int(*resolved)(struct resolve *); /* call in case of worked resolve */
-  int(*unresolved)(struct resolve *); /* call in case of failed resolve */
-  time_t expiretime;
-  char data[512]; /* data given by application */
-  char hostn[256];
-  int type;
-  unsigned long ip;
-  unsigned int protocol;
-  char ip6[17];
-  unsigned short id;
-  unsigned char state;
-  unsigned char sends;
+struct conndata
+{
+    int sock;
+
+    char *host;
+    int port;
+    char *vhost;
+
+    int state;
+
+    int host_family;
+    int vhost_family;
+
+    struct in_addr *host_addr;
+    struct in_addr *vhost_addr;
 };
 
-enum resolve_states {
-    STATE_FINISHED,
-    STATE_FAILED,
-    STATE_PTRREQ,
-    STATE_AREQ,
-    STATE_AAAAREQ,
-    STATE_PTR6REQ
+struct proxyconndata
+{
+    int user;
+    char *host;
+    struct in_addr *host_addr;
 };
 
-#define IS_PTR(x) (x->state == STATE_PTRREQ)
-#define IS_A(x)   (x->state == STATE_AREQ)
-#define IS_AAAA(x) (x->state == STATE_AAAAREQ)
-#define IS_PTR6(x) (x->state == STATE_PTR6REQ)
+enum connect_state
+{
+    CONN_RESOLVE_HOST,
+    CONN_RESOLVE_VHOST
+};
+
+struct acceptdata
+{
+    int sock;
+    int syssock;
+
+    int ip_family;
+    struct in_addr *ip_addr;
+};
 
 #ifdef TRANSLATE
 
@@ -590,7 +591,7 @@ extern struct stringarray *first;
 /* List of Users online, the topic for the partychannel */
 
 extern struct stringarray *partyusers;
-extern char partytopic[81]; /* topic of the partychannel */
+extern char partytopic[301]; /* topic of the partychannel */
 #endif
 
 /* The config file - cache */
@@ -668,6 +669,10 @@ extern char dcc6host[200];
 extern int safemode;
 extern int notsocket;
 
+#ifdef IPV6
+extern int defaultipv6;
+#endif
+
 #ifdef INTNET
 
 extern struct uchannelt *intchan;
@@ -733,6 +738,15 @@ int cmdjoin(int usern);
 int cmdpart(int usern);
 int cmdtopic(int usern);
 #endif
+
+int firstuser(int npeer);
+
+int cmdbquitn(int usern);
+int cmdbvhostn(int usern);
+int cmdbconnectn(int usern);
+int cmdkillsock(int usern);
+int cmdfixlistener(int usern);
+
 int repeatserverinit(int usern);
 int cmdbwho(int usern);
 int cmdadduser(int usern);
@@ -816,6 +830,10 @@ int cmdrehash(int usern);
 int cmdadmin(int usern); 
 int cmdunadmin(int usern); 
 int cmdbkill(int usern); 
+int cmdbraw(int usern);
+int cmdbdone(int usern);
+int cmdsetconnectdelay(int usern);
+int cmdmysqlipcheck(int usern);
 int cmdbquit(int usern); 
 int cmdbconnect(int usern);
 int cmdname(int usern);
@@ -858,27 +876,14 @@ int cmdlisttasks(int usern);
 #ifndef P_CRYPT
 char *cryptit(char *tocipher);
 char *decryptit(char *tocipher);
+int makesalt(void);
 extern char slt1[];
 extern char slt2[];
 #endif
 
-#ifndef P_COREDNS
-extern int init_dns_core(void);
-extern void dns_check_expires(void);
-extern int dns_ack(int flag);
-extern int dns_err(int flag, int ern);
-extern int resfd;
-extern struct resolve *findip(unsigned long ip);
-extern struct resolve *findhost(char *hostn);
-extern struct resolve *findip6(char *ip6);
-extern int dns_forward(char *hostname,int(*resolved)(struct resolve *),int(*unresolved)(struct resolve *), char *data);
-extern int dns_lookup(unsigned long ip,int(*resolved)(struct resolve *),int(*unresolved)(struct resolve *), char *data);
-extern int dns_lookupv6(unsigned char *v6ip,int(*resolved)(struct resolve *),int(*unresolved)(struct resolve *), char *data);
-extern void dns_stat(int usern);
-#endif
-
 #ifndef P_DCC
 int adddcc(int usern, char *host, int port, char *luser, char *pass, char *npt, int noini);
+int canceldcc(int usern, char *nick, char *file);
 int loaddccs(int usern);
 int listdccs(int usern);
 int erasedcc(int usern, int dccn);
@@ -916,8 +921,10 @@ int listpdccs(int usern);
 
 #ifndef P_HASH
 int userhelp(int usern, char *cmd);
+int fakeinbound(int iusern);
 int userinbound(int usern);
 int useroutbound(int usern);
+int internalinbound(int iusern, int link);
 #endif
 
 #ifndef P_INIFUNC
@@ -1009,6 +1016,7 @@ int createlisteners();
 int erroroldlistener(int npeer, int ern);
 int killoldlistener(int npeer);
 int checkoldlistener(int npeer);
+int checkhostallows(char *host);
 #endif
 
 #ifndef P_SERVER
@@ -1055,7 +1063,11 @@ int usererror(int usern,int errn);
 int userclosed(int usern);
 int checkclients();
 int checkstonednick();
+void create_oidentd_conf();
 #endif
+
+extern int nolog;
+
 
 #ifndef P_SOCKET
 extern struct socketnodes *previous;
@@ -1063,6 +1075,7 @@ struct socketnodes *getpsocketbysock(int syssock);
 struct socketnodes *getpsocketbygroup(struct socketnodes *first, unsigned long group, int notsock);
 int createsocket(int syssock,int type, int index, unsigned long group,int(*constructor)(int),int(*constructed)(int),int(*errorhandler)(int,int),int(*handler)(int),int(*destructor)(int),int(*remapper)(int,int), int protocol,int ssl);
 int killsocket(int syssock);
+int reallykillsocket(int syssock);
 int createlistener(char *host, int port, int proto, int pending, int(*listenhandler)(int),int(*errorhandler)(int,int),int(*datahandler)(int),int(*destructor)(int));
 int connectto(int socket,char *host, int port, char *vhost);
 int flushsendq(int socket, int forced);
@@ -1083,6 +1096,10 @@ int socket_accept();
 int socket_connect();
 unsigned long socketdriver();
 int socketdatawaiting(int syssock);
+char *get_sourceip(int fd);
+int get_sourceport(int fd);
+
+struct in_addr *duplicate_in_addr(int family, struct in_addr *address, int *address_length);
 #endif
 
 #ifndef P_STRING
@@ -1231,9 +1248,12 @@ int cmdintison(int usern, int link);
 int cmdintuserhost(int usern, int link);
 int removeinternal(char *server);
 int joinintnettolink(int link);
-
-
 #endif
+#endif
+
+#ifdef IPV6
+int cmddefaultipv6(int usern);
+int cmdpreferipv6(int usern);
 #endif
 
 #ifdef TRANSLATE
@@ -1267,8 +1287,34 @@ extern char * BLOW_stringdecrypt(unsigned char *input, unsigned char *key);
 
 #endif
 
-#define pcontext { strmncpy(ctxt,__FILE__,sizeof(ctxt)); strmncpy(cfunc,__FUNCTION__,sizeof(cfunc)); cline=__LINE__; }
-#define pmalloc(n) __pmalloc((n),__FILE__,__FUNCTION__,__LINE__)
+/* dns functions */
+
+typedef void (*dns_host_callback)(void *arg, int status, int timeouts, struct hostent *hostent);
+
+#ifdef IPV6
+    #define RESOLVER_AF AF_INET6
+#else
+    #define RESOLVER_AF AF_INET
+#endif
+
+#ifndef P_DNS
+int p_dns_init();
+int p_dns_fds(fd_set *read_fds, fd_set *write_fds);
+void p_dns_process(fd_set *read_fds, fd_set *write_fds);
+
+void p_dns_gethostbyname(char *hostname, int af, dns_host_callback callback, void *arg);
+void p_dns_gethostbyaddr(const void *address, int addrlen, int family, dns_host_callback callback, void *arg);
+
+int p_dns_success(int status);
+const char *p_dns_strerror(int status);
+#endif
+
+/* match functions */
+
+int wild_match(register unsigned char *m, register unsigned char *n);
+
+#define pcontext { strmncpy(ctxt,__FILE__,sizeof(ctxt)); strmncpy(cfunc,(char*)__FUNCTION__,sizeof(cfunc)); cline=__LINE__; }
+#define pmalloc(n) __pmalloc((n),__FILE__,(char*)__FUNCTION__,__LINE__)
 
 #define SSLCERT "key/psybnc.cert.pem"
 #define SSLKEY "key/psybnc.key.pem"

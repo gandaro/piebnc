@@ -1,4 +1,4 @@
-ADDLOG [netzwerk']quelle :filter
+ADDLOG [netzwerk~]quelle :filter
 --------------------------------
 ADDLOG erlaubt das Hinzufuegen von Zielen und Filtern fuer
 das Traffic-Logging. Dabei werden saemtliche Daten im 

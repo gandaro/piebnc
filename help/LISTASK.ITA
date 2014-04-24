@@ -1,4 +1,4 @@
-LISTASK [network']
+LISTASK [network~]
 ------------------
 lista tutti gli utenti che possono chiedere l'op al tuo bouncer.
 Esempio:

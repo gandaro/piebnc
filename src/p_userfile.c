@@ -1,6 +1,5 @@
-/* $Id: p_userfile.c,v 1.4 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_userfile.c
+ *   psybnc, src/p_userfile.c
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: p_userfile.c,v 1.4 2005/06/04 18:00:14 hisi Exp $";
-#endif
 
 #define P_USERFILE
 
@@ -48,7 +43,7 @@ int loaduser (int usernum) {
        }
        if (user(usernum)->instate > 1 && user(usernum)->parent==0) {
            ssnprintf(user(usernum)->insock,lngtxt(906),user(usernum)->nick);
-	   while(sno=getpsocketbygroup(sno,SGR_USERINBOUND+usernum,-1))
+	   while((sno=getpsocketbygroup(sno,SGR_USERINBOUND+usernum,-1)))
 	   {
 	       if(sno->sock)
                    killsocket(sno->sock->syssock);
@@ -194,6 +189,14 @@ int loaduser (int usernum) {
       strmncpy(user(usernum)->cert,decryptit(value),sizeof(user(usernum)->cert));
    }
 #endif
+#ifdef IPV6
+   // Get the value for the 'preferipv6' setting. 
+   // Set it to -1 if not set as then the global 'defaultipv6' option is used.
+
+   rc = getini("USER", lngtxt(1490), fnmuser);   
+   user(usernum)->preferipv6 = (rc != 0 ? -1 : atoi(value));
+#endif
+
    pcontext;
    if(user(usernum)->instate==STD_NOUSE) user(usernum)->instate=STD_NOCON;
    if(user(usernum)->outstate==STD_NOUSE) user(usernum)->outstate=STD_NOCON;
@@ -268,7 +271,7 @@ int loaduser (int usernum) {
 #ifdef SCRIPTING
    loadscript(usernum);
 #endif
-   return;
+   return 0x0;
 }
 
 
@@ -325,6 +328,7 @@ int writeuser(int usern)
     writeini("USER","CERT",fname,cryptit(user(usern)->cert));
 #endif
     flushconfig();
+    return 0x0;
 }
 
 /* this writes a link info to the link inifile */
@@ -347,13 +351,13 @@ int writelink(int linkn)
     ap_snprintf(iset,sizeof(iset),"%d",datalink(linkn)->allowrelay);
     writeini(lname,lngtxt(960),fname,iset);
     flushconfig();
+    return 0x0;
 }
 
 /* erase a link entry */
 
 int eraselinkini(int linkn)
 {
-    char iset[8];
     char fname[20];
     char lname[20];
     ap_snprintf(fname,sizeof(fname),"%s",lngtxt(961));
@@ -366,6 +370,7 @@ int eraselinkini(int linkn)
     writeini(lname,"PASS",fname,NULL);
     writeini(lname,lngtxt(963),fname,NULL);
     flushconfig();
+    return 0x0;
 }
 
 /* load all user structures */
@@ -399,7 +404,6 @@ int loadlink(int linkn)
 {
     int rc;
     char lname[20];
-    char buf[400];
     char lfile[]="LINKS";
     if (datalink(linkn)->type==LI_RELAY) return 0x0; /* not resetting dynamic links */
     if (datalink(linkn)->outstate==STD_CONN) {

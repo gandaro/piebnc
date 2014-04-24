@@ -1,6 +1,5 @@
-/* $Id: chkenv.c,v 1.2 2005/06/04 18:01:32 hisi Exp $ */
 /************************************************************************
- *   psybnc2.2.2, tools/chkenv.c
+ *   psybnc, tools/chkenv.c
  *   Copyright (C) 2001 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -21,10 +20,6 @@
  */
 
 /* this program gets compiled, if setenv is supported. */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: chkenv.c,v 1.2 2005/06/04 18:01:32 hisi Exp $";
-#endif
 
 #include <stdio.h>
 #include <sys/types.h>

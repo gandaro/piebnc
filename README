@@ -1,4 +1,4 @@
-psyBNC 2.3.2
+psyBNC 2.4
 ------------
 
 This program is useful for people who cannot be on irc all the time. Its used to 
@@ -42,6 +42,11 @@ psyBNC2.3 has not been completely rewritten. But ssl was added, and all strings 
 moved to Parameter-Files to allow different languages. Also, a nice SCRIPTING manual 
 was added. And some bugs fixed.
 
+psyBNC2.4 has been rewritten in DNS and ipv4/ipv6 handling. From this version psyBNC
+depends on the DNS library called c-ares. If it is not available system-wide, it can
+easily be compiled with make c-ares. Other bugs have been fixed as well including
+the well-known "freeze-bug".
+
 The OVERVIEW:
 -------------
 
@@ -55,7 +60,7 @@ a.) The DYNAMIC flag disables this
 2.) It allows Full Online Administration, the only thing you will have
     to set up before starting is your port where the demon should
     listen (standard is set to 31337. arent we cool ?).
-    Also, psyBNC 2.2 offers a GUI-Interface for setting up the
+    Also, psyBNC 2.2 and up offers a GUI-Interface for setting up the
     major settings for psyBNC. just insert
     
     make menuconfig
@@ -819,24 +824,29 @@ Nicks only (dumb would be blah!*@*). The statement Host has to be
 a fully valid hostname. psyBNC needs to get its ip, it has to
 connect that.
 
-(c) Contact:
-		#psybnc on IRCnet
+(c) Contact me: psychoid@ircnet - on many channels. i love irc.	
+		psychoid@lam3rz.de
+		psychoid@gmx.net
 
-		info@psybnc.at
-		
-		http://www.psybnc.org
+		http://www.psychoid.lam3rz.de
 
-		We prefer IRC for contact. Possibly a mail will be ignored, but a query wont.
+		I prefer IRC for contact. Possibly a mail will
+		be ignored, but a query wont.
+
+		If you want to contact me, please try on ircnet first.
+
+		Oh yes, i am NOT on efnet. If you met someone by the
+		nick 'psychoid' on efnet, he surely was a fake. Especially
+		the guy having "www.psychoid.lam3rz.de" in his real name.
+		Very funny. Not.
 		
 (d) Credits
 
-    match.c	   by Chris Fuller
-    curses-GUI	   by Savio Lam
-    Blowfish	   by Bruce Schneier
-    IDEA	   by ascom ltd, switzerland
-    bsd-setenv     by anonymous
-    createcrontab  by Monellik
-
+    match.c	by Chris Fuller
+    curses-GUI	by Savio Lam
+    Blowfish	by Bruce Schneier
+    IDEA	by ascom ltd, switzerland
+    bsd-setenv  by anonymous
 
     ap_snprintf by Apache Software
     -- apache notice --
@@ -846,16 +856,17 @@ connect that.
      
     Helptexts	by [DRACON]
 
-    Webpage 	by inFECT (old page by: coke)
+    Webpage 	by coke
     
-    Hosting	by www.chillzone.at
+    Hosting	by www.rewtbox.de
 
     Special thanks to: andi (basics of ipv6-coding, patches),
 		       Phil Tyler (solaris suggestions for 2.2.1)
 		       duckel (sunos IPv6, built into 2.2.2)
-   		       
+	
+    Special greeting to: trinoo ;-) thanks for the funny night in "the yard"
+    		       
     Thanks to all those who report bugs. A tool lives from its users.
-    This project is dedicated to psychoid the creator of psyBNC! We miss you!
 
 There is given absolutely NO WARRANTY of functionality. I am not responsible
 if anything gets screwed. Read the GNU-Public license which is included.
@@ -864,4 +875,3 @@ if anything gets screwed. Read the GNU-Public license which is included.
 have fun,
 psychoid / tCl
 inFECT / eMPiRe
-`DarK`AvengeR` / Ward0gZ

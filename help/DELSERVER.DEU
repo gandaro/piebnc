@@ -1,4 +1,4 @@
-DELSERVER [netzwerk'] :servernummer
+DELSERVER [netzwerk~] :servernummer
 -----------------------------------
 Loescht einen Eintrag aus der Liste der Server. Nutze
 /LISTSERVERS um die Nummer herauszufinden.

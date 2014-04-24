@@ -1,4 +1,4 @@
-DELIGNORE [netzwerk']nummer
+DELIGNORE [netzwerk~]nummer
 ---------------------------
 Entfernt einen Ignore-Eintrag aus der Ignore-Liste
 Beispiel:

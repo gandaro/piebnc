@@ -1,4 +1,4 @@
-LISTAUTOOPS [netzwerk']
+LISTAUTOOPS [netzwerk~]
 -----------------------
 Listet alle Nutzer, welche vom Bouncer des Nutzers Autoop
 bekommen koennen.

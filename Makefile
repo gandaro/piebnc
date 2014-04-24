@@ -1,5 +1,6 @@
 CC	= gcc
-CCFLAGS = 
+LD	= gcc
+CFLAGS	= -Wall -ggdb
 
 all:	$(OBJS)
 	@echo Initializing bouncer compilation
@@ -7,7 +8,7 @@ all:	$(OBJS)
 	@$(CC) tools/convconf.c -o tools/convconf
 	@tools/convconf
 	@echo [*] Running Autoconfig.
-	@$(CC) -I. tools/autoconf.c -o tools/autoconf
+	@$(CC) -I. tools/autoconf.c -o tools/autoconf -DCC=\"$(CC)\"
 	@tools/autoconf
 	@echo [*] Compiling MakeSalt for Encryption..
 	@$(CC) -I. -o makesalt tools/makesalt.c
@@ -17,17 +18,24 @@ all:	$(OBJS)
 	@ls -al psybnc
 	@echo done.
 
+autoconf:
+	@echo [*] Running Autoconfig.
+	@rm -f tools/autoconf
+	@$(CC) -I. tools/autoconf.c -o tools/autoconf -DCC=\"$(CC)\"
+	@tools/autoconf
+	
 menuconfig:
 	@echo Initializing Menu-Configuration
 	@echo [*] Running Conversion Tool for older psyBNC Data.
 	@$(CC) tools/convconf.c -o tools/convconf
 	@tools/convconf
 	@echo [*] Running Autoconfig.
-	@$(CC) -I. tools/autoconf.c -o tools/autoconf
+	@$(CC) -I. tools/autoconf.c -o tools/autoconf -DCC=\"$(CC)\"
 	@tools/autoconf
 	@echo [*] Creating Menu, please wait.
 	@echo This needs the 'ncurses' library. If it is not available, menuconf wont work. If you are using 'curses', use make menuconfig-curses instead.
-	@$(CC) menuconf/menuconf.c menuconf/inputbox.c menuconf/util.c menuconf/checklist.c menuconf/menubox.c menuconf/textbox.c src/snprintf.c -I. -lncurses -lm -o menuconf/menuconf 2>/dev/null
+	@$(CC) menuconf/menuconf.c menuconf/inputbox.c menuconf/util.c menuconf/checklist.c menuconf/menubox.c menuconf/textbox.c src/snprintf.c $(CFLAGS) -I. -lncurses -lm -o menuconf/menuconf
+# 2>/dev/null
 	@menuconf/menuconf
 	@clear
 	@echo Now compile psyBNC using make, if not yet compiled, or if Options were changed.
@@ -39,7 +47,7 @@ menuconfig-curses:
 	@$(CC) tools/convconf.c -o tools/convconf
 	@tools/convconf
 	@echo [*] Running Autoconfig.
-	@$(CC) -I. tools/autoconf.c -o tools/autoconf
+	@$(CC) -I. tools/autoconf.c -o tools/autoconf -DCC=\"$(CC)\"
 	@tools/autoconf
 	@echo [*] Creating Menu, please wait.
 	@echo This needs the 'curses' library. If it is not available, menuconf wont work.
@@ -49,33 +57,22 @@ menuconfig-curses:
 	@echo Now compile psyBNC using make, if not yet compiled, or if Options were changed.
 	@echo done.
 
-dist:
-	cd ..; tar -cvf psyBNC-2.3.2-9.tar psybnc; gzip -c psyBNC-2.3.2-9.tar > psyBNC-2.3.2-9.tar.gz; rm psyBNC-2.3.2-9.tar
+c-ares: src/c-ares/.libs/libcares.a c-ares-done
 
-cleandist:
-	@echo Cleaning.
-	rm -rf psybnc
-	rm -rf src/*.o
-	rm -rf tools/autoconf
-	rm -rf tools/chkenv
-	rm -rf tools/chkipv6
-	rm -rf tools/chkresolv
-	rm -rf tools/chksock
-	rm -rf tools/chkssl
-	rm -rf tools/convconf	
-	rm -rf tools/.chk
-	rm -rf tools/sys
-	rm -rf menuconf/menuconf
-	rm -rf makefile.out
-	rm -rf key/*
-	rm -rf log/*.LOG
-	rm -rf log/*.old
-	rm -rf log/*.TRL
-	rm -rf log/*.log
-	rm -rf downloads
-	rm -rf salt.h
-	rm -rf psybnc.pid	
+src/c-ares/.libs/libcares.a:
+	@echo Configuring and building c-ares, this can take a while..
+	cd src/c-ares && make clean; ./configure --disable-shared --enable-static && make
+	@echo
+
+c-ares-done:
+	@echo The c-ares library has been built successfully. You can now compile psyBNC.
+
+dist:
+	cd ..; tar -cvf psyBNC2.4.tar psybnc; gzip -c psyBNC2.4.tar > psyBNC2.4.tar.gz; rm psyBNC2.4.tar
+
 clean:
 	@echo Cleaning.
-	rm -rf psybnc
 	rm -rf src/*.o
+	rm -f psybnc menuconf/menuconf tools/autoconf tools/makesalt tools/sys tools/convconf
+	rm -f tools/chkbind tools/chkdns tools/chkenv tools/chkipv6 tools/chkmysql tools/chkresolv
+	rm -f tools/chksock tools/chkssl tools/chkmysql tools/chktime tools/chkdns

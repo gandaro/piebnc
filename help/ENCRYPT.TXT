@@ -1,4 +1,4 @@
-ENCRYPT [network']password :#channel or nick
+ENCRYPT [network~]password :#channel or nick
 --------------------------------------------
 Encrypt encrypts talk to a channel or person. This is thought
 for allowing improved privacy on irc. You need to handshake

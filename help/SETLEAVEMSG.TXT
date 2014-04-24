@@ -1,4 +1,4 @@
-SETLEAVEMSG [network']text
+SETLEAVEMSG [network~]text
 --------------------------
 Sets a message which get posted to the channels if you
 leave the bouncer. 

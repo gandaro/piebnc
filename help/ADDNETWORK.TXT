@@ -8,12 +8,12 @@ Example:
 ADDNETWORK Ef
 Would add a new network token named Ef to your userspecifications.
 For any added network, you can use the functions seperately, for example:
-ADDSERVER Ef'irc.freei.net:6667
+ADDSERVER Ef~irc.freei.net:6667
 would add a server for your newly added network token. The bouncer would open
 a second outgoing connection and relay it to your single client connection
 by prefixing Users and channels with the network token. Channel #sausage
-would be on that network #Ef'#sausage. Nicks also get prefixed, so the
-User johndoe on EfNet would appear as Ef'johndoe.
+would be on that network #Ef~#sausage. Nicks also get prefixed, so the
+User johndoe on EfNet would appear as Ef~johndoe.
 Every command can be prefixed with the network token and would then be
 executed for your networked client.
 See also: DELNETWORK

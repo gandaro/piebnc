@@ -1,4 +1,4 @@
-LISTOPS [netzwerk']
+LISTOPS [netzwerk~]
 -------------------
 Listet die Hosts/Nutzer, welche von dem Bouncer des Nutzers
 Op abfragen koennen.

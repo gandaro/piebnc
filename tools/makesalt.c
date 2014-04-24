@@ -1,6 +1,5 @@
-/* $Id: makesalt.c,v 1.2 2005/06/04 18:01:32 hisi Exp $ */
 /************************************************************************
- *   psybnc2.2.2, tools/makesalt.c
+ *   psybnc, tools/makesalt.c
  *   Copyright (C) 2001 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -19,10 +18,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-#ifndef lint
-static char rcsid[] = "@(#)$Id: makesalt.c,v 1.2 2005/06/04 18:01:32 hisi Exp $";
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -97,6 +92,7 @@ int main(void)
     for (foo=0;foo<saltlen2;foo++) 
         fprintf(salt,"    slt2[%d]=SALT2[%d];\n",foo,foo);
     fprintf(salt,"    slt2[%d]=0;\n",saltlen2);
+    fprintf(salt,"    return 0x0;\n");
     fprintf(salt,"}");
     fprintf(salt,"\n");
     fclose(salt);

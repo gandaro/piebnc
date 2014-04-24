@@ -1,4 +1,3 @@
-/* $Id: inifunc.c,v 1.2 2005/06/04 17:55:53 hisi Exp $ */
 /************************************************************************
  *   psybnc2.2, menuconf/inifunc.c
  *   Copyright (C) 2000 the most psychoid  and
@@ -21,7 +20,7 @@
  */
 
 #ifndef lint
-static char rcsid[] = "@(#)$Id: inifunc.c,v 1.2 2005/06/04 17:55:53 hisi Exp $";
+static char rcsid[] = "@(#)$Id: inifunc.c, v 2.2 2000/07/20 02:02:00 psychoid Exp $";
 #endif
 
 #include <stdio.h>

@@ -5,7 +5,7 @@ anderen Bouncer. Die jeweilige Gegenstelle muss zuvor einen LINKFROM-
 Eintrag erzeugt haben, damit die LINK-Verbindung zustande kommen kann.
 Es koennen so viele Bouncer verlinkt werden, wie man mag. Dadurch
 ist die Moeglichkeit gegeben, eine interne Partyline zu nutzen, ent-
-weder ueber das sogenannte int'-Net oder ueber den Channel &partyline,
+weder ueber das sogenannte int~-Net oder ueber den Channel &partyline,
 falls dieser vor Compilierung aktiviert wurde.
 Nutzerrechte werden durch Links nicht beeintraechtigt, kein Nutzer
 des gelinkten Bouncers kann auf den eigenen Bouncer zugreifen. Lediglich

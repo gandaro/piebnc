@@ -1,6 +1,5 @@
-/* $Id: p_version.h,v 1.10 2005/06/04 18:13:37 hisi Exp $ */
 #define APPNAME "psyBNC"
-#define APPVER "2.3.2-9"
+#define APPVER "2.4-BETA1"
 
 #ifdef P_MAIN
 
@@ -47,8 +46,11 @@ char *buildversion()
 #ifdef SCRIPTING
     strcat(ver,"S");
 #endif
-#ifdef OIDENTD
+#if defined(OIDENTD) && !defined(OIDENTD_DETAIL)
     strcat(ver,"o");
+#endif
+#ifdef OIDENTD_DETAIL
+    strcat(ver,"O");
 #endif
 #ifdef SHAREBANS
     strcat(ver,"s");
@@ -68,13 +70,9 @@ char *buildversion()
 #ifdef HAVE_SSL
     strcat(ver,"E");
 #endif
-#ifndef BLOCKDNS
-    strcat(ver,"r");
-#endif
-#ifdef FREEZEFIX
-    strcat(ver,"FX");
+#ifdef MYSQL_IPCHECK
+    strcat(ver,"m");
 #endif
     return ver;
 }
-
 #endif

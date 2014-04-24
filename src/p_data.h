@@ -1,6 +1,5 @@
-/* $Id: p_data.h,v 1.2 2005/06/04 18:00:14 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.2, src/p_data.h
+ *   psybnc, src/p_data.h
  *   Copyright (C) 2003 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -28,7 +27,7 @@ struct stringarray *first;
 /* partychannel defs */
 
 struct stringarray *partyusers;
-char partytopic[80];
+char partytopic[300];
 #endif
 
 /* CREATE-Variables */
@@ -82,6 +81,10 @@ char cfunc[60];
 int cline;
 char dcchost[200];
 char dcc6host[200];
+
+#ifdef IPV6
+int defaultipv6 = 0;
+#endif
 
 #ifdef INTNET
 

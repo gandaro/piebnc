@@ -1,4 +1,4 @@
-DELTRANSLATE [network']number
+DELTRANSLATE [network~]number
 -----------------------------
 DELTRANSLATE ti permette di rimuovere un translator dalla lista.
 Usa /LISTTRANSLATE per prendere nota del numero di translator

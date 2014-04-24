@@ -1,4 +1,4 @@
-LISTAUTOOPS [network']
+LISTAUTOOPS [network~]
 ----------------------
 Visualizza la lista degli utenti/host che ottengono l'autoop
 dal tuo bouncer.

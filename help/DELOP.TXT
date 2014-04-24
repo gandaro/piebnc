@@ -1,4 +1,4 @@
-DELOP [network'] :number
+DELOP [network~] :number
 ------------------------
 deletes a user that can ask OP from your bouncer. In order to see a list 
 of users added in your OP list use /LISTOPS ! 

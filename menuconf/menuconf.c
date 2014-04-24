@@ -1,6 +1,5 @@
-/* $Id: menuconf.c,v 1.3 2005/06/04 17:54:17 hisi Exp $ */
 /************************************************************************
- *   psybnc2.3.1, menuconf/menuconf.c
+ *   psybnc, menuconf/menuconf.c
  *   Copyright (C) 2002 the most psychoid  and
  *                      the cool lam3rz IRC Group, IRCnet
  *			http://www.psychoid.lam3rz.de
@@ -26,10 +25,6 @@
  *       Delete and New for User and Linklist
  */
 
-#ifndef lint
-static char rcsid[] = "@(#)$Id: menuconf.c,v 1.3 2005/06/04 17:54:17 hisi Exp $";
-#endif
-
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -54,8 +49,28 @@ static char rcsid[] = "@(#)$Id: menuconf.c,v 1.3 2005/06/04 17:54:17 hisi Exp $"
 int ap_snprintf(char *dest,size_t size, char *format, ...);
 #define snprintf ap_snprintf
 
+
+/* Random password generator for MySQL */
+#include <time.h>
+
+char *rand_password(char *dst, int size)
+{
+    static const char text[] = "abcdefghijklmnopqrstuvwxyz"
+                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                               "1234567890";
+/*    int i, len = rand() % (size - 1); */
+    int i;
+    for ( i = 0; i < size; ++i )
+    {
+        dst[i] = text[rand() % (sizeof text - 1)];
+    }
+    dst[i] = '\0';
+    return dst;
+}
+
 /* internals */
 
+char mysql_password[256];
 char selection[4096];
 int param;
 int true=-1;
@@ -84,13 +99,12 @@ struct comopt {
     int supsharebans;
     int supnetwork;
     int supproxy;
-    int blockdns;
     int anonymous;
     int dynamic;
     int loglevel;
     int partychannel;
     int supsslsec;
-    int fixfreeze;
+	int mysqlipcheck;
     char ctcpversion[100];
     char sslpath[200];
 };
@@ -106,7 +120,7 @@ char bm3[200];
 char *strmncpy(char *dest, char *source, unsigned int len)
 {
     char *pt;
-    if(dest==NULL | source==NULL) return NULL;
+    if(dest==NULL || source==NULL) return NULL;
     pt=strncpy(dest,source,len-1);
     if(strlen(source)+1>=len)
 	dest[len-1]=0;
@@ -188,43 +202,43 @@ const char * const compilingmenu[]={
     "202:",
     cm2,
     "203:",
-    cm3,
+    cm3,    
     "204:",
-    cm4,
+    cm4,    
     "205:",
-    cm5,
+    cm5,    
     "206:",
-    cm6,
+    cm6,    
     "207:",
-    cm7,
+    cm7,    
     "208:",
-    cm8,
+    cm8,    
     "209:",
-    cm9,
+    cm9,    
     "210:",
-    cmA,
+    cmA,    
     "211:",
-    cmB,
+    cmB,    
     "212:",
     cmC,
     "213:",
     cmD,
-    "214:",
-    cmE,
+    //"214:",
+    //cmE,
     "215:",
     cmF,
     "216:",
     cmG,
     "217:",
     cmH,
-    "224:",
-    cmO,
     "218:",
     cmI,
     "219:",
     cmJ,
     "220:",
     cmK,
+    "224:",
+    cmO,
     "221:",
     cmL,
     "222:",
@@ -364,7 +378,7 @@ dialog_textbox (const char *title, const char *file, int height, int width);
 /*
  * Displays a menu and waits for choose
  */
-
+ 
 extern int
 dialog_menu (const char *title, const char *prompt, int height, int width,
 		int menu_height, const char *current, int item_no,
@@ -394,7 +408,7 @@ unsigned long *pmalloc(unsigned long size)
     if (!(rc=(unsigned long *)malloc(size)))
     {
 	exit(0x1);
-    }
+    }	
     memset(rc,0x0,size);
     return rc;
 }
@@ -458,7 +472,7 @@ int flushconfig()
     wconf=conf;
     while(wconf)
     {
-	if(wconf->entry!=NULL) {
+	if(wconf->entry!=NULL) { 
 	   if(strlen(wconf->entry)>1)
 	       fprintf(handle,"%s\n",wconf->entry);
 	}
@@ -488,7 +502,7 @@ int clearsectionconfig(char *pattern)
 		} else {
 		    xconf->next=wconf->next;
 		}
-		free(wconf->entry);
+    		free(wconf->entry);
 		free(wconf);
 		wconf=xconf;
 	    }
@@ -496,6 +510,7 @@ int clearsectionconfig(char *pattern)
 	xconf=wconf;
 	wconf=wconf->next;
     }
+    return 0x0;
 }
 
 /* get entry from conf-file */
@@ -506,15 +521,15 @@ int getini(char *section, char *param,char *inidat)
    struct stringarray *wconf;
    char *po;
    wconf=conf;
-   memset(value,0x0,sizeof(value));
+   memset(value,0x0,sizeof(value));    
    ap_snprintf(ppuf,sizeof(ppuf),"%s.%s.%s=",inidat,section,param);
-   while (wconf!=NULL)
+   while (wconf!=NULL) 
    {
 	if(wconf->entry!=NULL)
 	{
 	    po = strstr(wconf->entry,ppuf);
 	    if (po == wconf->entry) {
-		po = po + strlen(ppuf);
+ 		po = po + strlen(ppuf);
 		ap_snprintf(value,sizeof(value),"%s",po);
 		return 0x0; /* found, returning */
 	    }
@@ -532,7 +547,6 @@ int writeini(char *section, char *param, char *inidat, char *data)
     char ppuf[200];
     char spuf[200];
     char buf[2048];
-    char tx[20];
     char *po;
     int wasinsection;
     char *data_p;
@@ -551,8 +565,8 @@ int writeini(char *section, char *param, char *inidat, char *data)
     while (wconf) {
       if(wconf->entry!=NULL)
       {
-	   po = strstr(wconf->entry,spuf);
-           if (po == wconf->entry)
+    	   po = strstr(wconf->entry,spuf);
+           if (po == wconf->entry) 
 	   {
 	      sectconf=xconf; /* save last entry of section */
 	      wasinsection = 1; /* we had been in the section */
@@ -566,7 +580,7 @@ int writeini(char *section, char *param, char *inidat, char *data)
 			xconf=conf;
 		    } else {
 			xconf->next=wconf->next;
-		    }
+		    }		     
 		    free(wconf->entry);
 		    free(wconf);
 		    wconf=xconf;
@@ -576,7 +590,7 @@ int writeini(char *section, char *param, char *inidat, char *data)
 		    wconf->entry=(char *)pmalloc(strlen(buf)+1);
 		    strmncpy(wconf->entry,buf,strlen(buf)+1);
 		    return 0x0;
-		 }
+		 }    
 	      }
 	   }
       }
@@ -584,7 +598,7 @@ int writeini(char *section, char *param, char *inidat, char *data)
       wconf=wconf->next;
     }
     if(data_p==NULL) return 0x0;
-    if(wasinsection==0)
+    if(wasinsection==0) 
     {
 	xconf->next=(struct stringarray *)pmalloc(sizeof(struct stringarray));
 	xconf=xconf->next;
@@ -612,17 +626,17 @@ int countconfentries(char *section, char *entry, char *fname)
     {
 	if(strchr(section,'%')!=NULL)
 	{
-	    ap_snprintf(buf,sizeof(buf),section,i);
+	    ap_snprintf(buf,sizeof(buf),section,i);	
 	    rc=getini(buf,entry,fname);
 	} else
 	if(strchr(entry,'%')!=NULL)
 	{
-	    ap_snprintf(buf,sizeof(buf),entry,i);
+	    ap_snprintf(buf,sizeof(buf),entry,i);	
 	    rc=getini(section,buf,fname);
 	} else
 	if(strchr(fname,'%')!=NULL)
 	{
-	    ap_snprintf(buf,sizeof(buf),fname,i);
+	    ap_snprintf(buf,sizeof(buf),fname,i);	
 	    rc=getini(section,entry,buf);
 	}
 	if(rc==0) cnt++; else if(lastfree>i) lastfree=i;
@@ -635,8 +649,8 @@ int countconfentries(char *section, char *entry, char *fname)
  * creates a menu driven by config parameters
  */
 
-int createvariablemenu(char *header, char *info, char *section,
-		       char *entry, char *entry2, char *fname,
+int createvariablemenu(char *header, char *info, char *section, 
+		       char *entry, char *entry2, char *fname, 
 		       int offset, char *dpattern)
 {
     int entries=countconfentries(section,entry,fname);
@@ -656,9 +670,9 @@ int createvariablemenu(char *header, char *info, char *section,
 	value[0]=0;
 	if(strchr(section,'%')!=NULL)
 	{
-	    ap_snprintf(buf,sizeof(buf),section,i);
+	    ap_snprintf(buf,sizeof(buf),section,i);	
 	    rc=getini(buf,entry,fname);
-	    if(rc==0)
+	    if(rc==0) 
 		strmncpy(vvalue,value,sizeof(vvalue));
 	    else
 		vvalue[0]=0;
@@ -666,9 +680,9 @@ int createvariablemenu(char *header, char *info, char *section,
 	} else
 	if(strchr(entry,'%')!=NULL)
 	{
-	    ap_snprintf(buf,sizeof(buf),entry,i);
+	    ap_snprintf(buf,sizeof(buf),entry,i);	
 	    rc=getini(section,buf,fname);
-	    if(rc==0)
+	    if(rc==0) 
 		strmncpy(vvalue,value,sizeof(vvalue));
 	    else
 		vvalue[0]=0;
@@ -677,9 +691,9 @@ int createvariablemenu(char *header, char *info, char *section,
 	} else
 	if(strchr(fname,'%')!=NULL)
 	{
-	    ap_snprintf(buf,sizeof(buf),fname,i);
+	    ap_snprintf(buf,sizeof(buf),fname,i);	
 	    rc=getini(section,entry,buf);
-	    if(rc==0)
+	    if(rc==0) 
 		strmncpy(vvalue,value,sizeof(vvalue));
 	    else
 		vvalue[0]=0;
@@ -688,7 +702,7 @@ int createvariablemenu(char *header, char *info, char *section,
 	if(rc2!=0) value[0]=0;
         if(rc==0)
         {
-	    ap_snprintf(pbuf[cnt],sizeof(pbuf[cnt]),"%d:",i);
+    	    ap_snprintf(pbuf[cnt],sizeof(pbuf[cnt]),"%d:",i);
 	    ap_snprintf(dbuf[cnt],sizeof(dbuf[cnt]),dpattern,i,value, vvalue);
 	    varmenu[xcnt++]=pbuf[cnt];
 	    varmenu[xcnt++]=dbuf[cnt];
@@ -716,17 +730,16 @@ int readconfigh()
 {
     FILE *config1;
     FILE *config2;
-    char ebuf[20];
     char buf[200];
     char *pt;
     config1=fopen("/psybnc/config.h","r");
     if(config1!=NULL)
     {
-        provi=1;
-        config2=config1;
+	provi=1;
+	config2=config1;
     } else {
 	config2=fopen("config.h","r");
-	if(config2==NULL)
+	if(config2==NULL) 
 	{
 	    /* standard defintions, all on except oIdentd */
 	    comoptions->supenc=true;
@@ -740,22 +753,21 @@ int readconfigh()
 	    comoptions->mduser=true;
 	    comoptions->maxuser=50;
 	    comoptions->maxcon=99;
-	    comoptions->supscript=false;
+	    comoptions->supscript=true;
 	    comoptions->supoidentd=false;
-	    comoptions->blockdns=true;
 	    comoptions->supnetwork=false;
 	    comoptions->supproxy=false;
 	    comoptions->anonymous=false;
 	    comoptions->dynamic=false;
 	    comoptions->loglevel=0;
 	    comoptions->partychannel=false;
-	    comoptions->fixfreeze=true;
+		comoptions->mysqlipcheck=false;
 	    comoptions->ctcpversion[0]=0;
 	    comoptions->sslpath[0]=0;
 	    comoptions->supsslsec=2; /* save public keys, and save certs */
 	    return -1;
 	}
-     }
+    }
     comoptions->ctcpversion[0]=0;
     system("clear");
     while(fgets(buf,sizeof(buf),config2))
@@ -778,10 +790,20 @@ int readconfigh()
 		comoptions->dccfiles=true;
 	    if(strstr(buf," DCCCHAT")!=NULL)
 		comoptions->dccchat=true;
-	    if(strstr(buf," MULTIUSER")!=NULL)
+		if(strstr(buf," MYSQL_IPCHECK")!=NULL)
+		comoptions->mysqlipcheck=true;
+        pt=strstr(buf," MYSQL_PASS ");
+        if(pt!=NULL)
+        {
+        pt+=13;
+        while(*pt==' ') pt++;
+        if(*pt=='"') pt++;
+        strmncpy(mysql_password,pt,sizeof(mysql_password));
+        pt=strchr(mysql_password,'"');
+	    if(pt!=NULL) *pt=0;
+        }
+        if(strstr(buf," MULTIUSER")!=NULL)
 		comoptions->mduser=true;
-            if(strstr(buf," FREEZEFIX")!=NULL)
-                comoptions->fixfreeze=true;
 	    pt=strstr(buf," MAXUSER ");
 	    if(pt!=NULL)
 	    {
@@ -818,8 +840,6 @@ int readconfigh()
 		comoptions->supscript=true;
 	    if(strstr(buf," OIDENTD")!=NULL)
 		comoptions->supoidentd=true;
-	    if(strstr(buf," BLOCKDNS")!=NULL)
-		comoptions->blockdns=true;
 	    if(strstr(buf," NETWORK")!=NULL)
 		comoptions->supnetwork=true;
 	    if(strstr(buf," PROXYS")!=NULL)
@@ -845,6 +865,7 @@ int readconfigh()
 	}
     }
     fclose(config2);
+    return 0x0;
 }
 
 /*
@@ -889,28 +910,37 @@ int writeconfig()
 	fprintf(config,"/* Pipe dcc Chats */\n\n#define DCCCHAT\n\n");
     if(comoptions->mduser)
 	fprintf(config,"/* Allow to add more users */\n\n#define MULTIUSER\n\n");
-    fprintf(config,"/* Number of max. Users */\n\n#define MAXUSER %d\n\n",comoptions->maxuser);
+    fprintf(config,"/* Number of max. Users */\n\n#define MAXUSER %d\n\n",comoptions->maxuser);    
     fprintf(config,"/* Number of max. Connections per User */\n\n#define MAXCONN %d\n\n",comoptions->maxcon);
     if(comoptions->supscript)
 	fprintf(config,"/* Allow the usage of scripts */\n\n#define SCRIPTING\n\n");
     if(comoptions->supoidentd)
 	fprintf(config,"/* Support oIdentd */\n\n#define OIDENTD\n\n");
-    if(comoptions->blockdns)
-	fprintf(config,"/* Use blocking DNS */\n\n#define BLOCKDNS\n\n");
     if(comoptions->supnetwork)
 	fprintf(config,"/* Allow multiple irc connections per user */\n\n#define NETWORK\n\n");
     if(comoptions->supproxy)
 	fprintf(config,"/* Allow Proxy Support */\n\n#define PROXYS\n\n");
     if(comoptions->anonymous)
 	fprintf(config,"/* Set " APPNAME " anonymous */\n\n#define ANONYMOUS\n\n");
-    if(comoptions->fixfreeze)
-        fprintf(config,"/* Fixes the freeze bug */\n\n#define FREEZEFIX\n\n");
     if(comoptions->dynamic)
 	fprintf(config,"/* Connections arent permanent */\n\n#define DYNAMIC\n\n");
-    fprintf(config,"/* The logging level */\n\n#define LOGLEVEL %d\n\n",comoptions->loglevel);
+    fprintf(config,"/* The logging level */\n\n#define LOGLEVEL %d\n\n",comoptions->loglevel);        
     if(comoptions->partychannel)
 	fprintf(config,"/* We still use the 2.1.1 stylish partychannel */\n\n#define PARTYCHANNEL\n\n");
-    if(comoptions->ctcpversion[0]!=0)
+    if(comoptions->mysqlipcheck)
+    {
+        char password[64];
+        if (strlen(mysql_password) == 0)
+        {
+            puts(rand_password(password, 16));
+        }
+        else
+        {
+            strcpy(password, mysql_password);
+        }
+        fprintf(config,"/* MySQL-based IP-check on incoming client connections */\n\n#define MYSQL_IPCHECK\n#define MYSQL_SERVER \"localhost\"\n#define MYSQL_USER \"psybnc\"\n#define MYSQL_PASS \"%s\"\n#define MYSQL_DB \"psybnc\"\n#define MYSQL_TABLE \"iplock\"\n#define MYSQL_TIMEOUT 2\n\n", password);
+    }
+	if(comoptions->ctcpversion[0]!=0)
 	fprintf(config,"/* The ctcp Version reply */\n\n#define CTCPVERSION \"%s\"\n\n",comoptions->ctcpversion);
     if(comoptions->sslpath[0]!=0)
     {
@@ -919,6 +949,7 @@ int writeconfig()
 	fprintf(config,"/* The Path to SSL */\n\n#define SSLPATH \"%s\"\n\n",comoptions->sslpath);
     }
     fprintf(config,"/* SSL-Security */\n\n#define SSLSEC %d\n\n",comoptions->supsslsec);
+    fprintf(config,"/* Insure */\n\n#define INSURE\n\n");
     fclose(config);
     return 0x1;
 }
@@ -977,19 +1008,16 @@ int setupcompilingoptions()
 	comoptions->maxuser=1;
     }
     ap_snprintf(cmA,sizeof(cmA),"    Maximum Users: %d",comoptions->maxuser);
-    ap_snprintf(cmB,sizeof(cmB),"    Maximum Connections: %d",comoptions->maxcon);
+    ap_snprintf(cmB,sizeof(cmB),"    Maximum Connections: %d",comoptions->maxcon);    
     if(comoptions->supscript)
-	strcpy(cmC,"[X] Support Scripting - NOT RELIABLE -");
+	strcpy(cmC,"[X] Support Scripting");
     else
-	strcpy(cmC,"[ ] Support Scripting - NOT RELIABLE -");
+	strcpy(cmC,"[ ] Support Scripting");
     if(comoptions->supoidentd)
 	strcpy(cmD,"[X] Support oIdentd");
     else
 	strcpy(cmD,"[ ] Support oIdentd");
-    if(comoptions->blockdns)
-	strcpy(cmE,"[ ] Use asynchroneous resolving - EXPERIMENTAL -");
-    else
-	strcpy(cmE,"[X] Use asynchroneous resolving - EXPERIMENTAL -");
+   
     if(comoptions->supnetwork)
 	strcpy(cmF,"[X] Support multiple IRC-Networks");
     else
@@ -1002,10 +1030,6 @@ int setupcompilingoptions()
 	strcpy(cmH,"[X] Anonymous Bouncer Usage");
     else
 	strcpy(cmH,"[ ] Anonymous Bouncer Usage");
-    if(comoptions->fixfreeze)
-        strcpy(cmO,"[X] Fix Freeze Bug");
-    else
-        strcpy(cmO,"[ ] Fix Freeze Bug");
     if(comoptions->dynamic)
 	strcpy(cmI,"[X] None permanent IRC-Connections");
     else
@@ -1026,6 +1050,10 @@ int setupcompilingoptions()
 	strcpy(cmK,"[X] Use the 2.1.1 compatible Partychannel");
     else
 	strcpy(cmK,"[ ] Use the 2.1.1 compatible Partychannel");
+	if(comoptions->mysqlipcheck)
+	strcpy(cmO,"[X] Support MySQL IP Check");
+	else
+	strcpy(cmO,"[ ] Support MySQL IP Check");
     if(comoptions->ctcpversion[0]==0)
 	strcpy(cmL,"    Version Reply: None");
     else
@@ -1071,6 +1099,7 @@ int extractparam()
     } else {
 	param=0;
     }
+    return 0x0;
 }
 
 /*
@@ -1123,14 +1152,14 @@ int compilingoptions()
 	{
 	    if(getuid()==0)
 		rc=dialog_menu( "Compiling Options","This is the compiling section of the " APPNAME " Configuration. Your Host runs a provider-config. You are root, changes will be saved in the Provider-wide psybnc-Config.",
-		    21,75,12,lchoice,24,compilingmenu);
+		    21,75,12,lchoice,23,compilingmenu);
 	    else
 		rc=dialog_menu( "Compiling Options","This is the compiling section of the " APPNAME " Configuration. Your Host runs a provider-config. You can`t change the compiling Options.",
-		    21,75,12,lchoice,24,compilingmenu);
+		    21,75,12,lchoice,23,compilingmenu);
 	}
 	else
 	    rc=dialog_menu( "Compiling Options","This is the compiling section of the " APPNAME " Configuration. Please select an item and press enter to change settings.",
-		    21,75,12,lchoice,24,compilingmenu);
+		    21,75,12,lchoice,23,compilingmenu);
 	extractparam();
 	end_dialog();
 
@@ -1141,7 +1170,7 @@ int compilingoptions()
 	    {
 		case 201:
 		    comoptions->supenc=!comoptions->supenc;
-		    break;
+    		    break;
 		case 202:
 		    comoptions->supenctype=!comoptions->supenctype;
 		    break;
@@ -1192,9 +1221,6 @@ int compilingoptions()
 		case 213:
 		    comoptions->supoidentd=!comoptions->supoidentd;
 		    break;
-		case 214:
-		    comoptions->blockdns=!comoptions->blockdns;
-		    break;
 		case 215:
 		    comoptions->supnetwork=!comoptions->supnetwork;
 		    break;
@@ -1215,16 +1241,16 @@ int compilingoptions()
 		    comoptions->partychannel=!comoptions->partychannel;
 		    break;
 		case 221:
-		    rc=dialog_inputbox ( "CTCP Version Reply", "Enter a reply Text", 21, 75,
+	    	    rc=dialog_inputbox ( "CTCP Version Reply", "Enter a reply Text", 21, 75,
 		                         APPNAME " " APPVER " by the most psychoid");
 		    strmncpy(comoptions->ctcpversion,selection,sizeof(comoptions->ctcpversion));
 		    break;
 		case 222:
 		    if(comoptions->sslpath[0]==0)
-			rc=dialog_inputbox ( "Path to OpenSSL", "Enter the Path of your OpenSSL-Installation", 21, 75,
+	    		rc=dialog_inputbox ( "Path to OpenSSL", "Enter the Path of your OpenSSL-Installation", 21, 75,
 		                         "/usr/local/ssl");
 		    else
-			rc=dialog_inputbox ( "Path to OpenSSL", "Enter the Path of your OpenSSL-Installation", 21, 75,
+	    		rc=dialog_inputbox ( "Path to OpenSSL", "Enter the Path of your OpenSSL-Installation", 21, 75,
 		                         comoptions->sslpath);
 		    strmncpy(comoptions->sslpath,selection,sizeof(comoptions->sslpath));
 		    break;
@@ -1233,9 +1259,9 @@ int compilingoptions()
 		    if (comoptions->supsslsec>2) comoptions->supsslsec=0;
 		    break;
 		case 224:
-		    comoptions->fixfreeze=!comoptions->fixfreeze;
-		    break;
-	    }		
+			comoptions->mysqlipcheck=!comoptions->mysqlipcheck;
+			break;
+	    }
 	}
 	if(rc==1)
 	{
@@ -1247,7 +1273,7 @@ int compilingoptions()
 	    help();
 	    strmncpy(lchoice,selection,sizeof(lchoice));
 	}
-    }
+    }	
 }
 
 /*
@@ -1264,120 +1290,150 @@ int setupuseroptions()
     strcpy(um1,"Login: ");
     rc=getini("USER","LOGIN",buf);
     if(rc==0)
-	if(strlen(um1)+strlen(value)<sizeof(um1)) strcat(um1,value);
-    else
-	strcat(um1,"Choose");
+    {
+	    if(strlen(um1)+strlen(value)<sizeof(um1)) strcat(um1,value);
+    } else {
+    	strcat(um1,"Choose");
+    }
     strcpy(um2,"Nick: ");
     rc=getini("USER","NICK",buf);
     if(rc==0)
-	if(strlen(um2)+strlen(value)<sizeof(um2)) strcat(um2,value);
-    else
-	strcat(um2,"Choose");
+    {
+    	if(strlen(um2)+strlen(value)<sizeof(um2)) strcat(um2,value);
+    } else {
+    	strcat(um2,"Choose");
+    }
     strcpy(um3,"Username: ");
     rc=getini("USER","USER",buf);
     if(rc==0)
-	if(strlen(um3)+strlen(value)<sizeof(um3)) strcat(um3,value);
-    else
-	strcat(um3,"Choose");
+    {
+    	if(strlen(um3)+strlen(value)<sizeof(um3)) strcat(um3,value);
+    } else {
+    	strcat(um3,"Choose");
+    }
     strcpy(um4,"Password: ");
     rc=getini("USER","PASS",buf);
     if(rc==0)
-	if(strlen(um4)+strlen(value)<sizeof(um4)) strcat(um4,value);
-    else
-	strcat(um4,"Choose");
+    {
+    	if(strlen(um4)+strlen(value)<sizeof(um4)) strcat(um4,value);
+    } else {
+    	strcat(um4,"Choose");
+    }
     strcpy(um5,"VHost: ");
     rc=getini("USER","VHOST",buf);
     if(rc==0)
-	if(strlen(um5)+strlen(value)<sizeof(um5)) strcat(um5,value);
-    else
-	strcat(um5,"Choose");
+    {
+    	if(strlen(um5)+strlen(value)<sizeof(um5)) strcat(um5,value);
+    } else {
+    	strcat(um5,"Choose");
+    }
     strcpy(um6,"Rights: ");
     rc=getini("USER","RIGHTS",buf);
     if(rc==0)
     {
-	if(atoi(value)==1)
-	    strcat(um6,"Admin");
-	else
-	    strcat(um6,"User");
+    	if(atoi(value)==1)
+        {
+    	    strcat(um6,"Admin");
+	    } else {
+    	    strcat(um6,"User");
+        }
+    } else {
+    	strcat(um6,"User");
     }
-    else
-	strcat(um6,"User");
     strcpy(um7,"Relaying over Link #: ");
     rc=getini("USER","VLINK",buf);
     if(rc==0)
-	if(atoi(value)==0)
-	    strcat(um7,"None");
-	else
-	    if(strlen(um7)+strlen(value)<sizeof(um7)) strcat(um7,value);
-    else
-	strcat(um7,"None");
+    {
+    	if(atoi(value)==0)
+        {
+    	    strcat(um7,"None");
+	    } else {
+    	    if(strlen(um7)+strlen(value)<sizeof(um7)) strcat(um7,value);
+        }
+    } else {
+    	strcat(um7,"None");
+    }
     strcpy(um8,"Using Proxy: ");
     rc=getini("USER","PROXY",buf);
     if(rc==0)
-	if(strlen(um8)+strlen(value)<sizeof(um8)) strcat(um8,value);
-    else
-	strcat(um8,"None");
+    {
+	    if(strlen(um8)+strlen(value)<sizeof(um8)) strcat(um8,value);
+    } else {
+    	strcat(um8,"None");
+    }
     strcpy(um9,"Proxy Port: ");
     rc=getini("USER","PPORT",buf);
     if(rc==0)
     {
-	if(atoi(value)>0)
-	    if(strlen(um9)+strlen(value)<sizeof(um9)) strcat(um9,value);
-	else
-	    strcat(um9,"None");
+        if(atoi(value)>0)
+        {
+            if(strlen(um9)+strlen(value)<sizeof(um9)) strcat(um9,value);
+        } else {
+            strcat(um9,"None");
+        }
+    } else {
+    	strcat(um9,"None");
     }
-    else
-	strcat(um9,"None");
     strcpy(umA,"Network User of User #: ");
     rc=getini("USER","PARENT",buf);
     if(rc==0)
     {
-	if(atoi(value)>0)
-	    if(strlen(umA)+strlen(value)<sizeof(umA)) strcat(umA,value);
-	else
-	    strcat(umA,"None");
+        if(atoi(value)>0)
+        {
+            if(strlen(umA)+strlen(value)<sizeof(umA)) strcat(umA,value);
+        } else {
+            strcat(umA,"None");
+        }
+    } else {
+    	strcat(umA,"None");
     }
-    else
-	strcat(umA,"None");
     strcpy(umB,"User marked as quitted: ");
     rc=getini("USER","QUITTED",buf);
     if(rc==0)
     {
-	if(atoi(value)!=0)
-	    strcat(umB,"Yes");
-	else
-	    strcat(umB,"No");
+        if(atoi(value)!=0)
+        {
+            strcat(umB,"Yes");
+        } else {
+            strcat(umB,"No");
+        }
+    } else {
+    	strcat(umB,"No");
     }
-    else
-	strcat(umB,"No");
     strcpy(umC,"Auto-Accept DCC-Files: ");
     rc=getini("USER","AUTOGETDCC",buf);
     if(rc==0)
     {
-	if(atoi(value)!=0)
-	    strcat(umC,"Yes");
-	else
-	    strcat(umC,"No");
+        if(atoi(value)!=0)
+        {
+            strcat(umC,"Yes");
+        } else {
+            strcat(umC,"No");
+        }
+    } else {
+    	strcat(umC,"No");
     }
-    else
-	strcat(umC,"No");
     strcpy(umD,"Receive Systemmessages: ");
     rc=getini("USER","SYSMSG",buf);
     if(rc==0)
     {
-	if(atoi(value)!=0)
-	    strcat(umD,"Yes");
-	else
-	    strcat(umD,"No");
+        if(atoi(value)!=0)
+        {
+            strcat(umD,"Yes");
+        } else {
+            strcat(umD,"No");
+        }
+    } else {
+    	strcat(umD,"No");
     }
-    else
-	strcat(umD,"No");
     strcpy(umE,"Network name of Network User: ");
     rc=getini("USER","NETWORK",buf);
     if(rc==0)
-	if(strlen(umE)+strlen(value)<sizeof(umE)) strcat(umE,value);
-    else
-	strcat(umE,"None");
+    {
+    	if(strlen(umE)+strlen(value)<sizeof(umE)) strcat(umE,value);
+    } else {
+    	strcat(umE,"None");
+    }
     strcpy(umF,"Reset LastLog");
     strcpy(umG,"Servers --->");
     return 0x0;
@@ -1588,7 +1644,7 @@ int useredit()
 			   case 0:
 			       strcpy(dbuf,"");
 			       ap_snprintf(ebuf,sizeof(ebuf),"SERVER%d",param);
-			       rrc=getini("SERVERS",ebuf,buf);
+			       rrc=getini("SERVERS",ebuf,buf);	
 			       if(rrc==0)
 			       {
 			           strmncpy(dbuf,value,sizeof(dbuf));
@@ -1618,7 +1674,7 @@ int useredit()
 					   writeini("SERVERS",ebuf,buf,selection);
 				       }
 				   }
-			       }
+			       }    
 			       break;
 			   case 2:
 			       ap_snprintf(ebuf,sizeof(ebuf),"%s.SERVERS.PORT%d",buf,param);
@@ -1627,7 +1683,7 @@ int useredit()
 			       clearsectionconfig(buf);
 			       break;
 		       }
-		    }
+		    }		
 		    break;
 	    }
 	}
@@ -1657,36 +1713,45 @@ int setuplinkoptions()
     rc=getini(buf,"TYPE","LINKS");
     if(rc==0)
     {
-	if(atoi(value)==1)
-	    strcat(lm1,"Listening for the Link");
-	else
-	    strcat(lm1,"Connecting the Link");
+        if(atoi(value)==1)
+        {
+            strcat(lm1,"Listening for the Link");
+        } else {
+            strcat(lm1,"Connecting the Link");
+        }
     } else {
-	strcat(lm1,"Choose");
+    	strcat(lm1,"Choose");
     }
-    strcpy(lm2,"Host :");
+    strcpy(lm2,"Host: ");
     rc=getini(buf,"HOST","LINKS");
     if(rc==0)
-	if(strlen(lm2)+strlen(value)<sizeof(lm2)) strcat(lm2,value);
-    else
-	strcat(lm2,"Unknown");
-    strcpy(lm3,"Port :");
+    {
+    	if(strlen(lm2)+strlen(value)<sizeof(lm2)) strcat(lm2,value);
+    } else {
+    	strcat(lm2,"Unknown");
+    }
+    strcpy(lm3,"Port: ");
     rc=getini(buf,"PORT","LINKS");
-    if(rc==0)
-	if(strlen(lm3)+strlen(value)<sizeof(lm3)) strcat(lm3,value);
-    else
-	strcat(lm3,"Choose");
-    strcpy(lm4,"Relay allowed :");
+    if(rc==0) {
+    	if(strlen(lm3)+strlen(value)<sizeof(lm3)) strcat(lm3,value);
+    } else {
+    	strcat(lm3,"Choose");
+    }
+    strcpy(lm4,"Relay allowed: ");
     rc=getini(buf,"ALLOWRELAY","LINKS");
     if(rc==0)
     {
-	if(atoi(value)==0)
-	    strcat(lm4,"No");
-	else
-	    strcat(lm4,"Yes");
-    } else
-	strcat(lm4,"No");
+        if(atoi(value)==0)
+        {
+            strcat(lm4,"No");
+        } else {
+            strcat(lm4,"Yes");
+        }
+    } else {
+    	strcat(lm4,"No");
+    }
     strcpy(lm5,"Reset Password");
+    return 0x0;
 }
 /*
  * hostedit()
@@ -1695,14 +1760,11 @@ int setuplinkoptions()
 
 int hostedit()
 {
-    int rc;
     int choosenallow;
-    char lchoice[200];
     char header[200];
     char buf[200];
-    char ebuf[200];
-    int pa,rrc;
-    choosenallow=param;
+    int rrc;
+    choosenallow=param;    
     ap_snprintf(header,sizeof(header),"Allowed Host #%d",choosenallow);
     ap_snprintf(buf,sizeof(buf),"ENTRY%d",choosenallow);
     rrc=getini("HOSTALLOWS",buf,"PSYBNC");
@@ -1726,7 +1788,6 @@ int linkedit()
     char lchoice[200];
     char header[200];
     char buf[20];
-    char ebuf[200];
     int pa,rrc;
     choosenlink=param;
     strcpy(lchoice,"501:");
@@ -1762,6 +1823,7 @@ int linkedit()
 			strcpy(value,"");
 		    rrc=dialog_inputbox ( "Host Name", "Enter the Hostname", 21, 75,
 		                         value);
+		    
 		    if(rrc==0)
 			writeini(buf,"HOST","LINKS",selection);
 		    break;
@@ -1821,16 +1883,16 @@ int bounceroptions()
 	rc=getini("SYSTEM","ME","PSYBNC");
 	if(rc!=0)
 	    strcpy(value,"(none)");
-	ap_snprintf(bm1,sizeof(bm1),"Bouncer Name :%s",value);
+	ap_snprintf(bm1,sizeof(bm1),"Bouncer Name: %s",value);
 	strmncpy(sysme,value,sizeof(sysme));
 	rc=getini("SYSTEM","DCCHOST","PSYBNC");
 	if(rc!=0)
 	    strcpy(value,"(none)");
-	ap_snprintf(bm2,sizeof(bm2),"DCC Host :%s",value);
+	ap_snprintf(bm2,sizeof(bm2),"DCC Host: %s",value);
 	rc=getini("SYSTEM","LANGUAGE","PSYBNC");
 	if(rc!=0)
 	    strcpy(value,"english");
-	ap_snprintf(bm3,sizeof(bm3),"Language :%s",value);
+	ap_snprintf(bm3,sizeof(bm3),"Language: %s",value);
 	init_dialog();
 	rc=dialog_menu( "Bouncer-Config","Please select the Option you want to change and press Enter.",
 		    21,75,12,lchoice,7,bouncemenu);
@@ -1846,7 +1908,7 @@ int bounceroptions()
 		    while(rc>=0)
 		    {
 		       confbase=1;
-		       rc=createvariablemenu("Listening Ports", "Please choose the Port-Entry you want to edit/delete or choose new to add a new entry. Press ESCAPE to return to the Option Menu.", "SYSTEM",
+		       rc=createvariablemenu("Listening Ports", "Please choose the Port-Entry you want to edit/delete or choose new to add a new entry. Press ESCAPE to return to the Option Menu.", "SYSTEM", 
 		       "PORT%d", "HOST%d", "PSYBNC", 10000, "#%d :%s %s");
 		       extractparam();
 		       switch(rc)
@@ -1870,7 +1932,7 @@ int bounceroptions()
 			       selection[0]=0;rc=0;
 			       while(strchr(selection,' ')==NULL && rc==0)
 			       {
-				    rc=dialog_inputbox ( "Listening Host and Port", "Enter a Host and a Port delimited by a space", 21, 75,
+		    		    rc=dialog_inputbox ( "Listening Host and Port", "Enter a Host and a Port delimited by a space", 21, 75,
 		                                     pbuf);
 			       }
 			       if(rc==0) {
@@ -1885,7 +1947,7 @@ int bounceroptions()
 					    pt--;
 					    *pt=0;
 					    ap_snprintf(buf,sizeof(buf),"HOST%d",param);
-					    writeini("SYSTEM",buf,"PSYBNC",selection);
+					    writeini("SYSTEM",buf,"PSYBNC",selection);    
 					}
 				    }
 			       }
@@ -1903,7 +1965,7 @@ int bounceroptions()
 		    while(rc>=0)
 		    {
 		       confbase=1;
-		       rc=createvariablemenu("Links", "Please choose the Link-Entry you want to edit/delete or choose new to add a new entry. Press ESCAPE to return to the Option Menu.", "LINK%d",
+		       rc=createvariablemenu("Links", "Please choose the Link-Entry you want to edit/delete or choose new to add a new entry. Press ESCAPE to return to the Option Menu.", "LINK%d", 
 		       "PORT", "HOST", "LINKS", 10000, "#%d :%s %s");
 		       extractparam();
 		       switch(rc)
@@ -1918,7 +1980,7 @@ int bounceroptions()
 			       clearsectionconfig(buf);
 			       break;
 		       }
-		    }
+		    }		
 		    break;
 		case 303:
 		    rc=dialog_inputbox ( "Bouncer Name", "Enter a name", 21, 75,
@@ -1945,7 +2007,7 @@ int bounceroptions()
 			       clearsectionconfig(buf);
 			       break;
 		       }
-		    }
+		    }		
 		    break;
 		case 305:
 		    rc=0;
@@ -1968,7 +2030,7 @@ int bounceroptions()
 			       clearsectionconfig(buf);
 			       break;
 		       }
-		    }
+		    }		
 		    rc=0;
 		    break;
 		case 306:
@@ -1986,12 +2048,15 @@ int bounceroptions()
 			ap_snprintf(buf,sizeof(buf),"lang/%s.lng",selection);
 			atest=fopen(buf,"r");
 			if(atest!=NULL)
-			{
+			{    
 			    writeini("SYSTEM","LANGUAGE","PSYBNC",selection);
 			    fclose(atest);
+			} else {
+			    
 			}
 		    }
 		    break;
+		    
 	    }
 	}
 	if(rc==1)
@@ -2001,7 +2066,7 @@ int bounceroptions()
 	    help();
 	    strmncpy(lchoice,selection,sizeof(lchoice));
 	}
-    }
+    }	
 }
 
 /*
@@ -2038,7 +2103,7 @@ int mmenu()
 		    log=fopen("log/psybnc.log","r");
 		    if(log!=NULL) /* only, if exists */
 		    {
-			fclose(log);
+			fclose(log);	    		    
 			rc=dialog_textbox ("The current Log", "log/psybnc.log", 21, 78);
 		    }
 		    break;
@@ -2062,13 +2127,16 @@ int mmenu()
 	    help();
 	    strmncpy(lchoice,selection,sizeof(lchoice));
 	}
-    }
+    }	
 }
 
 /* main loop */
 
 int main ()
 {
+    /* Used for MySQL password */
+    srand(time(0));
+
     comoptions=malloc(sizeof(struct comopt));
     umask( ~S_IRUSR & ~S_IWUSR );
     readconfig();
